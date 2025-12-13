@@ -1,0 +1,1917 @@
+{
+  "Coupon": {
+    "SOUTHERN_SAN_DORIA": "サンドリア王国 南サンドリア I-9\nAileviaに冒険者優待券を\nトレードしよう",
+    "NORTHERN_SAN_DORIA": "サンドリア王国 北サンドリア J-8\nMatildieに冒険者優待券を\nトレードしよう",
+    "PORT_SAN_DORIA": "サンドリア王国 サンドリア港 F-9\nTeilsaに冒険者優待券を\nトレードしよう",
+    "BASTOK_MINES": "バストゥーク共和国 バストゥーク鉱山区 H-7\nArvaに冒険者優待券を\nトレードしよう",
+    "PORT_BASTOK": "バストゥーク共和国 バストゥーク港 J-8\nDulsieに冒険者優待券を\nトレードしよう",
+    "BASTOK_MARKETS": "バストゥーク共和国 バストゥーク商業区 G-8\nReetに冒険者優待券を\nトレードしよう",
+    "WINDURST_WATERS": "ウィンダス連邦 ウィンダス水の区 北G-9T7\nJack of Heartsに冒険者優待券を\nトレードしよう",
+    "WINDURST_WALLS": "ウィンダス連邦 ウィンダス石の区 C-13\nJack of Diamondsに冒険者優待券を\nトレードしよう",
+    "PORT_WINDURST": "ウィンダス連邦 ウィンダス港 E-6T1\nJack of Clubsに冒険者優待券を\nトレードしよう",
+    "WINDURST_WOODS": "ウィンダス連邦 ウィンダス森の区 H-11T7\nJack of Spadesに冒険者優待券を\nトレードしよう"
+  },
+  "Tutorial": {
+    "SANDORIA": {
+      "1": "サンドリア王国 南サンドリア G-10\nチュートリアル開始\nAlauneに話しかけよう",
+      "2": "サンドリア王国 南サンドリア ?-?\n?からシグネットを受け、\nG-10 Alauneに報告しよう",
+      "2end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "3": "サンドリア王国 南サンドリア\n干し肉を食べ、\nG-10 Alauneに報告しよう",
+      "3end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "4": "チュートリアル\nモンスターと戦って戦闘スキルを5以上にして、\nウェポンスキルを覚えよう",
+      "4end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "5": "サンドリア王国 南サンドリア ?-?\nAuction Counterを調べよう",
+      "6": "サンドリア王国 南サンドリア G-10 \nAlauneに報告しよう",
+      "7": "チュートリアル\nモンスターを討伐してレベル4まで上げよう",
+      "7end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "8": "ザルクヘイム ラテーヌ高原\nラテーヌ高原でモンスターを一体討伐しよう",
+      "9": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "10": "チュートリアル\nモンスターを討伐してレベル10まで上げよう",
+      "10end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう",
+      "11": "ザルクヘイム ラテーヌ高原 ?-?\nテレポイントでゲートクリスタルを入手しよう",
+      "11end": "サンドリア王国 南サンドリア G-10\nAlauneに報告しよう"
+    },
+    "BASTOK": {
+      "1": "バストゥーク共和国 バストゥーク商業区 D-11\nチュートリアル開始\nGulldagoに話しかけよう",
+      "2": "バストゥーク共和国 バストゥーク商業区 ?-?\n?からシグネットを受け、\nD-11 Gulldagoに報告しよう",
+      "2end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "3": "バストゥーク共和国 バストゥーク商業区\n干し肉を食べ、\nD-11 Gulldagoに報告しよう",
+      "3end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "4": "チュートリアル\nモンスターと戦って戦闘スキルを5以上にして、\nウェポンスキルを覚えよう",
+      "4end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "5": "バストゥーク共和国 バストゥーク商業区 ?-?\nAuction Counterを調べよう",
+      "6": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "7": "チュートリアル\nモンスターを討伐してレベル4まで上げよう",
+      "7end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "8": "ザルクヘイム コンシュタット高地\nコンシュタット高地でモンスターを一体討伐しよう",
+      "9": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "10": "チュートリアル\nモンスターを討伐してレベル10まで上げよう",
+      "10end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう",
+      "11": "ザルクヘイム コンシュタット高地 ?-?\nテレポイントのゲートクリスタルを入手しよう",
+      "11end": "バストゥーク共和国 バストゥーク商業区 D-11\nGulldagoに報告しよう"
+    },
+    "WINDURST": {
+      "1": "ウィンダス連邦 ウィンダス森の区 K-10T7\nチュートリアル開始\nSeleleに話しかけよう",
+      "2": "ウィンダス連邦 ウィンダス森の区 K-10T1\nHarara,W.Wからシグネットを受け、\nK-10T7 Seleleに報告しよう",
+      "2end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "3": "ウィンダス連邦 ウィンダス森の区\n干し肉を食べ、\nK-10T7 Seleleに報告しよう",
+      "3end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "4": "チュートリアル\nモンスターと戦って戦闘スキルを5以上にして、\nウェポンスキルを覚えよう",
+      "4end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "5": "ウィンダス連邦 ウィンダス森の区 J-12T7\nAuction Counterを調べよう",
+      "6": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "CONQUEST_PROMOTION_VOUCHER": "ウィンダス連邦 ウィンダス森の区 K-10T1\nHarara,W.Wから個人戦績アイテムの戦車の指輪\n女帝の指輪、皇帝の指輪のいずれかを受け取ろう",
+      "7": "チュートリアル\nモンスターを討伐してレベル4まで上げよう",
+      "7end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "8": "コルシュシュ タロンギ大峡谷\nタロンギ大峡谷でモンスターを一体討伐しよう",
+      "9": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "10": "チュートリアル\nモンスターを討伐してレベル10まで上げよう",
+      "10end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう",
+      "11": "コルシュシュ タロンギ大峡谷 I-6\nテレポイントのゲートクリスタルを入手しよう",
+      "11end": "ウィンダス連邦 ウィンダス森の区 K-10T7\nSeleleに報告しよう"
+    }
+  },
+  "MissionWindurst": {
+    "THE_HORUTOTO_RUINS_EXPERIMENT": {
+      "1": "ウィンダス連邦 ウィンダス港 E-7T4\n口の院のHakkuru-Rinkuruに話しかけよう",
+      "2": "サルタバルタ 内ホルトト遺跡 H-9T1\n南の壁H-9T9Cracked Wallの扉の奥\nGate: Magical Gizmoを調べましょう",
+      "3": "サルタバルタ 内ホルトト遺跡\n6つあるAncient Magical Gizmoのひとつから\n割れた魔導球を回収しよう",
+      "3_1": "サルタバルタ 内ホルトト遺跡\nI-8T9のAncient Magical Gizmoを調べよう",
+      "3_2": "サルタバルタ 内ホルトト遺跡\nI-8T1のAncient Magical Gizmoを調べよう",
+      "3_3": "サルタバルタ 内ホルトト遺跡\nI-9T9のAncient Magical Gizmoを調べよう",
+      "3_4": "サルタバルタ 内ホルトト遺跡\nG-9T8のAncient Magical Gizmoを調べよう",
+      "3_5": "サルタバルタ 内ホルトト遺跡\nH-8T1のAncient Magical Gizmoを調べよう",
+      "3_6": "サルタバルタ 内ホルトト遺跡\nG-8T8のAncient Magical Gizmoを調べよう",
+      "4": "ウィンダス連邦 ウィンダス港 E-7T4\nHakkuru-Rinkuruに報告しよう"
+    },
+    "THE_HEART_OF_THE_MATTER": {
+      "1": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに話しかけよう",
+      "2": "サルタバルタ 東サルタバルタ J-11T4\nPore-Ohreに話しかけよう",
+      "3": "サルタバルタ 外ホルトト遺跡\nH-7からI-9にある\n6つのAncient Magical Gizmoを調べる",
+      "3end": "サルタバルタ 外ホルトト遺跡 I-8T3\nI-8T1 Cracked Wallの奥\nGate: Magical Gizmoを調べる",
+      "4": "サルタバルタ 外ホルトト遺跡\n魔導球を納めた6つのAncient Magical Gizmoを\n再度調べ、6つの輝く魔導球を入手しよう",
+      "5": "サルタバルタ 東サルタバルタ\n外ホルトト遺跡の入口から東サルタバルタへ出ましょう",
+      "6": "ウィンダス連邦 ウィンダス森の区 H-9T7\nApururuに報告しよう"
+    },
+    "THE_PRICE_OF_PEACE": {
+      "1": "ウィンダス連邦 ウィンダス水の区 南J-9T7\n鼻の院屋上Leepe-Hoppeに話しかけよう",
+      "2": "サルタバルタ ギデアス\nG-7 Ghoo Pakyaと\nH-7Laa Moziに献上品を渡す",
+      "2_FOOD_OFFERING": "サルタバルタ ギデアス\nH-7T9 Laa Moziに話しかけよう",
+      "2_DRINK_OFFERING": "サルタバルタ ギデアス\nG-7T7 Ghoo Pakyaに話しかけよう",
+      "3": "ウィンダス連邦 ウィンダス水の区 南J-9T7\n鼻の院屋上Leepe-Hoppeに報告しよう",
+      "4": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaに報告しよう"
+    },
+    "LOST_FOR_WORDS": {
+      "1": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに話しかけよう",
+      "2": "ウィンダス連邦 ウィンダス森の区 J-3T4\nNanaa Mihgoに話しかけよう",
+      "3": "コルシュシュ シャクラミの地下迷宮 MAP[3]\nH-4からH-5にあるFossil Rockを調べよう",
+      "3_0": "コルシュシュ シャクラミの地下迷宮 MAP[3]\nH-4T2にあるFossil Rockを調べよう",
+      "3_4": "コルシュシュ シャクラミの地下迷宮 MAP[3]\nG-5T6にあるFossil Rockを調べよう",
+      "3_5": "コルシュシュ シャクラミの地下迷宮 MAP[3]\nH-5T7にあるFossil Rockを調べよう",
+      "3_6": "コルシュシュ シャクラミの地下迷宮 MAP[3]\nH-5T5にあるFossil Rockを調べよう",
+      "4": "ウィンダス連邦 ウィンダス森の区 J-3T4\nNanaa Mihgoに報告しよう",
+      "5": "サルタバルタ 内ホルトト遺跡 MAP[2]\nG-8T1にあるMahogany Doorを調べよう",
+      "6": "ウィンダス連邦 ウィンダス石の区 G-3T3\nDoor:House of the Heroを調べよう",
+      "7": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに報告しよう"
+    },
+    "A_TESTING_TIME": {
+      "1": "ウィンダス連邦 ウィンダス水の区 北L-6T1\n耳の院のMoreno-Toenoに話しかけよう",
+      "2": "コルシュシュ タロンギ大峡谷\nタロンギ大峡谷で10体以上のモンスターを倒そう\n討伐数：",
+      "2end": "ウィンダス連邦 ウィンダス水の区 北L-6T1\n耳の院のMoreno-Toenoに報告しよう\n討伐数："
+    },
+    "THE_THREE_KINGDOMS": {
+      "0": "ウィンダス連邦 天の塔\n受付のKupipiに話しかけよう",
+      "1": "サンドリア王国 北サンドリア H-9T8\nウィンダス領事館のHeruze-Moruzeに話しかけよう",
+      "2": "サンドリア王国 北サンドリア H-9T7\nウィンダス領事館奥にいるKasaroroに話しかけよう",
+      "6": "バストゥーク共和国 大工房 上 I-7T4\nウィンダス領事館 Patt-Pottに話しかけよう",
+      "11": "ウィンダス連邦 天の塔\n天の塔受付のKupipiに報告しよう"
+    },
+    "THE_THREE_KINGDOMS_SANDORIA": {
+      "3": "サンドリア王国 ドラギーユ城 I-9T4\nHalverに話しかけよう",
+      "4": "ロンフォール ゲルスバ野営陣 H-7T1\nWarchief Vatgitを倒そう",
+      "5": "サンドリア王国 北サンドリア H-9T7\nウィンダス領事館のKasaroroに報告しよう"
+    },
+    "THE_THREE_KINGDOMS_BASTOK2": {
+      "8": "バストゥーク共和国 大工房 上 K-8T3\nバストゥーク大統領府のPiusに話しかけよう",
+      "9": "バストゥーク共和国 大工房 上 H-9T7\n食堂に入るGrohmに話しかけよう",
+      "10": "グスタベルグ ワールンの祠\nBurning Circleを調べてランク2最終ミッションに挑もう",
+      "11": "バストゥーク共和国 大工房 上 I-7T4\nウィンダス領事館 Patt-Pottに報告しよう"
+    },
+    "TO_EACH_HIS_OWN_RIGHT": {
+      "0": "ウィンダス連邦 天の塔\n天の塔受付のKupipiに話しかけよう",
+      "1": "ウィンダス連邦 天の塔\n受付横の扉Starway Stairwayを通過し、\n3FにいるRhy Epocanに話しかけよう",
+      "2": "ウィンダス連邦 ウィンダス港 E-7T4\n口の院のHakkuru-Rinkuruに話しかけよう",
+      "3": "アラゴーニュ オズトロヤ城\nI-8T3の扉の前にある2つのレバーの真ん中に立ち\nどちらかのレバーを引いて床が落た下に進もう",
+      "4": "ウィンダス連邦 天の塔\n3FにいるRhy Epocanに報告しよう"
+    },
+    "WRITTEN_IN_THE_STARS": {
+      "0": "ウィンダス連邦 天の塔\n天の塔2FのZubabaに話しかけよう",
+      "1": "サルタバルタ 内ホルトト遺跡\nMAP[4]G-7T9 Gate of Lightを調べよう",
+      "2": "ウィンダス連邦 天の塔\n天の塔2FのZubabaに報告しよう",
+      "3": "サルタバルタ 内ホルトト遺跡\nMAP[4]G-7付近\nWendigoから錆びた短剣を3本手に入れよう",
+      "3end": "ウィンダス連邦 天の塔\n天の塔2FのZubabaに錆びた短剣をトレードしよう"
+    },
+    "A_NEW_JOURNEY": {
+      "0": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "1": "ジュノ大公国 ル・ルデの庭 I-9T4\nウィンダス領事館のPakh Jatalfihに話しかけよう",
+      "2": "クフィム デルクフの塔上層 H-8\nPorphyrionを倒そう",
+      "2_2": "クフィム デルクフの塔上層 H-8T1\nElevatorにデルクフのカギをトレードしよう",
+      "2_3": "クフィム デルクフの塔下層\n螺旋階段を一番下まで降り下層へ移動\nI-8T4にあるCermet Doorから先に進もう",
+      "2_4": "クフィム デルクフの塔下層 M-7T6\n更に先に進んでCermet Doorを調べよう",
+      "3": "ジュノ大公国 ル・ルデの庭 I-9T4\nPakh Jatalfihに報告しよう",
+      "4": "ジュノ大公国 ル・ルデの庭 I-9T7\nDoor:Windurstian Emb.を調べよう"
+    },
+    "MAGICITE": {
+      "0": "ジュノ大公国 ル・ルデの庭 I-9T7\nDoor:Windurstian Emb.を調べよう",
+      "1": "ジュノ大公国 ル・ルデの庭 H-6T2\nDoor:Audience Chamberを調べよう",
+      "2": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireから中に入り\nAldoに話しかけよう",
+      "3_DAVOI": "魔晶石を奪え ダボイ編\nE-6T6にあるMagiciteを調べよう",
+      "3_BEADEAUX": "魔晶石を奪え ベドー編\nF-9T8にあるMagiciteを調べよう",
+      "3_CASTLE_OZTROJA": "魔晶石を奪え オズトロヤ編\nG-8T8にあるMagiciteを調べよう",
+      "3": "ジュノ大公国 ル・ルデの庭 H-6T2\nDoor:Audience Chamberを調べよう",
+      "4": "ジュノ大公国 ル・ルデの庭 I-9T4\nPakh Jatalfihに話しかけよう"
+    },
+    "THE_FINAL_SEAL": {
+      "10": " ",
+      "11": "フォルガンディ ク・ビアの闘技場\nBurning Circleを調べてランク5ミッションに挑もう",
+      "12": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう"
+    },
+    "THE_SHADOW_AWAITS": {
+      "0": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "2": "バルドニア 王の間\nThrone Roomを調べよう",
+      "3": "バルドニア 王の間\nThrone Roomからバトルフィールドに挑もう",
+      "4": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう"
+    },
+    "FULL_MOON_FOUNTAIN": {
+      "0": "ウィンダス連邦 ウィンダス港 E-7T4\n口の院のHakkuru-Rinkuruに話しかけよう",
+      "1": "サルタバルタ 外ホルトト遺跡\nMAP[4]I-8T2Cracked Wallを進み、\nJ-8T3のGate: Magical Gizmoを調べよう",
+      "2": "サルタバルタ 外ホルトト遺跡 MAP[4]J-8T3\nGate: Magical Gizmoを再度調べよう",
+      "3": "ウィンダス連邦 ウィンダス港 E-7T4\n口の院のHakkuru-Rinkuruに報告し、\n東サルタバルタから満月の泉に向かおう",
+      "3_end": " "
+    },
+    "SAINTLY_INVITATION": {
+      "0": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "1": "サルタバルタ バルガの舞台\nBurning Circleを調べて聖者の招待に挑もう",
+      "JUDGMENT_KEY": "アラゴーニュ オズトロヤ城\nYagudo Flagellantを倒して裁きのカギを手に入れよう",
+      "2": "アラゴーニュ オズトロヤ城 MAP[5]H-5T7\nH-5T1のBrass Doorを裁きのカギで開け\nKaa Toru the Justに話しかけよう",
+      "3": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう"
+    },
+    "THE_SIXTH_MINISTRY": {
+      "0": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに話しかけよう",
+      "TORAIMARAI_CANAL": "サルタバルタ トライマライ水路 MAP[2]G-8T5\n4体のHinge Oilを倒し、北東の階段H-8T7の\n扉を進んで心の院に入ろう",
+      "1": "ウィンダス連邦 トライマライ水路 MAP[2]H-8\n心の院のTome of Magicを調べよう",
+      "2": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに報告しよう"
+    },
+    "AWAKENING_OF_THE_GODS": {
+      "0": "ウィンダス連邦 ウィンダス水の区 南J-9T7\n鼻の院屋上Leepe-Hoppeに話しかけよう",
+      "1": "ウィンダス連邦 ウィンダス水の区 南J-8T7\n鼻の院北棟のKerutotoに話しかけよう",
+      "2": "低地エルシモ カザム\nJ-9T2 Jakoh Wahcondaloに話しかけた後\nH-11T5 Romaa Mihgoに話しかけよう",
+      "CURSED_KEY": "高地エルシモ ウガレピ寺院 MAP[3]J-9\nBonze Marberryから呪われたカギを手に入れよう",
+      "3": "高地エルシモ ウガレピ寺院 MAP[3]J-6T5\nGranite Doorを呪われたカギで開けよう",
+      "4": " ",
+      "5": "ウィンダス連邦 ウィンダス水の区 南J-9T7\n鼻の院屋上Leepe-Hoppeに報告しよう"
+    },
+    "VAIN": {
+      "0": "ウィンダス連邦 ウィンダス水の区 北L-6T1\n耳の院のMoreno-Toenoに話しかけよう",
+      "1": "リ・テロア ロ・メーヴ H-6T5\nQu'Hau Springを調べよう",
+      "2": "ノルバレン ダボイ J-8T4上\nSedal-Godjalに話しかけよう",
+      "CURSE_WAND": "ノルバレン ダボイ 中央島H-8の建物内\nDirtyhanded Gochakzukを倒して\n呪術の杖を入手しよう",
+      "3": "ノルバレン ダボイ J-8T4上\nSedal-Godjalに呪術の杖を渡そう",
+      "4": "ウィンダス連邦 ウィンダス水の区 北L-6T1\n耳の院のMoreno-Toenoに報告しよう"
+    },
+    "THE_JESTER_WHOD_BE_KING": {
+      "0": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに話しかけよう",
+      "OPTISTERY_RING": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに話しかけよう",
+      "AURASTERY_RING": "ノルバレン ダボイ J-8T4上\nSedal-Godjalに話しかけよう",
+      "RHINOSTERY_RING": "フォルガンディ フェ・イン MAP[3]F-6T4\n西側の小部屋のCermet Doorを調べよう",
+      "2": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに報告しよう",
+      "3": "ウィンダス連邦 天の塔\n受付のKupipiに話しかけよう",
+      "4": "サルタバルタ 外ホルトト遺跡 MAP[2]G-8T4\nCracked Wallを調べよう",
+      "5": "サルタバルタ 外ホルトト遺跡 MAP[2]G-8T4\nCracked Wallを再度調べよう",
+      "6": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに話しかけよう",
+      "7": "ウィンダス連邦 ウィンダス石の区 K-7T5\nShantottoに話しかけよう",
+      "8": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに報告しよう",
+      "9": "サルタバルタ 内ホルトト遺跡 MAP[4]I-7T1\nGate of Darknessを調べよう",
+      "10": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに報告しよう"
+    },
+    "DOLL_OF_THE_DEAD": {
+      "0": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに話しかけよう",
+      "1": "ウィンダス連邦 天の塔\n天の塔に移動しよう",
+      "2": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "3": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに話しかけよう",
+      "4": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに話しかけよう",
+      "CLUMP_OF_GOOBBUE_HUMUS": "リ・テロア ボヤーダ樹\nOld Goobbueからグゥーブーの腐葉土を手に入れよう",
+      "5": "リ・テロア ボヤーダ樹 MAP[1]F-4T4\nMandragora Wardenにグゥーブーの腐葉土を渡そう",
+      "6": "ウィンダス連邦 ウィンダス森の区 H-9T7\n手の院のApururuに報告しよう",
+      "7": "サルタバルタ 満月の泉\nトライマライ水路MAP[1]H-7T4から降り\nG-8T3から上り、G-7T7から満月の泉へ移動しよう"
+    },
+    "MOON_READING": {
+      "0": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "ANCIENT_VERSE_OF_ROMAEVE": "リ・テロア ロ・メーヴ H-6T5\nQu'Hau Springを調べよう",
+      "ANCIENT_VERSE_OF_UGGALEPIH": "高地エルシモ ウガレピ寺院 MAP[2]E-8T4\nGranite Doorをウガレピのカギで個室に入り\n???を調べよう",
+      "ANCIENT_VERSE_OF_ALTEPA": "クゾッツ 宣託の間\n流砂洞から宣託の間に移動しよう\n流砂洞 Home Point #1からが近い",
+      "UGGALEPIH_KEY": "高地エルシモ ウガレピ寺院\nTonberry Cutterからウガレピのカギを手に入れよう",
+      "1": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "2": "サルタバルタ 満月の泉\nMoon Spiralから月詠みに挑もう\nトライマライ水路 Home Point #1からが近い",
+      "3": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "4": "ウィンダス連邦 天の塔\nDoor:Vestal Chamberを再度調べよう"
+    },
+    "ROLANBERRY": {
+      "0": "ウィンダス連邦 ウィンダス水の区 北E-8T1\n調理ギルドのKopopoからロランベリーを購入しよう",
+      "1": "ウィンダス連邦 天の塔\n天の塔受付のKupipiにロランベリーをトレードしよう"
+    },
+    "NONE": {
+      "0": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaからミッションを受けよう",
+      "THE_HORUTOTO_RUINS_EXPERIMENT": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaからホルトト遺跡の大実験を受けよう",
+      "THE_HEART_OF_THE_MATTER": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaからカーディアンの心を受けよう",
+      "THE_PRICE_OF_PEACE": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから平和のためにを受けよう",
+      "LOST_FOR_WORDS": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから白き書を受けよう",
+      "A_TESTING_TIME": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから試験の行方を受けよう",
+      "THE_THREE_KINGDOMS": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから三大強国を受けよう",
+      "TO_EACH_HIS_OWN_RIGHT": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaからそれぞれの正義を受けよう",
+      "WRITTEN_IN_THE_STARS": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから星読みを受けよう",
+      "A_NEW_JOURNEY": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから新たなる旅立ちを受けよう",
+      "MAGICITE": "ジュノ大公国 ル・ルデの庭 I-9T4\nPakh Jatalfihに話しかけよう",
+      "THE_FINAL_SEAL": "ウィンダス連邦 天の塔\n天の塔最上階のDoor:Vestal Chamberを調べよう",
+      "THE_SHADOW_AWAITS": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから最果てにて君を待つ闇を受けよう",
+      "FULL_MOON_FOUNTAIN": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから満月の泉を受けよう",
+      "SAINTLY_INVITATION": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから聖者の招待を受けよう",
+      "THE_SIXTH_MINISTRY": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから第6の院を受けよう",
+      "AWAKENING_OF_THE_GODS": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから蘇る神々を受けよう",
+      "VAIN": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaからヴェインを受けよう",
+      "THE_JESTER_WHOD_BE_KING": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから王と道化師を受けよう",
+      "DOLL_OF_THE_DEAD": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから死者の人形を受けよう",
+      "MOON_READING": "ウィンダス連邦 ウィンダス森の区 K-10T7\nRakoh Buumaから月詠みを受けよう"
+    }
+  },
+  "MissionZilart": {
+    "THE_NEW_FRONTIER": {
+      "0": "低地エルシモ ノーグ\nノーグに移動してジラートミッションを開始しよう"
+    },
+    "WELCOME_TNORG": {
+      "0": "低地エルシモ ノーグ K-8T2\nOaken Doorを調べよう"
+    },
+    "KAZHAMS_CHIEFTAINESS": {
+      "0": "低地エルシモ カザム J-9T2\nJakoh Wahcondaloに話しかけよう"
+    },
+    "THE_TEMPLE_OF_UGGALEPIH": {
+      "0": "高地エルシモ 生贄の間\nMahogany Doorからウガレピ寺院に挑もう",
+      "1": " ",
+      "2": " "
+    },
+    "HEADSTONE_PILGRIMAGE": {
+      "FIRE_FRAGMENT": "炎の祈り ユタンガ大森林 L-7T7\nCermet Headstoneを調べよう",
+      "EARTH_FRAGMENT": "土の祈り 西アルテパ砂漠 H-9T8\nCermet Headstoneを調べよう",
+      "WATER_FRAGMENT": "水の祈り ラテーヌ高原 G-11T5\nCermet Headstoneを調べよう",
+      "WIND_FRAGMENT": "風の祈り テリガン岬 G-5T3\nCermet Headstoneを調べよう",
+      "ICE_FRAGMENT": "氷の祈り 凍結の回廊\nCermet Headstoneを調べよう",
+      "LIGHTNING_FRAGMENT": "雷の祈り ベヒーモスの縄張り G-9T5\nCermet Headstoneを調べよう",
+      "LIGHT_FRAGMENT": "光の祈り 聖地ジ・タ\nJ-9T3からマップ外に進み\nI-7T9にあるCermet Headstoneを調べよう"
+    },
+    "THROUGH_THE_QUICKSAND_CAVES": {
+      "0": "クゾッツ 宣託の間\nShimmering Circleから流砂洞を超えてに挑もう"
+    },
+    "THE_CHAMBER_OF_ORACLES": {
+      "0": "古代神殿廃墟最深部\n8つの祈りをすべての台座に捧げ、\nいずれかの台座をもう一度調べよう",
+      "255": " "
+    },
+    "RETURN_TO_DELKFUTTS_TOWER": {
+      "0": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireから中に入り\nAldoに話しかけよう",
+      "option1": "クフィム デルクフの塔下層\nクフィム島F-6T5からデルクフの塔下層へ入ろう",
+      "option3": "クフィム 天輪の場\nQe'lov Gateを調べよう",
+      "1": "クフィム 天輪の場\nQe'lov Gateからデルクフの塔再びに挑もう",
+      "2": " "
+    },
+    "ROMAEVE": {
+      "0": "ジュノ大公国 ジュノ下層 J-8T4\nAldoに話しかけよう",
+      "option1": "低地エルシモ ノーグ K-8T2\nOaken Doorを調べよう"
+    },
+    "THE_TEMPLE_OF_DESOLATION": {
+      "0": "リ・テロア 神々の間 H-7T8\nCermet Grateを調べよう"
+    },
+    "THE_HALL_OF_THE_GODS": {
+      "0": "低地エルシモ ノーグ K-8T2\nOaken Doorを調べてGilgameshに報告しよう"
+    },
+    "THE_MITHRA_AND_THE_CRYSTAL": {
+      "0": "クゾッツ ラバオ G-7T8\nMaryoh Comyujahに話しかけよう",
+      "1": "クゾッツ 流砂洞 MAP[7]I-8\nMAP[7]G-8T5扉を抜けてI-8T5から落ちて\n直下のI-8T7の???を調べよう",
+      "1end": "クゾッツ ラバオ G-7T8\nMaryoh Comyujahに報告しよう",
+      "2": "リ・テロア 神々の間 H-4T8\nH-7T8Cermet Grateを調べ、\n奥にあるShimmering Circleを調べよう"
+    },
+    "THE_GATE_OF_THE_GODS": {
+      "0": "北に進んでエリア移動しよう"
+    },
+    "ARK_ANGELS": {
+      "0": "トゥー・リア ル・アビタウ神殿 H-11T7\n空白ターゲットを調べよう",
+      "SHARD_OF_COWARDICE": "トゥー・リア ル・オンの庭 F-11T8\nG-10T1からワープし、ラ・ロフの劇場に入り\nアーク・ガーディアン2に挑もう",
+      "SHARD_OF_ENVY": "トゥー・リア ル・オンの庭 E-7T7\nラ・ロフの劇場に入り\nアーク・ガーディアン3に挑もう",
+      "SHARD_OF_APATHY": "トゥー・リア ル・オンの庭 H-4\nラ・ロフの劇場に入り\nアーク・ガーディアン1に挑もう",
+      "SHARD_OF_ARROGANCE": "トゥー・リア ル・オンの庭 K-7\nラ・ロフの劇場に入り\nアーク・ガーディアン4に挑もう",
+      "SHARD_OF_RAGE": "トゥー・リア ル・オンの庭 J-11\nラ・ロフの劇場に入り\nアーク・ガーディアン5に挑もう"
+    },
+    "THE_SEALED_SHRINE": {
+      "0": "低地エルシモ ノーグ K-8T2\nOaken Doorを調べてGilgameshに報告しよう",
+      "1": "トゥー・リア ル・アビタウ神殿\nル・オンの庭 I-6T6からル・アビタウ神殿へ入ろう"
+    },
+    "THE_CELESTIAL_NEXUS": {
+      "0": "トゥー・リア 宿星の座\nCelestial Gageを調べて宿星の座に挑もう"
+    },
+    "AWAKENING": {
+      "0": "低地エルシモ ノーグ\nノーグに移動しよう",
+      "1": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireを調べよう"
+    }
+  },
+  "MissionCOP": {
+    "ANCIENT_FLAMES_BECKON": {
+      "0": "クフィム デルクフの塔に移動して\nプロマシアの呪縛ミッションを開始しよう"
+    },
+    "THE_RITES_OF_LIFE": {
+      "1": "ジュノ大公国 ジュノ上層\nジュノ上層に移動しよう",
+      "2": "ジュノ大公国 ジュノ上層 G-10T9\nMonberauxに話しかけよう"
+    },
+    "BELOW_THE_ARKS": {
+      "0": "ジュノ大公国 ル・ルデの庭 G-6T3\nPherimocielに話しかけよう",
+      "0_option1": "プロミヴォン-ホラ\nWeb of Recollectionsから誘うは古のほむらに挑もう",
+      "0_option2": "プロミヴォン-デム\nWeb of Recollectionsから誘うは古のほむらに挑もう",
+      "0_option3": "プロミヴォン-メア\nWeb of Recollectionsから誘うは古のほむらに挑もう"
+    },
+    "AN_INVITATION_WEST": {
+      "0": " ",
+      "1": "タブナジア侯国 タブナジア地下壕\nルフェーゼ野 E-9T7からタブナジア地下壕に移動しよう"
+    },
+    "THE_LOST_CITY": {
+      "0": "タブナジア侯国 タブナジア地下壕 MAP[1]K-10T1\n3階にいるDespachiaireに話しかけよう",
+      "1": "タブナジア侯国 タブナジア地下壕 MAP[3]I-7T7\nSewer Entranceを調べよう"
+    },
+    "DISTANT_BELIEFS": {
+      "0": "タブナジア諸島 フォミュナ水道 MAP[2]J-2T5\nK-10T5から下り、I-6T7から上り、K-5T5から下り\nJ-2T5のMinotaurを倒そう",
+      "BRONZE_KEY": "タブナジア諸島 フォミュナ水道\nフォモル属から青銅のカギを手に入れよう",
+      "1": "タブナジア諸島 フォミュナ水道 MAP[2]E-8T4\nG-6T5から下りG-8T4のIron Gateを青銅のカギで開け\nE-8T4 Wooden Ladderを調べよう",
+      "2": "タブナジア諸島 フォミュナ水道 MAP[3]E-8T5\n現在の曜日属性と、反属性の2つのランプを点灯し、\nMAP[3]E-8T5 Ornate Gateを調べよう",
+      "3": "タブナジア侯国 タブナジア地下壕 MAP[1]J-6T2\nタブナジア地下壕 3階のJustiniusに報告しよう"
+    },
+    "AN_ETERNAL_MELODY": {
+      "0": "タブナジア侯国 タブナジア地下壕 MAP[1]K-7T5\n3階プリッシュの部屋Walnut Doorを調べよう",
+      "1": "タブナジア諸島 ミザレオ海岸 I-11T1\nJustiniusに話しを聞き、MAP[2]G-6T3から\nミザレオ海岸へ行き、Dilapidated Gateを調べよう",
+      "2": "タブナジア侯国 タブナジア地下壕 MAP[2]I-8T3\nタブナジア地下壕 2階中央吊り橋の近くまで進もう"
+    },
+    "ANCIENT_VOWS": {
+      "0": "タブナジア諸島 ミザレオ海岸 F-7T7\nDilapidated Gateを調べよう",
+      "1": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nSpatial Displacementを調べて\nリヴェーヌ岩塊群に入ろう",
+      "GIANT_SCALE": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nワイバーン族から巨大な鱗を2枚手に入れよう",
+      "2": "タブナジア諸島 帝龍の飛泉\nSpatial Displacementから誓いの雄叫びに挑もう"
+    },
+    "THE_CALL_OF_THE_WYRMKING": {
+      "0": " ",
+      "1": "バストゥーク共和国 バストゥーク港 F-7T8\n飛空艇乗り場付近へ移動しよう",
+      "2": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう"
+    },
+    "A_VESSEL_WITHOUT_A_CAPTAIN": {
+      "0": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireを調べよう",
+      "1": "ジュノ大公国 ル・ルデの庭 H-7T5\nオーロラ宮殿に向かおう"
+    },
+    "THE_ROAD_FORKS": {
+      "0": "サンドリア王国 北サンドリアに移動し\nミッションを進めよう",
+      "1": "サンドリア王国 北サンドリア M-6T9\n大聖堂にいるArnauに話を聞こう",
+      "2": "サンドリア王国 北サンドリア L-6T5\n北側の部屋にいるChasalvigeに話を聞こう",
+      "5": "ノルバレン ギルド桟橋 H-10T7\nGuilloudに話しかけよう",
+      "9": "サンドリア王国 南サンドリア A-6T6\nHinareeに話を聞こう",
+      "14": "ウィンダス連邦 ウィンダス水の区に移動し\nミッションを進めよう",
+      "30": "ウィンダス連邦 ウィンダス水の区 南J-9T9\n鼻の院の南側の部屋の\nOhbiru-Dohbiruに話しかけよう",
+      "46": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに話しかけよう",
+      "62": "ウィンダス連邦 ウィンダス水の区 北F-10T9\nレストランのKyume-Romehに話しかけよう",
+      "94": "ウィンダス連邦 ウィンダス水の区 南E-7T4\n民家2階にいるHonoi-Gomoiに話しかけよう",
+      "110": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに報告しよう",
+      "142": "アラゴーニュ アットワ地溝 K-8T3\nI-10T7から広場に出て北から時計回りに進み\nLoose Sandを調べよう",
+      "142_1": "アラゴーニュ アットワ地溝 J-9T8\n反時計回りで進み、J-9T4あたりから時計回り\n30分以内にCredle of Rebirthを調べよう",
+      "142_MIMEO_FEATHER": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに報告しよう",
+      "158": "ウィンダス連邦 ウィンダス港 M-6T4\n飛空艇乗り場前にいるYujujuと話そう",
+      "190": "ウィンダス連邦 ウィンダス水の区 北G-8T7\n目の院東棟のTosuka-Porikaに話しかけよう",
+      "206": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに話しかけよう",
+      "238": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう"
+    },
+    "TENDING_AGED_WOUNDS": {
+      "238": "ジュノ大公国 ジュノ下層に移動しよう",
+      "238_1": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireを調べよう"
+    },
+    "DARKNESS_NAMED": {
+      "238": "ジュノ大公国 ジュノ上層 G-10T9\nMonberauxに話しかけよう",
+      "238_1": "ジュノ大公国 ジュノ下層 I-7T7\nGhebi Damomoheに話しかけよう",
+      "238_2": "フォルガンディ ソ・ジヤ\nDiremiteからグレーチップを手に入れよう\nカーマインチップやシアンチップでも構わない",
+      "238_2end": "ジュノ大公国 ジュノ下層 I-7T7\nGhebi Damomoheにカーマインチップ・グレーチップ\nシアンチップのいずれかをトレードしよう",
+      "238_3": "フォルガンディ 異界の口\nエレベータを下りたら西側に向かい\nStone Gateを進み、異界の口へ",
+      "238_4": "フォルガンディ ソ・ジヤ\nMemento Circleから神を名乗りてに挑もう",
+      "238_5": "ジュノ大公国 ジュノ上層 G-10T9\nMonberauxに話しかけよう"
+    },
+    "SHELTERING_DOUBT": {
+      "238": "タブナジア侯国 タブナジア地下壕に移動しよう",
+      "238_1": "タブナジア侯国 タブナジア地下壕 MAP[1]K-10T1\n3階にいるDespachiaireに話しかけよう",
+      "238_2": "タブナジア侯国 タブナジア地下壕 MAP[1]J-6T2\n3階にいるJustiniusに話しかけよう",
+      "238_3": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう"
+    },
+    "THE_SAVAGE": {
+      "238": "タブナジア諸島 ミザレオ海岸 F-7T7\nDilapidated Gateを調べよう",
+      "GIANT_SCALE": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nワイバーン族から巨大な鱗を手に入れよう",
+      "238_1": "タブナジア諸島 帝龍の飛泉\nSpatial Displacementから猛き者たちよに挑もう",
+      "238_2": "タブナジア侯国 タブナジア地下壕 MAP[1]J-6T2\n3階にいるJustiniusに話しかけよう"
+    },
+    "THE_SECRETS_OF_WORSHIP": {
+      "238": "タブナジア侯国 タブナジア地下壕 MAP[1]K-7T5\n3階プリッシュの部屋Walnut Doorを調べよう",
+      "238_1": "タブナジア諸島 礼拝堂\nミザレオ海岸H-4T4のIron Gateから礼拝堂に入ろう",
+      "238_2_1": "タブナジア諸島 礼拝堂\nフォモル族から珊瑚の紋章のカギを手に入れよう",
+      "238_2_2": "タブナジア諸島 礼拝堂 MAP[2]L-8T5\nコース族NMのKeremetから\n海獅子の紋章のカギを手に入れよう",
+      "238_2_3": "タブナジア侯国 タブナジア地下壕 I-10T9\nQuelveuiatに紋章のカギと海獅子の紋章のカギを\n渡して侯国騎士団長のカギを手に入れよう",
+      "238_2": "タブナジア諸島 礼拝堂 MAP[2]G-8T7\nMAP[2]を反時計回りに周り、H-7T8の門を開け\n右手へ進んだWooden Gateを調べよう",
+      "238_3": "タブナジア諸島 礼拝堂\n礼拝堂内の各部屋の引き出しにある???を調べ、\nゴーストNMを倒して再度調べよう",
+      "238_3_1": "タブナジア諸島 礼拝堂 G-8T7\nMAP[2]H-7T8の扉を進み\n右手へ進んだWooden Gateを調べよう"
+    },
+    "SLANDEROUS_UTTERINGS": {
+      "238": "タブナジア侯国 タブナジア地下壕 MAP[1]K-10T1\n3階にいるDespachiaireの部屋に行こう",
+      "238_1": "タブナジア侯国 海獅子の巣窟 H-6T1\nIron Gateを調べよう"
+    },
+    "THE_ENDURING_TUMULT_OF_WAR": {
+      "238": "タブナジア侯国 タブナジア地下壕 MAP[1]K-10T1\n3階にいるDespachiaireに話しかけよう",
+      "238_option1": "サンドリア王国 北サンドリア L-6T5\n北側の部屋にいるChasalvigeに話を聞こう",
+      "238_option2": "サンドリア王国 サンドリア港 H-6\nAnokiに話に話を聞こう",
+      "238_option3": "バストゥーク共和国 バストゥーク港へ移動しよう",
+      "238_1_option3": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "238_2_option3": "フォルガンディ ソ・ジヤ\nボスディン氷河 F-7T5からソ・ジヤに入ろう",
+      "238_3_option3": "フォルガンディ ソ・ジヤ H-8T8\nStone Doorを調べてNMを倒そう",
+      "238_4_option3": "フォルガンディ ソ・ジヤ G-7T1\n扉の奥のエレベーターで下り\n奥のStone Doorを調べよう"
+    },
+    "DESIRES_OF_EMPTINESS": {
+      "238": "プロミヴォン-ヴァズ 3層J-8T3\nMemory Fluxを調べよう",
+      "238_option_1": "プロミヴォン-ヴァズ 3層J-8T3\nMemory Fluxを再度調べよう",
+      "238_1_option9": "プロミヴォン-ヴァズ 4層M-6T9\nMemory Fluxを調べよう",
+      "238_1_option11": "プロミヴォン-ヴァズ 4層M-6T9\nMemory Fluxを再度調べよう",
+      "238_1_option27": "プロミヴォン-ヴァズ 5層D-6T7\nMemory Fluxを調べよう",
+      "238_1_option31": "プロミヴォン-ヴァズ 5層D-6T7\nMemory Fluxを再度調べよう",
+      "238_1_option63": "プロミヴォン-ヴァズ 5層F-8T3\nヴァズの塔に入ろう",
+      "238_2_option63": "プロミヴォン-ヴァズ ヴァズの塔\nWeb of Recolloctionsから願わくば闇をに挑もう",
+      "238_3_option63": " ",
+      "238_4_option63": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう"
+    },
+    "THREE_PATHS": {
+      "238": "タブナジア侯国 タブナジア地下壕 MAP[1]K-10T1\n3階のDespachiaireに話しかけよう",
+      "750": "ウィンダス連邦 ウィンダス森の区 K-7T8f\nミスラの族長Perih Vashaiに話しかけよう",
+      "1006": "コルシュシュ プルゴノルゴ島 H-11T5\n??? Warmachineを調べよう",
+      "SNOW_LILY": "ウルガラン山脈のUleguerand Tigerか\nCwn Annwnからスノーリリーを入手しよう",
+      "1774": "ムバルポロス ムバルポロス旧市街\nグスゲン鉱山I-9T4からムバルポロス旧市街へ",
+      "2286": "ムバルポロス 2716号採石場\nムバルポロス旧市街K-10T5の\nTarnotikにスノーリリーをトレードして進もう",
+      "2286_2": "ムバルポロス 2716号採石場\nShaft Entranceからなにゆえにその子はに挑もう",
+      "2542": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "GOLD_KEY": "ムバルポロス ムバルポロス新市街\n入り口付近にいるゴブリン族・モブリン族から\n黄金のカギを入手しよう",
+      "3054": "ムバルポロス 2716号採石場\nShaft Entranceに黄金のカギをトレードしよう",
+      "3310": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう",
+      "3822": "ザルクヘイム ラテーヌ高原\nG-6T5 ???を調べよう",
+      "12014": "フォルガンディ ソ・ジヤ\n下まで下りたらAvatar Gateを調べよう",
+      "16110": "ジュノ大公国 ジュノ上層 G-10T9\nMonberauxに話しかけよう",
+      "24302": "ジュノ大公国 ル・ルデの庭 G-6T3\nPherimocielに話しかけよう",
+      "28398": "ジュノ上層G-10 Monberauxに話を聞き、\nバタリア丘陵 K-9T8の???を調べよう",
+      "28398_option1": "ノルバレン バタリア丘陵 K-9T8\n???を調べてデルクフ解除キーを手に入れよう",
+      "36590": "クフィム デルクフの塔下層 H-5T2\nCermet Doorを調べよう",
+      "40686": "フォルガンディ ソ・ジヤ\nボスディン氷河 H-10T3からソ・ジヤに入ろう",
+      "48878": "フォルガンディ ソ・ジヤ\n降りたら正面のAvatar Gateを調べよう",
+      "52974": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう",
+      "61166": "南サンドリアA-6T6 Hinareeに話しを聞き、\nサンドリア港に向かおう",
+      "61166_upper3": "サンドリア王国 北サンドリア L-6T5\n北側の部屋にいるChasalvigeに話を聞こう",
+      "61166_upper4": "ウィンダス連邦 ウィンダス水の区 南J-8T7\nKerutotoに話しを聞こう",
+      "61166_upper6": "ウィンダス連邦 ウィンダス石の区 E-5T9\nYoran-Oranに話しを聞こう",
+      "61166_upper7": "アラゴーニュ 千骸谷\nDark Miasmaから向かい風に挑もう",
+      "61166_upper8": "バルドニア 熊爪嶽\nWind Pillerから迎え火に挑もう",
+      "61166_upper9": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう"
+    },
+    "FOR_WHOM_THE_VERSE_IS_SUNG": {
+      "61166_upper14": "ジュノ大公国 ル・ルデの庭 G-6T3\nPherimocielに話しかけよう",
+      "61166_upper14_1": "ジュノ大公国 ジュノ上層 F-7T2\nマーブルブリッジのDoor:Marble Bridgeを調べよう",
+      "61166_upper14_2": "ジュノ大公国 ル・ルデの庭に移動しよう"
+    },
+    "A_PLACE_TO_RETURN": {
+      "61166_upper14": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう",
+      "61166_upper14_1": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option1": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option2": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option3": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option4": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option5": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option6": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateを調べよう",
+      "61166_upper14_1_option7": "タブナジア諸島 ミザレオ海岸 I-11T1\nDilapidated Gateをもう一度調べよう"
+    },
+    "MORE_QUESTIONS_THAN_ANSWERS": {
+      "61166_upper14": "ジュノ大公国 ル・ルデの庭 G-6T3\nPherimocielに話しかけよう",
+      "61166_upper14_1": "ジュノ大公国 ル・ルデの庭 H-6T2\nDoor:Audience Chamberを調べよう",
+      "61166_upper14_2": "ザルクヘイム セルビナ H-9T3\n織工ギルド内にいるMathildeに話しかけよう"
+    },
+    "ONE_TO_BE_FEARED": {
+      "61166_upper14": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "61166_upper14_1": "タブナジア侯国 海獅子\nタブナジア地下壕1階MAP[3]H-9T2から\n海獅子の巣窟に行こう",
+      "61166_upper14_2": "タブナジア侯国 海獅子の巣窟 H-6T1\nIron Gateを調べよう",
+      "61166_upper14_3": "タブナジア侯国 海獅子の巣窟 H-6T1\nIron Gateから畏れよ、我をに挑もう",
+      "61166_upper14_4": " "
+    },
+    "CHAINS_AND_BONDS": {
+      "61166_upper14": " ",
+      "61166_upper14_1": "タブナジア侯国 タブナジア地下壕に移動しよう",
+      "61166_upper14_status2": "タブナジア侯国 タブナジア地下壕 MAP[1]K-7T5\n3階プリッシュの部屋Walnut Doorを調べよう",
+      "61166_upper14_status2_option1": "タブナジア侯国 海獅子の巣窟\nタブナジア地下壕1階MAP[3]H-9T2から\n海獅子の巣窟に行こう",
+      "61166_upper14_status2_option5": "タブナジア侯国 タブナジア地下壕 1階MAP[3]J-7\nフォミュナ水道入口のSewer Entranceを調べよう"
+    },
+    "FLAMES_IN_THE_DARKNESS": {
+      "61166_upper14": "タブナジア諸島 ミザレオ海岸 F-7T7\nDilapidated Gateを調べよう",
+      "61166_upper14_1": "タブナジア諸島 海獅子の巣窟 H-6T2\nSueleenに話しかけよう",
+      "61166_upper14_2": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう",
+      "61166_upper14_3": "ジュノ大公国 ジュノ上層 F-7T2\nマーブルブリッジのDoor:Marble Bridgeを調べよう"
+    },
+    "FIRE_IN_THE_EYES_OF_MEN": {
+      "61166_upper14": "ムバルポロス 2716号採石場\nShaft Entranceを調べよう",
+      "61166_upper14_1": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "61166_upper14_1_timer": "バストゥーク共和国 大工房 H-8T7\nYもう一度Cidに話しかけよう"
+    },
+    "CALM_BEFORE_THE_STORM": {
+      "61166_upper14": "ノルバレン ギルド桟橋 I-9T3\n???を調べよう",
+      "61166_upper526": "コルシュシュ ビビキー湾 MAP[1]F-6T8\n洞窟の中にある???を調べよう",
+      "61166_upper1550": "タブナジア諸島 ミザレオ海岸 E-7T3\n小屋の中のStorage Compartmentを調べよう",
+      "61166_upper1806": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "61166_upper1806_next": "タブナジア諸島 海獅子の巣窟 H-6T2\nSueleenに話しかけよう"
+    },
+    "THE_WARRIORS_PATH": {
+      "61166_upper1806": "タブナジア諸島 海獅子の巣窟 H-6T1\nIron Gateを調べよう",
+      "61166_upper1806_1": "タブナジア諸島 海獅子の巣窟 H-6T1\nIron Gateから武士道とはに挑もう",
+      "61166_upper1806_2": " ",
+      "61166_upper1806_3": " "
+    },
+    "GARDEN_OF_ANTIQUITY": {
+      "61166_upper1806": "ルモリア アル・タユ H-11T2\nCrystalline Fieldを調べよう",
+      "61166_upper1806_status1": "ルモリア アル・タユ D-10T4\nRubious Crystalを調べよう",
+      "61166_upper9998_status1": "ルモリア アル・タユ H-13T2\nRubious Crystalを調べよう",
+      "61166_upper12046_status1": "ルモリア アル・タユ L-10T6\nRubious Crystalを調べよう",
+      "61166_upper16142_1": "ルモリア アル・タユ H-11T2\nCrystalline Fieldから中に入ろう",
+      "61166_upper16142_2": "ルモリア フ・ゾイの王宮 H-8T8\nGate of the Godsを調べよう",
+      "61166_upper16142_3": "ルモリア フ・ゾイの王宮 MAP[3]H-8T6\n東側にあるParticle Gateを調べよう"
+    },
+    "A_FATE_DECIDED": {
+      "61166_upper16142": "ルモリア フ・ゾイの王宮 MAP[2]H-8T2\nCermet Portalを調べよう",
+      "61166_upper16142_1": "ルモリア フ・ゾイの王宮 MAP[2]H-8T2\nCermet Portalを再度調べよう"
+    },
+    "WHEN_ANGELS_FALL": {
+      "61166_upper16142": "ルモリア フ・ゾイの王宮 H-8T8\n1階の正面にあるGate of the Godsを調べよう",
+      "61166_upper16142_1": "ルモリア ル・メトの園\n4階のEbon Panelを調べよう\n5つの塔はどれを登ってもよい",
+      "61166_upper16142_2": "ルモリア ル・メトの園\n4階のEbon Panelをもう一度調べよう",
+      "BRAND_OF_DAWN": "ルモリア ル・メトの園 MAP[2]H-7T8\nH-8T8 Qn'zdei4体がいる小部屋を抜けて\nParticle Gateを調べよう",
+      "BRAND_OF_TWILIGHT": "ルモリア ル・メトの園 MAP[2]H-10\nH-9T5からワープし、I-8T4からワープし\n南に進んでParticle Gateを調べよう",
+      "61166_upper16142_3": "ルモリア ル・メトの園 MAP[3]H-8T2\nMAP[2]H-8から中央エレベーターから上がり\n3階のParticle Gateを調べよう",
+      "61166_upper16142_4": "ルモリア ル・メトの園 MAP[3]H-8T2\n再度Particle Gateを調べ天使たちの抗いに挑もう",
+      "61166_upper16142_5": "ルモリア ル・メトの園 MAP[3]H-7T8\nLuminous Convergenceを調べよう",
+      "61166_upper16142_6": "ルモリア アル・タユ\nアル・タユにエリアチェンジしよう"
+    },
+    "DAWN": {
+      "61166_upper16142": "ルモリア 天象の鎖\nTranscendental Radianceを調べよう",
+      "61166_upper16142_1": "ルモリア 天象の鎖\nTranscendental Radianceもう一度調べて\n暁に挑もう",
+      "61166_upper16142_2": " ",
+      "61166_upper16142_3": " ",
+      "61166_upper16142_status4_option31": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう",
+      "61166_upper16142_status4_option15": "ウィンダス連邦 ウィンダス港 C-8T8\n漁師ギルドのChipmy-Popmyに話しかけよう",
+      "61166_upper16142_status4_option15_1": "コルシュシュ プルゴノルゴ島 H-11T5\n??? Warmachineを調べよう",
+      "61166_upper16142_status4_option13": "サンドリア王国 南サンドリア A-6T6\nHinareeに話しかけよう",
+      "61166_upper16142_status4_option13_1": "バルドニア ウルガラン山脈へ向かおう",
+      "61166_upper16142_status4_option13_2": "サンドリア王国 南サンドリア B-6T6\n屋敷の前へ向かおう",
+      "61166_upper16142_status4_option12": "コルシュシュ マウラへ向かおう",
+      "61166_upper16142_status4_option8": "ムバルポロス ムバルポロス旧市街へ向かおう",
+      "61166_upper16142_4": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう",
+      "61166_upper16142_5": "ジュノ大公国 ジュノ上層 F-7T2\nマーブルブリッジのDoor:Marble Bridgeを調べよう",
+      "61166_upper16142_6_ring": "ジュノ大公国 ジュノ上層 F-7T2\nマーブルブリッジのDoor:Marble Bridgeを再度調べよう",
+      "61166_upper16142_6": "タブナジア侯国 タブナジア地下壕 MAP[1]K-7T5\n3階プリッシュの部屋Walnut Doorを調べよう",
+      "61166_upper16142_7": "タブナジア諸島 ルフェーゼ野 J-6T7\n蒼剣の丘に向かおう",
+      "61166_upper16142_8": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう"
+    }
+  },
+  "MissionTOAU": {
+    "LAND_OF_SACRED_SERPENTS": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "IMMORTAL_SENTRIES": {
+      "0": "アラパゴ諸島 アズーフ島監視哨 K-9T5\nカダーバの浮沼K-9T8からアズーフ島監視哨に入り\nNareemaに話しかけよう",
+      "1": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに報告しよう"
+    },
+    "PRESIDENT_SALAHEEM": {
+      "Rytaal": "西アトルガン地方 アトルガン白門 K-10T9\nRytaalからアサルトのガイダンスを受けよう",
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう",
+      "1": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemにもう一度話しかけよう\n要エリアチェンジ"
+    },
+    "KNIGHT_OF_GOLD": {
+      "0": "西アトルガン地方 アトルガン白門 G-11T9\nCacaroonに話しかけよう",
+      "1": "西アトルガン地方 アトルガン白門 G-11T9\nCacaroonにアトルガン青銅貨1枚か\n1000ギルをトレードしよう",
+      "2": "西アトルガン地方 アトルガン白門 K-8T7\nワラーラ寺院に向かおう",
+      "3": "西アトルガン地方 アトルガン白門 J-12T6\n茶屋シャララトに向かおう"
+    },
+    "CONFESSIONS_OF_ROYALTY": {
+      "0": "サンドリア王国 ドラギーユ城 I-9T4\nHalverに書状を届けよう"
+    },
+    "EASTERLY_WINDS": {
+      "0": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう"
+    },
+    "WESTERLY_WINDS": {
+      "0": "西アトルガン地方 アトルガン白門 J-12T6\n茶屋シャララトに向かおう",
+      "1": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう"
+    },
+    "A_MERCENARY_LIFE": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T6\nAbquhbahの付近まで近づこう\n要エリアチェンジ"
+    },
+    "UNDERSEA_SCOUTING": {
+      "0": "アルザダール海底遺跡群 H-8T5\nGuilded Doorsまで進もう"
+    },
+    "ASTRAL_WAVES": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう"
+    },
+    "IMPERIAL_SCHEMES": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう\n要エリアチェンジ"
+    },
+    "ROYAL_PUPPETEER": {
+      "0": "アラパゴ諸島 ナシュモ H-7T5\nPyopyoroonに話しかけよう",
+      "VIAL_OF_JODYS_ACID": "バフラウ段丘もしくはワジャーム樹林のAmeretatから\nジョディの消化液を手に入れよう",
+      "1": "アラパゴ諸島 ナシュモ H-7T5\nPyopyoroonにジョディの消化液をトレードしよう"
+    },
+    "LOST_KINGDOM": {
+      "0": "アラパゴ諸島 カダーバの浮沼 E-10T9\nJazaraat's Headstoneを調べよう",
+      "1": "アラパゴ諸島 カダーバの浮沼 E-10T9\nJazaraat's Headstoneをもう一度調べて\nバトルに挑もう",
+      "2": "アラパゴ諸島 カダーバの浮沼 E-10T9\nJazaraat's Headstoneをもう一度調べよう"
+    },
+    "THE_DOLPHIN_CREST": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに報告しよう"
+    },
+    "THE_BLACK_COFFIN": {
+      "0": "アラパゴ諸島 アラパゴ暗礁域 MAP[3]H-8T4\n船着き場まで進もう",
+      "1": "アラパゴ諸島 アラパゴ暗礁域 MAP[3]G-8T9\nCutterを調べて漆黒の柩に挑もう",
+      "2": " ",
+      "3": " "
+    },
+    "GHOSTS_OF_THE_PAST": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに報告しよう"
+    },
+    "GUESTS_OF_THE_EMPIRE": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\n武器を外し、ふさわしい上着を着て\nNaja Salaheemに確認してもらおう",
+      "1": "西アトルガン地方 アトルガン白門 I-10T8\n武器を外し、ふさわしい上着を着て\nNaja Salaheemに確認してもらおう",
+      "2": "西アトルガン地方 アトルガン白門 L-9T9\n武器を外し、ふさわしい上着を着て\nImperial Whitegateを調べよう"
+    },
+    "PASSING_GLORY": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "SWEETS_FOR_THE_SOUL": {
+      "0": "西アトルガン地方 アトルガン白門 J-12T6\n茶屋シャララトに向かおう"
+    },
+    "TEAHOUSE_TUMULT": {
+      "0": "マムージャ蕃国 エジワ蘿洞\nワジャーム樹林G-7からエジワ蘿洞に入ろう",
+      "1": "マムージャ蕃国 エジワ蘿洞\nMAP[5]G-8T4にあるポイントを調べよう"
+    },
+    "FINDERS_KEEPERS": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "SHIELD_OF_DIPLOMACY": {
+      "0": " ",
+      "1": "ハルブーン傭兵団領 ナバゴ処刑場\nDecorative Bronze Gateを調べよう",
+      "2": "ハルブーン傭兵団領 ナバゴ処刑場\nDecorative Bronze Gateをもう一度調べて\n特使の御楯に挑もう"
+    },
+    "SOCIAL_GRACES": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "FOILED_AMBITION": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう\n要エリアチェンジ"
+    },
+    "PLAYING_THE_PART": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう"
+    },
+    "SEAL_OF_THE_SERPENT": {
+      "0": "西アトルガン地方 アトルガン白門 L-9T9\n武器を外してImperial Whitegateを調べよう"
+    },
+    "MISPLACED_NOBILITY": {
+      "0": "マムージャ蕃国 エジワ蘿洞\nMAP[5]G-8T4にあるポイントを調べよう"
+    },
+    "BASTION_OF_KNOWLEDGE": {
+      "0": "西アトルガン地方 アトルガン白門 K-8T7\nワラーラ寺院の部屋の中に入ろう"
+    },
+    "PUPPET_IN_PERIL": {
+      "0": "マムージャ蕃国 翡翠廟\nOrnamental Doorを調べよう",
+      "1": "マムージャ蕃国 翡翠廟\nOrnamental Doorをもう一度調べて\n少女の傀儡に挑もう"
+    },
+    "PREVALENCE_OF_PIRATES": {
+      "0": " ",
+      "1": "アラパゴ諸島 アラパゴ暗礁域 MAP[3]H-8T4\n船着き場まで進もう"
+    },
+    "SHADES_OF_VENGEANCE": {
+      "0": "アラパゴ諸島 ドゥブッカ島監視哨 I-9T7\nドゥブッカ島監視哨のRunic Sealを調べて\n暗雲の去来に挑もう",
+      "1": " "
+    },
+    "IN_THE_BLOOD": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに報告しよう"
+    },
+    "SENTINELS_HONOR": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう\n要エリアチェンジ"
+    },
+    "TESTING_THE_WATERS": {
+      "EPHRAMADIAN_GOLD_COIN": "アラパゴ諸島 カダーバの浮沼 E-10T9\nJazaraat's Headstoneを調べよう",
+      "0": "アラパゴ諸島 アラパゴ暗礁域 MAP[3]H-8T4\n船着き場まで進もう",
+      "1": " "
+    },
+    "LEGACY_OF_THE_LOST": {
+      "0": "アラパゴ諸島 タラッカ入江\nRock Slabを調べて亡国の遺産に挑もう"
+    },
+    "GAZE_OF_THE_SABOTEUR": {
+      "TALACCA_COVE": "アラパゴ諸島 カダーバの浮沼\nタラッカ入江の水辺を時計回りに進んで徒歩で\nカダーバの浮沼に移動しよう",
+      "0": "　",
+      "1": "アラパゴ諸島 ハザルム試験場\nEntry Gateを調べよう"
+    },
+    "PATH_OF_BLOOD": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう",
+      "1": " "
+    },
+    "STIRRINGS_OF_WAR": {
+      "0": "西アトルガン地方 アトルガン白門 J-12T6\n茶屋シャララトに向かおう"
+    },
+    "ALLIED_RUMBLINGS": {
+      "0": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう"
+    },
+    "UNRAVELING_REASON": {
+      "0": "ジュノ大公国 ル・ルデの庭 G-6T3\nPherimocielに話しかけよう",
+      "1": " ",
+      "2": " ",
+      "3": " "
+    },
+    "LIGHT_OF_JUDGMENT": {
+      "0": "西アトルガン地方 アトルガン白門 2階I-7T2\nRodin-Comidinに話しかけよう"
+    },
+    "PATH_OF_DARKNESS": {
+      "0": "アルザダール海底遺跡群 MAP[5]J-9T9\nワープした付近のポールを調べよう",
+      "NYZUL_ISLE_ROUTE": "西アトルガン地方 アトルガン白門 2階I-7T2\nRodin-Comidinからナイズル島ルートメモを貰おう",
+      "1": "アルザダール海底遺跡群 MAP[5]I-9T9\n西に進んでRunic Sealから巨人の懐へに挑もう",
+      "2": " "
+    },
+    "FANGS_OF_THE_LION": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "NASHMEIRAS_PLEA": {
+      "0": "アルザダール海底遺跡群 MAP[5]J-9T9\nワープした付近のポールを調べよう",
+      "1": "アルザダール海底遺跡群 MAP[5]I-9\n西に進んでRunic Sealから少女の決意に挑もう",
+      "2": " "
+    },
+    "RAGNAROK": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T9\nサラヒム・センチネルの部屋の中に入ろう"
+    },
+    "IMPERIAL_CORONATION": {
+      "0": "西アトルガン地方 アトルガン白門 L-9T9\n武器を外し、ふさわしい上着を着て\nImperial Whitegateを調べよう"
+    },
+    "THE_EMPRESS_CROWNED": {
+      "0": "西アトルガン地方 アトルガン白門 I-10T8\nNaja Salaheemに話しかけよう"
+    }
+  },
+  "MissionWOTG": {
+    "CAVERNOUS_MAWS": {
+      "0": "ノルバレン バタリア丘陵H-5T9\nCavernous Mawを調べよう"
+    },
+    "BACK_TO_THE_BEGINNING": {
+      "0": "ノルバレン戦線 バタリア丘陵〔Ｓ〕 H-5T9\nCavernous Mawを調べよう"
+    },
+    "CAIT_SITH": {
+      "0": "東ロンフォール〔Ｓ〕G-6T4から\n南サンドリア〔Ｓ〕に入ろう"
+    },
+    "THE_QUEEN_OF_THE_DANCE": {
+      "0": "サンドリア王国〔Ｓ〕 南サンドリア〔Ｓ〕 K-6T6\nDoor:\"Lion Springs\"を調べよう",
+      "1": "ジュノ大公国 ジュノ上層 G-7T5\nTurloughに話しかけよう",
+      "2": "サンドリア王国〔Ｓ〕 南サンドリア〔Ｓ〕 K-6T6\nDoor:\"Lion Springs\"を調べよう",
+      "3": " ",
+      "4": " "
+    },
+    "WHILE_THE_CAT_IS_AWAY": {
+      "0": "南サンドリア〔Ｓ〕L-10T6 Eauvague, T.K.に話しかけて\n東ロンフォール〔Ｓ〕に出よう"
+    },
+    "A_TIMESWEPT_BUTTERFLY": {
+      "0": "ジャグナー森林〔Ｓ〕G-11T2 Wooden Gateから\nラヴォール村〔Ｓ〕に入ろう"
+    },
+    "PURPLE_THE_NEW_BLACK": {
+      "0": "ノルバレン戦線 ラヴォール村〔Ｓ〕 F-9T8\nReinforced Gatewayを調べよう",
+      "1": "ノルバレン戦線 ラヴォール村〔Ｓ〕 F-9T8\nReinforced Gatewayを調べて紫電、劈くに挑もう",
+      "2": " "
+    }
+  },
+  "Trust": {
+    "SANDORIA": {
+      "1": "フェイス取得クエスト\nモンスターを討伐してレベル5まで上げよう",
+      "2": "フェイス取得クエスト\nサンドリア王国 南サンドリア L-6T2\nGondebaudに話しかけよう",
+      "3": "フェイス取得クエスト\nサンドリア王国 北サンドリア D-9T4\nExcenmilleに話しかけよう",
+      "4": "フェイス取得クエスト\nロンフォール 東ロンフォールもしくは、\n西ロンフォールでフェイス「エグセニミル」を呼び出そう",
+      "4end": "フェイス取得クエスト\nサンドリア王国 北サンドリア D-9T4\nExcenmilleに報告しよう"
+    },
+    "BASTOK": {
+      "1": "フェイス取得クエスト\nモンスターを討伐してレベル5まで上げよう",
+      "2": "フェイス取得クエスト\nバストゥーク共和国 バストゥーク港 K-7T4\nClarion Starに話しかけよう",
+      "3": "フェイス取得クエスト\nバストゥーク共和国 大工房 上J-8T4\nNajiに話しかけよう",
+      "4": "フェイス取得クエスト\nグスタベルグ 北グスタベルグもしくは、\n南グスタベルグでフェイス「ナジ」を呼び出そう",
+      "4end": "フェイス取得クエスト\nバストゥーク共和国 バストゥーク港 K-7T4\nClarion Starに報告しよう"
+    },
+    "WINDURST": {
+      "1": "フェイス取得クエスト\nモンスターを討伐してレベル5まで上げよう",
+      "2": "フェイス取得クエスト\nウィンダス連邦 ウィンダス森の区 G-10T6\nWetataに話しかけよう",
+      "3": "フェイス取得クエスト\nウィンダス連邦 天の塔\n天の塔受付のKupipiに話しかけよう",
+      "4": "フェイス取得クエスト\nサルタバルタ 東サルタバルタもしくは、\n西サルタバルタでフェイス「クピピ」を呼び出そう",
+      "4end": "フェイス取得クエスト\nウィンダス連邦 天の塔\n天の塔受付のKupipiに報告しよう"
+    },
+    "CIPHER": {
+      "CIPHER_OF_SEMIHS_ALTER_EGO": "フェイス登録\nウィンダス連邦 ウィンダス森の区 G-10T6\nWetataに「盟-セミ」をトレードしましょう"
+    }
+  },
+  "Support": {
+    "Selbina": {
+    },
+    "Mhaura": {
+      "1": "サポートジョブ取得クエスト\nモンスターを討伐してレベル18まで上げよう",
+      "2": "サポートジョブ取得クエスト\nマウラG-10T7 Veraに話しかけよう",
+      "3": "サポートジョブ取得クエスト\nコルシュシュ ブブリム半島\nMighty Rarabから野兎の尻尾を入手しよう",
+      "4": "サポートジョブ取得クエスト\nコルシュシュ マウラ\nG-10T7 Veraに野兎の尻尾を渡そう",
+      "5": "サポートジョブ取得クエスト\nコルシュシュ ブブリム半島\nBull Dhalmelからダルメルの唾液を入手しよう",
+      "6": "サポートジョブ取得クエスト\nコルシュシュ マウラ\nG-10T7 Veraにダルメルの唾液を渡そう",
+      "7": "サポートジョブ取得クエスト\nコルシュシュ ブブリム半島\nBogyから血染めの衣を入手しよう",
+      "8": "サポートジョブ取得クエスト\nコルシュシュ マウラ\nG-10T7 Veraに血染めの衣を渡そう"
+    }
+  },
+  "Quest": {
+    "CHOCOBOS_WOUNDS": {
+      "level": "チョコボ取得クエスト\nモンスターを討伐してレベル20まで上げよう",
+      "0": "チョコボ取得クエスト\nジュノ大公国 ジュノ上層 G-7T3\nBrutusに話しかけよう",
+      "0_CLUMP_OF_GAUSEBIT_WILDGRASS": "チョコボ取得クエスト\nメリファト山地 Crane Flyから\nゴゼビの野草を4つ手に入れよう",
+      "1": "チョコボ取得クエスト\nジュノ大公国 ジュノ上層 G-7T2 Oskerに話しかけて\n隣のChocoboにゴゼビの野草を与えよう",
+      "2": "チョコボ取得クエスト\nOsker隣のChocobo G-7T2にゴゼビの野草を与えよう\n次に与えられる時間：",
+      "3": "チョコボ取得クエスト\nOsker隣のChocobo G-7T2にゴゼビの野草を与えよう\n次に与えられる時間：",
+      "4": "チョコボ取得クエスト\nOsker隣のChocobo G-7T2にゴゼビの野草を与えよう\n次に与えられる時間：",
+      "5": "チョコボ取得クエスト\nOsker隣のChocobo G-7T2にゴゼビの野草を与えよう\n次に与えられる時間：",
+      "6": "チョコボ取得クエスト\nOsker隣のChocobo G-7T2にゴゼビの野草を与えよう\n次に与えられる時間："
+    },
+    "FULL_SPEED_AHEAD": {
+      "0": "マウント取得クエスト\nジュノ大公国 ジュノ上層 G-7T3\nMapitotoに話しかけよう",
+      "1": "マウント取得クエスト\nノルバレン バタリア丘陵 E-6T3\nRaptor's Foodを5個集めてSyrilliaの位置へ向かおう",
+      "2": "マウント取得クエスト\nジュノ大公国 ジュノ上層 G-7T3\nMapitotoに報告しよう"
+    },
+    "TENSHODO_MEMBERSHIP": {
+      "0": "天晶堂入会クエスト\nジュノ大公国 ジュノ下層 I-7T7\nGhebi Damomoheに話しかけ3つ目の選択を選ぼう",
+      "1": "天晶堂入会クエスト\nバストゥーク共和国 バストゥーク港 F-6T5\nJabbarから天晶堂入会申込書をもらおう",
+      "2": "天晶堂入会クエスト\nジュノ大公国 ジュノ下層 I-7T7\nGhebi Damomoheに報告しよう"
+    },
+    "CREST_OF_DAVOI": {
+      "0": "ダボイ村の紋章の入手クエスト\nジュノ大公国 ジュノ上層 G-8T7\nBaudinに話しかけよう",
+      "1": "ダボイ村の紋章の入手クエスト\nアラゴーニュ ソロムグ原野\nクアールを倒してクアールの肉を手に入れよう",
+      "1end": "ダボイ村の紋章の入手クエスト\nジュノ大公国 ジュノ上層 G-8T7\nBaudinにトレードしよう"
+    },
+    "MYSTERIES_OF_BEADEAUX_I_AND_II": {
+      "0": "ベドーの謎クエスト\nジュノ大公国 ジュノ下層 J-8T5\n天晶堂のSattal-Mansalに話しかけよう",
+      "1": "ベドーの謎クエスト\nデルフラント ベドー I-9\nDe'Vyu Headhunterからクゥダフの呪符を手に入れよう",
+      "2": "ベドーの謎クエスト\nデルフラント ベドー F-6\nGo'Bhu Gasconからクゥダフの卜占甲を手に入れよう",
+      "3": "ベドーの謎クエスト\nジュノ大公国 ジュノ下層 J-8T5\n天晶堂のSattal-Mansalにクゥダフの呪符を渡そう",
+      "4": "ベドーの謎クエスト\nジュノ大公国 ジュノ下層 J-8T5\n天晶堂のSattal-Mansalにクゥダフの卜占甲を渡そう"
+    },
+    "YAGUDO_TORCH": {
+      "0": "ヤグードの松明入手クエスト\nジュノ大公国 ジュノ上層 I-8T7\nPaya-Sabyaに話しかけよう",
+      "1": "ヤグードの松明入手クエスト\nジュノ大公国 ジュノ下層 H-10T6\nジャンク屋の奥のMuckvixに話しかけよう"
+    },
+    "IN_DEFIANT_CHALLENGE": {
+      "0": "限界への挑戦クエスト\nル・ルデの庭H-5T6 Maatに話しかけよう",
+      "PIECE_OF_ANCIENT_PAPYRUS": "限界への挑戦クエスト\nエルディーム古墳のLichから\n古代魔法のパピルスを手に入れよう",
+      "CLUMP_OF_EXORAY_MOLD": "限界への挑戦クエスト\nクロウラーの巣のExorayから\nエクソレイの粘菌を手に入れよう",
+      "CHUNK_OF_BOMB_COAL": "限界への挑戦クエスト\nガルレージュ要塞のExplosureから\nボムの炭を手に入れよう",
+      "1": "限界への挑戦クエスト\nル・ルデの庭H-5T6 Maatに古代魔法のパピルスと\nエクソレイの粘菌とボムの炭をトレードしよう"
+    },
+    "ATOP_THE_HIGHEST_MOUNTAINS": {
+      "0": "すべての高い山に登れクエスト\nル・ルデの庭H-5T6 Maatに話しかけよう",
+      "ROUND_FRIGICITE": "すべての高い山に登れクエスト\nザルカバードI-5T5にある???を調べ\n丸い氷石を手に入れよう",
+      "SQUARE_FRIGICITE": "すべての高い山に登れクエスト\nザルカバードJ-6T9にある???を調べ\n四角い氷石を手に入れよう",
+      "TRIANGULAR_FRIGICITE": "すべての高い山に登れクエスト\nザルカバードG-11T7にある???を調べ\n六角形の氷石を手に入れよう",
+      "1": "すべての高い山に登れクエスト\nル・ルデの庭H-5T6 Maatに報告しよう"
+    },
+    "WHENCE_BLOWS_THE_WIND": {
+      "0": "風の行方はクエスト\nル・ルデの庭H-5T6 Maatに話しかけよう",
+      "ORCISH_CREST": "風の行方はクエスト\n修道窟J-6T1にある???を調べて\nオークの紋章を手に入れよう",
+      "QUADAV_CREST": "風の行方はクエスト\nクゥルンの大伽藍I-7T9にある???を調べて\nクゥダフの紋章を手に入れよう",
+      "YAGUDO_CREST": "風の行方はクエスト\nオズトロヤ城MAP[5]H-6T7にある???を調べて\nヤグードの紋章を手に入れよう",
+      "1": "風の行方はクエスト\nル・ルデの庭H-5T6 Maatに報告しよう"
+    },
+    "RIDING_ON_THE_CLOUDS": {
+      "0": "天かける雲のごとくクエスト\nル・ルデの庭H-5T6 Maatに話しかけよう",
+      "SANDORIA0": "天かける雲のごとくクエスト\n南サンドリア F-8からI-9付近を巡回\nRaminelに獣神印章を渡そう",
+      "SANDORIA1": "天かける雲のごとくクエスト\n南サンドリア D-6T6\nSobaneに獣神印章を渡そう",
+      "SANDORIA2": "天かける雲のごとくクエスト\n北サンドリア F-7T1\nTauretteに獣神印章を渡そう",
+      "SANDORIA3": "天かける雲のごとくクエスト\n北サンドリア J-8T6\nMaloquedilに獣神印章を渡そう",
+      "SANDORIA4": "天かける雲のごとくクエスト\nサンドリア港 H-10T8\nSheridanに獣神印章を渡そう",
+      "SANDORIA5": "天かける雲のごとくクエスト\nサンドリア港 H-10T9\nFontoumantに獣神印章を渡そう",
+      "SANDORIA6": "天かける雲のごとくクエスト\nサンドリア港 H-8T5\nBrifalienに獣神印章を渡そう",
+      "SANDORIA7": "天かける雲のごとくクエスト\nサンドリア港 J-8T9\nRugietteに獣神印章を渡そう",
+      "BASTOK0": "天かける雲のごとくクエスト\nバストゥーク鉱山区 J-6T9\nBabennに獣神印章を渡そう",
+      "BASTOK1": "天かける雲のごとくクエスト\nバストゥーク商業区 E-11T6\nGwillに獣神印章を渡そう",
+      "BASTOK2": "天かける雲のごとくクエスト\nバストゥーク商業区 K-9T2\nBrygidに獣神印章を渡そう",
+      "BASTOK3": "天かける雲のごとくクエスト\nバストゥーク港 J-5T7\nKaedeに獣神印章を渡そう",
+      "BASTOK4": "天かける雲のごとくクエスト\nバストゥーク港 E-6T4\nHildaに獣神印章を渡そう",
+      "BASTOK5": "天かける雲のごとくクエスト\n大工房 J-8T4\nNajiに獣神印章を渡そう",
+      "BASTOK6": "天かける雲のごとくクエスト\n大工房 G-8T6\nRaibahtに獣神印章を渡そう",
+      "BASTOK7": "天かける雲のごとくクエスト\n大工房 I-9T4\nLuciusに獣神印章を渡そう",
+      "WINDURST0": "天かける雲のごとくクエスト\nウィンダス水の区北 K-6T4\nKoko Lihzehに獣神印章を渡そう",
+      "WINDURST1": "天かける雲のごとくクエスト\nウィンダス水の区南 C-11T4\nNaiko-Paneikoに獣神印章を渡そう",
+      "WINDURST2": "天かける雲のごとくクエスト\nウィンダス水の区南 J-8T7\nKerutotoに獣神印章を渡そう",
+      "WINDURST3": "天かける雲のごとくクエスト\nウィンダス石の区 E-7T5\nKoru-Moruに獣神印章を渡そう",
+      "WINDURST4": "天かける雲のごとくクエスト\nウィンダス港 H-5T9\nShanruruに獣神印章を渡そう",
+      "WINDURST5": "天かける雲のごとくクエスト\nウィンダス森の区 H-10T7\nBoizo-Naizoに獣神印章を渡そう",
+      "WINDURST6": "天かける雲のごとくクエスト\nウィンダス森の区 K-10T7\nSola_Jaabに獣神印章を渡そう",
+      "WINDURST7": "天かける雲のごとくクエスト\n天の塔 Kupipiに獣神印章を渡そう",
+      "OTHER0": "天かける雲のごとくクエスト\nセルビナ H-9T3\nMathildeに獣神印章を渡そう",
+      "OTHER1": "天かける雲のごとくクエスト\nセルビナ I-7T5\nVoboに獣神印章を渡そう",
+      "OTHER2": "天かける雲のごとくクエスト\nセルビナ I-9T4\nMelyonに獣神印章を渡そう",
+      "OTHER3": "天かける雲のごとくクエスト\nセルビナ H-9T7\nGabwaleidに獣神印章を渡そう",
+      "OTHER4": "天かける雲のごとくクエスト\nマウラ G-8T5\nCelestinaに獣神印章を渡そう",
+      "OTHER5": "天かける雲のごとくクエスト\nマウラ G-9T2\nEkokokoに獣神印章を渡そう",
+      "OTHER6": "天かける雲のごとくクエスト\nマウラ G-9T6\nBihoro-Guhoroに獣神印章を渡そう",
+      "OTHER7": "天かける雲のごとくクエスト\nマウラ H-9T9\nJikka-Abukkaに獣神印章を渡そう",
+      "1": "天かける雲のごとくクエスト\nル・ルデの庭H-5T6 Maatに報告しよう"
+    },
+    "SHATTERING_STARS": {
+      "0": "星の輝きを手にクエスト\nル・ルデの庭H-5T6 Maatに話しかけよう",
+      "1": "星の輝きを手にクエスト\nル・ルデの庭H-5T6 Maatに\n指定された証をトレードしよう",
+      "2": "星の輝きを手にクエスト\nル・ルデの庭H-5T6 Maatに\n指定された証をトレードして星の輝きを手にに挑もう",
+      "3": "星の輝きを手にクエスト\nル・ルデの庭H-5T6 Maatに報告しよう"
+    },
+    "LIMIT_BREAKER": {
+      "0": "リミットブレーカー\nル・ルデの庭H-5T6 Nomad Moogleに話しかけよう"
+    },
+    "DYNAMIS": {
+      "0": "バルドニア ザルカバード\nザルカバードに移動しよう",
+      "1": "サンドリア王国 南サンドリア L-5T1\nTrail Markingsを調べよう",
+      "2": "ノルバレン ダボイ J-7T9\nLootbloxに50000ギルをトレードしよう",
+      "DYNAMIS_SAN_DORIA_1": "デュナミス デュナミス-サンドリア\n南サンドリア L-5T1 Trail Markingsから入ろう",
+      "DYNAMIS_SAN_DORIA_2": "デュナミス デュナミス-サンドリア\nNMから蛮兵の玉を入手し\nI-7T2 ???にトレードしてボスを討伐しよう",
+      "DYNAMIS_BASTOK_1": "デュナミス デュナミス-バストゥーク\nバストゥーク鉱山区 K-8T5 Trail Markingsから入ろう",
+      "DYNAMIS_BASTOK_2": "デュナミス デュナミス-バストゥーク\nNMから鉄壁の玉を入手し\nH-10T8 ???にトレードしてボスを討伐しよう",
+      "DYNAMIS_WINDURST_1": "デュナミス デュナミス-ウィンダス\nウィンダス石の区 C-12T1 Trail Markingsから入ろう",
+      "DYNAMIS_WINDURST_2": "デュナミス デュナミス-ウィンダス\nNMから異端の玉を入手し\nJ-11T9 ???にトレードしてボスを討伐しよう",
+      "DYNAMIS_JEUNO_1": "デュナミス デュナミス-ジュノ\nル・ルデの庭 I-9T2 Trail Markingsから入ろう",
+      "DYNAMIS_JEUNO_2": "デュナミス デュナミス-ジュノ\nNMから放浪の玉を入手し\nH-11T8 ???にトレードしてボスを討伐しよう",
+      "DYNAMIS_BEAUCEDINE_1": "デュナミス デュナミス-ボスディン\nボスディン氷河 F-11T9 Trail Markingsから入ろう",
+      "DYNAMIS_BEAUCEDINE_2": "デュナミス デュナミス-ボスディン\nNMから邪眼の玉を入手し\nJ-5T4 ???にトレードしてボスを討伐しよう",
+      "DYNAMIS_XARCABARD_1": "デュナミス デュナミス-ザルカバード\nザルカバード J-9T3 Trail Markingsから入ろう",
+      "DYNAMIS_XARCABARD_2": "デュナミス デュナミス-ザルカバード\nNMから漆黒の玉を入手し\nD-7T2 ???にトレードしてボスを討伐しよう"
+    },
+    "CRIMSON_ORB": {
+      "0": "深紅のオーブ入手クエスト\nダボイJ-9T1 Wall of Banishingを調べよう",
+      "1": "深紅のオーブ入手クエスト\nダボイJ-8T4上 Sedal-Godjalに話しかけよう",
+      "WHITE_ORB": "深紅のオーブ入手クエスト\nダボイH-10T7 Howling Pondを調べよう",
+      "PINK_ORB": "深紅のオーブ入手クエスト\nダボイE-8T7 Screaming Pondを調べよう",
+      "RED_ORB": "深紅のオーブ入手クエスト\nダボイL-9T9 Wailing Pondを調べよう",
+      "BLOOD_ORB": "深紅のオーブ入手クエスト\nダボイJ-10T2から川に進み\nI-6T8 Groaning Pondを調べよう",
+      "CURSED_ORB": "深紅のオーブ入手クエスト\nダボイJ-8T4上 Sedal-Godjalに報告しよう"
+    },
+    "AIRSHIP_PASS_FOR_KAZHAM": {
+      "0": "カザム行き飛空艇パス取得クエスト\nジュノ港I-7T9 Guddalに話しかけて\nカザム行き飛空艇パス手に入れよう"
+    },
+    "PAINTBRUSH_OF_SOULS": {
+      "0": "魂の絵筆クエスト\n高地エルシモ ウガレピ寺院\nTonberry Cutterからウガレピのカギを手に入れよう",
+      "1": "魂の絵筆クエスト\n高地エルシモ ウガレピ寺院 MAP[1]F-7T5\nウガレピのカギを使い古びた小さなカギを手に入れよう",
+      "2": "魂の絵筆クエスト\nウガレピ寺院 MAP[1]F-7T5でWorn Bookを3冊読んで\nOld Casketを調べて魂の絵筆を手に入れよう"
+    },
+    "OPEN_SESAME": {
+      "0": "1人でも開いちゃう？クエスト\n東アルテパ砂漠G-7T8 Lokpixに話しかけよう",
+      "TREMORSTONE": "1人でも開いちゃう？クエスト\n震動の回廊のプロトクリスタル脇にある???を調べて\n震動石を手に入れよう",
+      "METEORITE": "1人でも開いちゃう？クエスト\n西サルタバルタの星降る丘（I-6周辺）にいる\nCrawlerを倒して隕石を手に入れよう",
+      "1": "1人でも開いちゃう？クエスト\n東アルテパ砂漠G-7T8\nLokpixに震動石と隕石を渡そう"
+    },
+    "EMPTY_MEMORIES": {
+      "0": "虚ろなる記憶クエスト\nル・ルデの庭H-5T7 Harithに話しかけよう",
+      "1": "虚ろなる記憶クエスト\nプロミヴォンに生息するエンプティ類から\n悩ましき記憶の一塊を手に入れよう",
+      "2": "虚ろなる記憶クエスト\nル・ルデの庭H-5T7 Harithに\n悩ましき記憶の一塊と2000ギルをトレードしよう"
+    },
+    "FLY_HIGH": {
+      "0": "その翼、空高くクエスト\nタブナジア地下壕 2階G-9T1 Ferchinneに\n話しかけよう",
+      "1": "その翼、空高くクエスト\nリヴェーヌ岩塊群サイトA01で\nヒポグリフの尾羽根を2枚手に入れよう",
+      "2": "その翼、空高くクエスト\nタブナジア地下壕 2階G-9T1 Ferchinneに\nヒポグリフの尾羽根を2枚を渡そう"
+    },
+    "A_HARD_DAYS_KNIGHT": {
+      "0": "タブナジア侯国騎士団クエスト\nタブナジア侯国 タブナジア地下壕 2階H-10T9\nQuelveuiatに話しかけてクエストを受けよう",
+      "1": "タブナジア侯国騎士団クエスト\nタブナジア諸島 ルフェーゼ野 H-10\n物見台の上にある???を調べよう",
+      "2": "タブナジア侯国騎士団クエスト\nタブナジア侯国 タブナジア地下壕 2階H-10T9\nQuelveuiatに報告しよう"
+    },
+    "BOMBS_AWAY": {
+      "0": "スノールと狩人クエスト\nウルガラン山脈F-9T1 Buffalostalker Dodzbrazに\n話しかけよう",
+      "1": "スノールと狩人クエスト\nリヴェーヌ岩塊群サイトA01やB01でクラスターを倒し\nクラスターの魂を2個手に入れよう",
+      "2": "スノールと狩人クエスト\nウルガラン山脈F-9T1 Buffalostalker Dodzbrazに\nクラスターの魂を2個トレードしよう"
+    },
+    "STORMS_OF_FATE": {
+      "0": "日輪を担いてクエスト\nタブナジア諸島 ミザレオ海岸 F-7T7\nDilapidated Gateを調べよう",
+      "1": "日輪を担いてクエスト\nタブナジア諸島 リヴェーヌ岩塊群サイトB01 E-7T4\nUnstable Displacementを調べよう",
+      "2": "タブナジア諸島 リヴェーヌ岩塊群サイトB01 E-7T4\nUnstable Displacementをもう一度調べて\n日輪を担いてに挑もう",
+      "3": "日輪を担いてクエスト\nジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう"
+    },
+    "SHADOWS_OF_THE_DEPARTED": {
+      "0": "ジュノ大公国 ル・ルデの庭 H-7T5\n再びジュノ大公宮に向かおう",
+      "PROMYVION_HOLLA_SLIVER": "プロミヴォン-ホラ J-10T6\nMemory Fluxを調べよう",
+      "PROMYVION_DEM_SLIVER": "プロミヴォン-デム K-4T2\nMemory Fluxを調べよう",
+      "PROMYVION_MEA_SLIVER": "プロミヴォン-メア K-6T9\nMemory Fluxを調べよう",
+      "0_end": "ジュノ大公国 ル・ルデの庭 H-7T5\nジュノ大公宮に向かおう"
+    },
+    "APOCALYPSE_NIGH": {
+      "Start": "ジュノ大公国 ル・ルデの庭 H-7T5\n再びジュノ大公宮に向かおう\n要エリア移動",
+      "0": "タブナジア侯国 海獅子の巣窟\nタブナジア地下壕1階MAP[3]H-9T2から\n海獅子の巣窟に行きましょう",
+      "1": "ルモリア フ・ゾイの王宮 H-8T8\nGate of the Godsを調べよう",
+      "2": "ルモリア 天象の鎖\nル・メトの園中央のエレベータから下に降り、\nTranscendental Radianceを調べよう",
+      "3": "ルモリア 天象の鎖\nTranscendental Radianceをもう一度調べて\n世界に在りて君は何を想うのか？に挑もう",
+      "4": "ジュノ大公国 ジュノ下層 J-7T5\n天晶堂のDoor:Neptune's Spireから中に入り\nAldoに話しかけよう",
+      "5": "低地エルシモ ノーグ K-8T1\nOaken Doorから部屋に入り\nGilgameshに報告しよう"
+    },
+    "THE_ROAD_TO_AHT_URHGAN": {
+      "Start": "ジュノ大公国 ジュノ下層 J-7T8\n天晶堂のDoor:Neptune's Spireから中に入り\nFaurselに話しかけよう",
+      "0": "ジュノ大公国 ジュノ下層 J-7T8\nFaurselともう一度話し\nアトルガン渡航条件を聞き出そう。",
+      "1": "ジュノ大公国 ジュノ下層 J-7T8\n渡航に必要なアイテムをFaurselにトレードしよう",
+      "3": "ジュノ大公国 ジュノ下層 J-7T8\nエリア移動を挟み、Faurselにもう一度話しをしよう"
+    },
+    "STEAMED_RAMS": {
+      "ACCEPT": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕 MAP[2]I-6T7\nRandecqueに話しかけよう",
+      "0": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-9T1\nMaincheliteに話しかけよう",
+      "CHARRED_PROPELLER": "ロンフォール戦線 東ロンフォール〔Ｓ〕\nH-8T3 ???を調べよう",
+      "PIECE_OF_SHATTERED_LUMBER": "ロンフォール戦線 東ロンフォール〔Ｓ〕\nI-8T4 ???を調べよう",
+      "OXIDIZED_PLATE": "ロンフォール戦線 東ロンフォール〔Ｓ〕\nJ-7T7 ???を調べよう",
+      "1": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-9T1\nMaincheliteに報告しよう"
+    },
+    "THE_FIGHTING_FOURTH": {
+      "ACCEPT": "ノルバレン戦線 エルディーム古墳〔Ｓ〕 J-9T9\nTurbulent Stormに話しかけよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 E-8T3\nAdelbrechtに話しかけよう",
+      "1": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕\nI-6T5にいるGebhardtに話しかけよう",
+      "2": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕\nE-11T5にいるRoderichに話しかけよう",
+      "3": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕\nE-7T7にあるBarricadeを調べよう",
+      "4": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 E-8T3\nAdelbrechtに報告しよう"
+    },
+    "SNAKE_ON_THE_PLAINS": {
+      "ACCEPT": "デルフラント戦線 クロウラーの巣〔Ｓ〕 L-8T4\nKalsu-Kalasuに話しかけよう",
+      "0": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北H-9T1\nMiah Riyuhに話しかけよう",
+      "SEALED_DOORS_2": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕 J-8T4\nSealed Entranceを調べよう",
+      "SEALED_DOORS_1": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕 F-4T6\nSealed Entranceを調べよう",
+      "SEALED_DOORS_4": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕 F-11T7\nSealed Entranceを調べよう",
+      "1": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北H-9T1\nMiah Riyuhに報告しよう"
+    },
+    "GIFTS_OF_THE_GRIFFON": {
+      "0": "ロンフォール戦線 南サンドリア〔Ｓ〕 G-7T1\nLouxiardに話しかけよう",
+      "1": "ロンフォール戦線 南サンドリア〔Ｓ〕 G-7\nもう一度Louxiardに話しかけよう",
+      "2": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "PLUME_DOR_1": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-9T5\nRongelouts N Distaudに金の羽根をトレードしよう",
+      "PLUME_DOR_2": "ロンフォール戦線 南サンドリア〔Ｓ〕 G-7T1\nLouxiardに金の羽根をトレードしよう",
+      "PLUME_DOR_4": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-11T9\nSabiliontに金の羽根をトレードしよう",
+      "PLUME_DOR_8": "ロンフォール戦線 南サンドリア〔Ｓ〕 C-6T7\nMachionageに金の羽根をトレードしよう",
+      "PLUME_DOR_16": "ロンフォール戦線 南サンドリア〔Ｓ〕 K-9T5\n2階にいるLoillieに金の羽根をトレードしよう",
+      "PLUME_DOR_32": "ロンフォール戦線 南サンドリア〔Ｓ〕 K-9T9\nElnondeに金の羽根をトレードしよう",
+      "PLUME_DOR_64": "ロンフォール戦線 南サンドリア〔Ｓ〕 H-9T1\nIlleuseに金の羽根をトレードしよう",
+      "PLUME_DOR_end": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに報告しよう"
+    },
+    "CLAWS_OF_THE_GRIFFON": {
+      "ACCEPT": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "0": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontにもう一度話しかけよう",
+      "1": " ",
+      "2": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 I-6T4\n???を調べよう",
+      "3": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 I-6T4\n???をもう一度調べて討伐しよう",
+      "4": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 I-6T4\n???をもう一度調べよう"
+    },
+    "BOY_AND_THE_BEAST": {
+      "0": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-7T2\nRaustigneに話しかけよう",
+      "1": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "2": "デルフラント戦線 ブンカール浦〔Ｓ〕 H-6T5\n???を調べよう",
+      "ACCEPT": "デルフラント戦線 ブンカール浦〔Ｓ〕 F-5T7\nメモを参考にLeafy Patchを調べよう",
+      "3": "デルフラント戦線 ブンカール浦〔Ｓ〕 H-6T5\n戻って???を調べよう"
+    },
+    "WRATH_OF_THE_GRIFFON": {
+      "ACCEPT": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "0": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 H-10T9\n???を調べよう",
+      "1": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 H-10T9\n???をもう一度調べて討伐しよう",
+      "2": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 H-10T9\n???をもう一度調べよう",
+      "3": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに報告しよう"
+    },
+    "PERILS_OF_THE_GRIFFON": {
+      "0": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "1": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontにもう一度話しかけよう",
+      "2": "ロンフォール戦線 南サンドリア〔Ｓ〕 I-11T7\nDaigraffeauxに話しかけよう",
+      "3": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに話しかけよう",
+      "ACCEPT": "ノルバレン戦線 ジャグナー森林〔Ｓ〕 I-6T4\n???を調べよう",
+      "ORCISH_WARMACHINE_BODY": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nRholontに報告しよう"
+    },
+    "IN_A_HAZE_OF_GLORY": {
+      "ACCEPT": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕 MAP[1]I-6T6\nDiordinneに話しかけよう",
+      "0": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕 MAP[2]H-9T8\nWooden Cratesを調べよう",
+      "1": "アラゴーニュ戦線 ゴユの空洞 MAP[2]H-9T8\nWooden Cratesを再度調べて\nそれぞれの死地へに挑もう",
+      "NUMBER_EIGHT_SHELTER_KEY": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕 MAP[1]I-6T6\nDiordinneにもう一度話しかけて\n8番壕のカギをもらおう",
+      "2": " ",
+      "3": "ロンフォール戦線 南サンドリア〔Ｓ〕 E-7T4\nヴァナ18時から24時の間にRholontに話しかけよう"
+    },
+    "BETTER_PART_OF_VALOR": {
+      "ACCEPT": "バストゥーク商業区〔Ｓ〕H-4T3 Red Canyonに\n話しかけて北グスタベルグ〔Ｓ〕へエリアチェンジしよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに届けよう",
+      "1": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕 F-8T9\n西側の下りた滝付近の???を調べよう",
+      "2": "デルフラント戦線 ブンカール浦〔Ｓ〕 J-6T1\nLeadavoxに話しかけよう",
+      "GNOLE_CLAW": "デルフラント戦線 ブンカール浦〔Ｓ〕\nGnoleからノールの爪を手に入れよう",
+      "3": "デルフラント戦線 ブンカール浦〔Ｓ〕 J-6T1\nLeadavoxにノールの爪をトレードしよう",
+      "4": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに報告しよう"
+    },
+    "FIRES_OF_DISCONTENT": {
+      "ACCEPT": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに話しかけよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-9T9\nPagdakoに話しかけよう",
+      "1": "バストゥーク共和国 バストゥーク鉱山区\nJ-7T1 2階Gumbahに話しかけた後\n大工房 J-8T6 Iron Eaterに話しかけよう",
+      "2": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに報告しよう",
+      "3": "グスタベルグ戦線 グロウベルグ〔Ｓ〕 I-6T7\nH-5T9から洞窟に入り???を調べよう",
+      "4": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに報告しよう",
+      "5": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに話しかけよう",
+      "6": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに報告しよう"
+    },
+    "LIGHT_IN_THE_DARKNESS": {
+      "ACCEPT": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに話しかけよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-9T9\nPagdakoに話しかけよう",
+      "1": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 F-8T7\nBlatherixに話しかけよう",
+      "2": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 F-8T7\nBlatherixにゴブリンチョコ30個か\n5000ギルのどちらかをトレードしよう",
+      "3": "デルフラント戦線 パシュハウ沼〔Ｓ〕\nグロウベルグ〔Ｓ〕 L-4T7から\nパシュハウ沼〔Ｓ〕に移動しよう",
+      "4": "デルフラント戦線 ルホッツ銀山\nパシュハウ沼〔Ｓ〕F-5T1のCorroded Doorを調べて\n解明への灯に挑もう",
+      "5": " ",
+      "6": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに報告しよう"
+    },
+    "BURDEN_OF_SUSPICION": {
+      "ACCEPT": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに話しかけよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 K-10T9\nEngelhartに話しかけよう",
+      "1": "ノルバレン戦線 エルディーム古墳〔Ｓ〕 MAP[3]I-7T5\nSarcophagusを調べよう",
+      "2": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに報告しよう",
+      "end": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 F-8T7\nBlatherixから報酬を受け取ろう"
+    },
+    "STORM_ON_THE_HORIZON": {
+      "ACCEPT": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕\n北グスタベルグ〔Ｓ〕J-9T2からバストゥーク商業区〔Ｓ〕へ移動しよう",
+      "0": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに話しかけよう",
+      "1": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕 J-7T1\nMonumentを調べよう",
+      "2": "グスタベルグ戦線 グロウベルグ〔Ｓ〕 I-6T7\nH-5T9から洞窟に入り???を調べよう"
+    },
+    "FIRE_IN_THE_HOLE": {
+      "ACCEPT": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕\n北グスタベルグ〔Ｓ〕J-9T2からバストゥーク商業区〔Ｓ〕へ移動しよう",
+      "0": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕 E-9T8\nStonehoused Aditを調べよう",
+      "1": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕 E-9T8\nStonehoused Aditから隠滅の炎に挑戦しよう",
+      "2": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕\n北グスタベルグ〔Ｓ〕J-9T2からバストゥーク商業区〔Ｓ〕へ移動しよう",
+      "3": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerに話しかけよう",
+      "4": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕 H-6T2\nGentle Tigerにもう一度話しかけよう"
+    },
+    "THE_TIGRESS_STIRS": {
+      "ACCEPT": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北H-10T4\nDhea Prandolehに話しかけよう",
+      "SMALL_STARFRUIT": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕 I-6T2\n星降る丘頂上付近の???を調べよう",
+      "0": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北K-5T7\nDoor:Acolyte Hostelを調べよう"
+    },
+    "THE_TIGRESS_STRIKES": {
+      "ACCEPT": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北H-10T4\nDhea Prandolehに話しかけよう",
+      "0": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[2]I-8T6\n2階にいるRotih Moalghettに話しかけよう",
+      "1": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[1]I-9T8\n???を調べよう",
+      "2": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[1]I-9T8\n???をもう一度調べて討伐しよう",
+      "2_kill": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[1]I-9T8\n討伐後に???をもう一度調べよう",
+      "3": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北H-10T4\nDhea Prandolehに報告しよう"
+    },
+    "KNOT_QUITE_THERE": {
+      "ACCEPT": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕 北K-5T7\nDoor:Acolyte Hostelを調べよう",
+      "0": "アラゴーニュ戦線 ソロムグ原野〔Ｓ〕 F-6T6\nBulwark Gateを調べよう",
+      "ONE_HUNDRED_EIGHT_KNOT_QUIPU": "ソロムグ原野〔Ｓ〕、ガルレージュ要塞〔Ｓ〕の\nヤグード族から百八結節のキープスを入手しよう",
+      "1": "アラゴーニュ戦線 ソロムグ原野〔Ｓ〕 F-6\nBulwark Gateに百八結節のキープスをトレードしよう",
+      "2": "ロンフォール戦線 南サンドリア〔Ｓ〕\n東ロンフォール〔Ｓ〕からエリアチェンジしよう",
+      "3": "ロンフォール戦線 南サンドリア〔Ｓ〕 M-8T4\nDoor:Houseを調べよう"
+    },
+    "A_MANIFEST_PROBLEM": {
+      "ACCEPT": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[2]I-8T6\n2階にいるRotih Moalghettに話しかけよう",
+      "0": "アラゴーニュ戦線 オズトロヤ城〔Ｓ〕\nメリファト山地〔Ｓ〕L-8T1 Iron Protcullisから\nオズトロヤ城〔Ｓ〕へ",
+      "1": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[2]I-8T6\n2階にいるRotih Moalghettに話しかけよう",
+      "2": "サルタバルタ戦線 ゴユの空洞\nカルゴナルゴ城砦〔Ｓ〕MAP[2]H-5T7\nColorful Doorから降臨、異貌の徒に挑もう",
+      "3": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕\n西サルタバルタ〔Ｓ〕J-9T8からウィンダス水の区〔Ｓ〕へ",
+      "4": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕 MAP[2]I-8T6\nRotih Moalghettに話しかけて\nもう一度ワームキーをもらおう"
+    }
+  },
+  "Fame": {
+    "Jeuno": {
+      "3": "ジュノ名声を3以上に上げよう\nジュノもしくは3国のクエストクリアで上がります\nジュノの名声：{femaRank}/3 ランク３まで：{femaPoint}/125"
+    }
+  },
+  "Area": {
+    "SOUTHERN_SAN_DORIA": {
+      "WEST_RONFAURE": "サンドリア王国 南サンドリア\n西ロンフォールI-6T5か南サンドリアへ"
+    },
+    "NORTHERN_SAN_DORIA": {
+      "SOUTHERN_SAN_DORIA": "サンドリア王国 北サンドリア\n南サンドリアI-7T2から北サンドリアへ",
+      "CHATEAU_DORAGUILLE": "サンドリア王国 ドラギーユ城\nI-9T1 Faurieに話しかけてドラギーユ城を出よう"
+    },
+    "CHATEAU_DORAGUILLE": {
+      "NORTHERN_SAN_DORIA": "サンドリア王国 ドラギーユ城\n北サンドリアJ-7T7からドラギーユ城へ"
+    },
+    "BASTOK_MINES": {
+      "BASTOK_MARKETS": "バストゥーク共和国 バストゥーク鉱山区\nバストゥーク商業区H-12T2からバストゥーク鉱山区へ"
+    },
+    "BASTOK_MARKETS": {
+      "SOUTH_GUSTABERG": "バストゥーク共和国 バストゥーク商業区\n南グスタベルグJ-7T7からバストゥーク商業区へ"
+    },
+    "PORT_BASTOK": {
+      "BASTOK_MARKETS": "バストゥーク共和国 バストゥーク港\nバストゥーク商業区G-4T3からバストゥーク港へ"
+    },
+    "METALWORKS": {
+      "BASTOK_MARKETS": "バストゥーク共和国 大工房\nバストゥーク商業区H-7T8から大工房へ"
+    },
+    "WINDURST_WATERS": {
+      "WINDURST_WATERS2": "ウィンダス連邦 ウィンダス水の区 北\nウィンダス水の区 南H-6T9から北のマップへ"
+    },
+    "WINDURST_WALLS": {
+      "WINDURST_WOODS": "ウィンダス連邦 ウィンダス石の区\nウィンダス森の区G-7T7からウィンダス石の区へ"
+    },
+    "PORT_WINDURST": {
+      "WINDURST_WATERS": "ウィンダス連邦 ウィンダス港\nウィンダス水の区 南G-10T2からウィンダス港へ"
+    },
+    "WINDURST_WOODS": {
+      "WINDURST_WATERS": "ウィンダス連邦 ウィンダス森の区\nウィンダス水の区 北G-8T9 Tonanaに話しかけ\nウィンダス森の区に転送してもらおう",
+      "PORT_WINDURST": "ウィンダス連邦 ウィンダス森の区\nウィンダス港N-5T5からウィンダス森の区へ",
+      "WINDURST_WALLS": "ウィンダス連邦 ウィンダス森の区\nウィンダス石の区J-14T3からウィンダス森の区へ"
+    },
+    "HEAVENS_TOWER": {
+      "WINDURST_WALLS": "ウィンダス連邦 天の塔\nウィンダス石の区H-6T2から天の塔へ"
+    },
+    "RULUDE_GARDENS": {
+      "UPPER_JEUNO": "ジュノ大公国 ル・ルデの庭\nジュノ上層J-10T5からル・ルデの庭へ"
+    },
+    "UPPER_JEUNO": {
+      "LOWER_JEUNO": "ジュノ大公国 ジュノ上層\nジュノ下層I-5T8からジュノ上層へ"
+    },
+    "LOWER_JEUNO": {
+      "PORT_JEUNO": "ジュノ大公国 ジュノ下層\nジュノ港F-9T4からジュノ下層へ"
+    },
+    "PORT_JEUNO": {
+      "SAUROMUGUE_CHAMPAIGN": "ジュノ大公国 ジュノ港\nソロムグ原野E-6T7からジュノ港へ"
+    },
+    "WEST_RONFAURE": {
+      "LA_THEINE_PLATEAU": "ロンフォール 西ロンフォール\nラテーヌ高原E-3T1から西ロンフォールへ",
+      "NORTHERN_SAN_DORIA": "ロンフォール 西ロンフォール\n北サンドリアC-8T2から西ロンフォールへ"
+    },
+    "EAST_RONFAURE": {
+      "SOUTHERN_SAN_DORIA": "ロンフォール 東ロンフォール\n南サンドリアL-10T7から東ロンフォールへ"
+    },
+    "GHELSBA_OUTPOST": {
+      "WEST_RONFAURE": "ロンフォール ゲルスバ野営陣\n西ロンフォールE-4T5からゲルスバ野営陣へ"
+    },
+    "LA_THEINE_PLATEAU": {
+      "VALKURM_DUNES": "ザルクヘイム ラテーヌ高原\nバルクルム砂丘L-5T1からラテーヌ高原へ",
+      "ORDELLES_CAVES": "ザルクヘイム ラテーヌ高原\nオルデール鍾乳洞MAP[2]G-10T8からラテーヌ高原へ"
+    },
+    "KONSCHTAT_HIGHLANDS": {
+      "VALKURM_DUNES": "ザルクヘイム コンシュタット高地\nバルクルム砂丘M-11T7からコンシュタット高地へ"
+    },
+    "VALKURM_DUNES": {
+      "SELBINA": "ザルクヘイム バルクルム砂丘\nセルビナI-10T4 Catusに話しかけて町に入り、\nH-7T9からバルクルム砂丘へ"
+    },
+    "SELBINA": {
+      "MHAURA": "ザルクヘイム セルビナ\nマウラ I-9T5 Felisaに運賃を払い船上しよう\nヴァナ0時、8時、16時に出向する",
+      "SHIP_BOUND_FOR_SELBINA": "航行：セルビナ行き\n機船航路を航行中。到着を待ちましょう\n到着時間は船長Bhagirathに聞くことができる"
+    },
+    "ORDELLES_CAVES": {
+      "LA_THEINE_PLATEAU": "ザルクヘイム オルデール鍾乳洞\nラテーヌ高原F-7T6からオルデール鍾乳洞へ",
+      "ORDELLES_CAVES_1_4": "ザルクヘイム オルデール鍾乳洞\nMAP[1]I-5T3からMAP[4]へ",
+      "ORDELLES_CAVES_4_1": "ザルクヘイム オルデール鍾乳洞\nMAP[4]H-9T6からMAP[1]へ",
+      "ORDELLES_CAVES_1_4_2": "ザルクヘイム オルデール鍾乳洞\nMAP[1]H-12T8から下に降りてMAP[4]へ",
+      "ORDELLES_CAVES_4_2": "ザルクヘイム オルデール鍾乳洞\nMAP[4]I-11T2からMAP[2]へ"
+    },
+    "GUSGEN_MINES": {
+      "KONSCHTAT_HIGHLANDS": "ザルクヘイム グスゲン鉱山\nコンシュタット高地L-7T6からグスゲン鉱山へ"
+    },
+    "JUGNER_FOREST": {
+      "BATALLIA_DOWNS": "ノルバレン ジャグナー森林\nバタリア丘陵F-9T4からジャグナー森林へ"
+    },
+    "DAVOI": {
+      "JUGNER_FOREST": "ノルバレン ダボイ\nジャグナー森林G-12T1からダボイへ",
+      "MONASTIC_CAVERN": "ノルバレン ダボイ\n修道窟I-8T1からダボイへ"
+    },
+    "MONASTIC_CAVERN": {
+      "DAVOI": "ノルバレン 修道窟\nダボイG-7T3から修道窟へ",
+      "DAVOI_2": "ノルバレン 修道窟\nダボイH-11T6から修道窟へ",
+      "DAVOI_3": "ノルバレン 修道窟\nダボイJ-9T1 Wall of Banishingを調べて\n封印を解いて修道窟へ"
+    },
+    "THE_ELDIEME_NECROPOLIS": {
+      "BATALLIA_DOWNS": "ノルバレン エルディーム古墳\nバタリア丘陵I-10T6からエルディーム古墳へ"
+    },
+    "CARPENTERS_LANDING": {
+      "JUGNER_FOREST": "ノルバレン ギルド桟橋\nジャグナー森林E-6T7からギルド桟橋へ",
+      "JUGNER_FOREST_2": "ノルバレン ギルド桟橋\nジャグナー森林J-8T6からギルド桟橋へ"
+    },
+    "NORTH_GUSTABERG": {
+      "KONSCHTAT_HIGHLANDS": "グスタベルグ 北グスタベルグ\nコンシュタット高地I-12T4から北グスタベルグへ",
+      "PORT_BASTOK": "グスタベルグ 北グスタベルグ\nバストゥーク港L-6T3から北グスタベルグへ"
+    },
+    "SOUTH_GUSTABERG": {
+      "NORTH_GUSTABERG": "グスタベルグ 南グスタベルグ\n北グスタベルグE-12T5から南グスタベルグへ"
+    },
+    "PALBOROUGH_MINES": {
+      "NORTH_GUSTABERG": "グスタベルグ パルブロ鉱山\n北グスタベルグK-3T5からパルブロ鉱山へ",
+      "PALBOROUGH_MINES_1_3": "グスタベルグ パルブロ鉱山\nMAP[1]を南から反時計回りに周り\nI-8T2 Elevator Leverを操作して3階へ"
+    },
+    "WAUGHROON_SHRINE": {
+      "PALBOROUGH_MINES": "グスタベルグ ワールンの祠\nパルブロ鉱山MAP[3]H-10T2からワールンの祠へ"
+    },
+    "ZERUHN_MINES": {
+      "BASTOK_MINES": "グスタベルグ ツェールン鉱山\nバストゥーク鉱山区D-7T4からツェールン鉱山へ"
+    },
+    "KORROLOKA_TUNNEL": {
+      "ZERUHN_MINES": "グスタベルグ コロロカの洞門\nツェールン鉱山H-7T8 Lasthenesに話しかけて\n門の先に進み、F-7T1からコロロカの洞門へ",
+      "KORROLOKA_TUNNEL_1_2": "グスタベルグ コロロカの洞門\nMAP[1]B-10T8からMAP2へ"
+    },
+    "PASHHOW_MARSHLANDS": {
+      "ROLANBERRY_FIELDS": "デルフラント パシュハウ沼\nロランベリー耕地H-14T5からパシュハウ沼へ"
+    },
+    "ROLANBERRY_FIELDS": {
+      "LOWER_JEUNO": "デルフラント ロランベリー耕地\nジュノ下層F-11T2からロランベリー耕地へ"
+    },
+    "BEADEAUX": {
+      "PASHHOW_MARSHLANDS": "デルフラント ベドー\nパシュハウ沼L-11T7からベドーへ",
+      "BEADEAUX_1_2": "デルフラント ベドー\nMAP[1]H-7T5からMAP[2]へ",
+      "BEADEAUX_2_1": "デルフラント ベドー\nMAP[2]G-7T9 The Muteを調べて静寂になり\nF-8T8からMAP[1]へ",
+      "BEADEAUX_1_2_2": "デルフラント ベドー\nMAP[1]E-10T8から上段に登り\nK-6T4からMAP[2]へ",
+      "BEADEAUX_2_1_2": "デルフラント ベドー\nMAP[2]M-8T7からクゥルンの大伽藍へ"
+    },
+    "QULUN_DOME": {
+      "BEADEAUX": "デルフラント クゥルンの大伽藍\nベドーMAP[2]H-7T2からクゥルンの大伽藍へ"
+    },
+    "CRAWLERS_NEST": {
+      "ROLANBERRY_FIELDS": "デルフラント クロウラーの巣\nロランベリー耕地F-13T3からクロウラーの巣へ"
+    },
+    "EAST_SARUTABARUTA": {
+      "WINDURST_WOODS": "サルタバルタ 東サルタバルタ\nウィンダス森の区K-10T4から東サルタバルタへ"
+    },
+    "WEST_SARUTABARUTA": {
+      "WINDURST_WATERS": "サルタバルタ 西サルタバルタ\nウィンダス水の区北F-4T6から西サルタバルタへ",
+      "PORT_WINDURST": "サルタバルタ 西サルタバルタ\nウィンダス港B-5T9から西サルタバルタへ"
+    },
+    "INNER_HORUTOTO_RUINS": {
+      "EAST_SARUTABARUTA": "サルタバルタ 内ホルトト遺跡\n東サルタバルタJ-7T3から内ホルトト遺跡へ\nSurvival Guideが近い",
+      "INNER_HORUTOTO_RUINS_1_2": "サルタバルタ 内ホルトト遺跡\nMAP[1]G-9T6からMAP[2]へ",
+      "INNER_HORUTOTO_RUINS_2_3": "サルタバルタ 内ホルトト遺跡\nMAP[2]D-10T1からMAP[3]へ",
+      "INNER_HORUTOTO_RUINS_3_4": "サルタバルタ 内ホルトト遺跡\nMAP[3]H-8T7の壁がすり抜けられるので\nそのまま進んでMAP[4]へ"
+    },
+    "OUTER_HORUTOTO_RUINS": {
+      "EAST_SARUTABARUTA": "サルタバルタ 外ホルトト遺跡\n東サルタバルタJ-11T4から外ホルトト遺跡へ",
+      "EAST_SARUTABARUTA_SH2": "サルタバルタ 外ホルトト遺跡\n東サルタバルタF-4T6から外ホルトト遺跡へ",
+      "WEST_SARUTABARUTA": "サルタバルタ 外ホルトト遺跡\n西サルタバルタF-11T7から外ホルトト遺跡へ",
+      "OUTER_HORUTOTO_RUINS_1_5": "サルタバルタ 外ホルトト遺跡\nMAP[1]I-6T1からMAP[5]へ"
+    },
+    "TORAIMARAI_CANAL": {
+      "INNER_HORUTOTO_RUINS": "サルタバルタ トライマライ水路\n内ホルトト遺跡MAP[4]H-5T3からトライマライ水路へ",
+      "TORAIMARAI_CANAL_1_2": "サルタバルタ トライマライ水路\nMAP[1]H-7T4から降り、J-9T8からMAP[2]へ",
+      "TORAIMARAI_CANAL_2_B_M7_1": "サルタバルタ トライマライ水路\nMAP[2]F-8T3から上り、G-8T5へ"
+    },
+    "FULL_MOON_FOUNTAIN": {
+      "TORAIMARAI_CANAL": "サルタバルタ 満月の泉\nトライマライ水路MAP[1]H-7T4から降り\nG-8T3から上り、G-7T7から満月の泉へ"
+    },
+    "GIDDEUS": {
+      "WEST_SARUTABARUTA": "サルタバルタ ギデアス\n西サルタバルタF-8T4からギデアスへ"
+    },
+    "BALGAS_DAIS": {
+      "GIDDEUS": "サルタバルタ バルガの舞台\nギデアスMAP[1]G-12T1からバルガの舞台へ"
+    },
+    "TAHRONGI_CANYON": {
+      "EAST_SARUTABARUTA": "コルシュシュ タロンギ大峡谷\n東サルタバルタJ-4T8からタロンギ大峡谷へ"
+    },
+    "MAZE_OF_SHAKHRAMI": {
+      "TAHRONGI_CANYON": "コルシュシュ シャクラミの地下迷宮\nタロンギ大峡谷K-5T8からシャクラミの地下迷宮へ",
+      "MAZE_OF_SHAKHRAMI_2_3": "コルシュシュ シャクラミの地下迷宮\nMAP[2]G-6T9からMAP[3]へ"
+    },
+    "BUBURIMU_PENINSULA": {
+      "TAHRONGI_CANYON": "コルシュシュ ブブリム半島\nタロンギ大峡谷K-8T5からブブリム半島へ"
+    },
+    "MHAURA": {
+      "BUBURIMU_PENINSULA": "コルシュシュ マウラ\nブブリム半島I-9T5からマウラへ"
+    },
+    "BIBIKI_BAY": {
+      "BUBURIMU_PENINSULA": "コルシュシュ ビビキー湾\nブブリム半島F-10T9からビビキー湾へ"
+    },
+    "MANACLIPPER": {
+      "BIBIKI_BAY": "コルシュシュ マナクリッパー\nプルゴノルゴ島へ到着を待とう\nGniyah Mischattが到着時間を教えてくれる"
+    },
+    "ABDHALJS_ISLE_PURGONORGO": {
+      "BIBIKI_BAY": "コルシュシュ プルゴノルゴ島\nビビキー湾H-7T6からプルゴノルゴ島へ\nヴァナ時間5:30と17:30に出発港"
+    },
+    "MERIPHATAUD_MOUNTAINS": {
+      "TAHRONGI_CANYON": "アラゴーニュ メリファト山地\nタロンギ大渓谷G-3T1からメリファト山地へ"
+    },
+    "CASTLE_OZTROJA": {
+      "MERIPHATAUD_MOUNTAINS": "アラゴーニュ オズトロヤ城\nメリファト山地L-8T1からオズトロヤ城へ",
+      "CASTLE_OZTROJA_2_3": "アラゴーニュ オズトロヤ城\nMAP[2]I-8T6扉の前に立ち、左右どちらかのスイッチを\n調べて扉を開け、J-8T8からMAP[3]へ",
+      "CASTLE_OZTROJA_3_4": "アラゴーニュ オズトロヤ城\nMAP[3]I-10T6のスイッチの並びをG-8T1と同じに\n設定し、F-9T9からMAP[4]へ",
+      "CASTLE_OZTROJA_4_5": "アラゴーニュ オズトロヤ城\nMAP[4]H-11T8からMAP[5]へ",
+      "CASTLE_OZTROJA_5_5": "アラゴーニュ オズトロヤ城\nMAP[5]G-7T3でトーチを点灯し、H-7T1の扉を抜けて\nBrass Statueに3つの合言葉を入力して下へ",
+      "CASTLE_OZTROJA_3_7": "アラゴーニュ オズトロヤ城\nMAP[3]G-7T8からMAP[7]へ",
+      "CASTLE_OZTROJA_7_1": "アラゴーニュ オズトロヤ城\nMAP[7]I-7T7からMAP[1]へ",
+      "CASTLE_OZTROJA_0_1": "アラゴーニュ オズトロヤ城\nMAP[1]I-8T3にある床を調べて下へ",
+      "CASTLE_OZTROJA_1_6": "アラゴーニュ オズトロヤ城\nMAP[1]J-10T1からMAP[6]へ",
+      "CASTLE_OZTROJA_6_2": "アラゴーニュ オズトロヤ城\nMAP[6]G-8T3からMAP[2]へ"
+    },
+    "ALTAR_ROOM": {
+      "CASTLE_OZTROJA": "アラゴーニュ 祭壇の間\nオズトロヤ城MAP1[1]H-9T1で松明を灯し\nG-10T9から祭壇の間へ"
+    },
+    "SAUROMUGUE_CHAMPAIGN": {
+      "MERIPHATAUD_MOUNTAINS": "アラゴーニュ ソロムグ原野\nメリファト山地D-4T8からソロムグ原野へ"
+    },
+    "GARLAIGE_CITADEL": {
+      "SAUROMUGUE_CHAMPAIGN": "アラゴーニュ ガルレージュ要塞\nソロムグ原野H-11T7からガルレージュ要塞へ"
+    },
+    "ATTOHWA_CHASM": {
+      "MAZE_OF_SHAKHRAMI": "アラゴーニュ アットワ地溝\nシャクラミの地下迷宮MAP[2]F-5T7から\nアットワ地溝へ"
+    },
+    "BONEYARD_GULLY": {
+      "ATTOHWA_CHASM": "アラゴーニュ 千骸谷\nアットワ地溝G-6T2から千骸谷へ"
+    },
+    "RANGUEMONT_PASS": {
+      "EAST_RONFAURE": "フォルガンディ ラングモント峠\n東ロンフォールK-4T9からラングモント峠へ"
+    },
+    "BEAUCEDINE_GLACIER": {
+      "RANGUEMONT_PASS": "フォルガンディ ボスディン氷河\nラングモント峠L-4T1からボスディン氷河へ"
+    },
+    "FEIYIN": {
+      "BEAUCEDINE_GLACIER": "フォルガンディ フェ・イン\nボスディン氷河J-4T1からフェ・インへ",
+      "FEIYIN_1_2": "フォルガンディ フェ・イン\nMAP[1]H-9T7からMAP[3]へ"
+    },
+    "QUBIA_ARENA": {
+      "FEIYIN": "フォルガンディ ク・ビアの闘技場\nフェ・インK-8T8からク・ビアの闘技場へ"
+    },
+    "CLOISTER_OF_FROST": {
+      "FEIYIN": "フォルガンディ 凍結の回廊\nフェ・インMAP[2]I-5T6から凍結の回廊へ"
+    },
+    "PSOXJA": {
+      "BEAUCEDINE_GLACIER": "フォルガンディ ソ・ジヤ\nボスディン氷河 H-8T5からソ・ジヤへ",
+      "BEAUCEDINE_GLACIER_2": "フォルガンディ ソ・ジヤ\nボスディン氷河 J-8T4からソ・ジヤへ",
+      "PSOXJA_1_2": "フォルガンディ ソ・ジヤ\nStone Doorを調べてNMを倒して進むのを繰り返し\nMAP[1]H-8T5から下に降りMAP[2]へ",
+      "PSOXJA_3_4": "フォルガンディ ソ・ジヤ\n外周を反時計回りに1周しMAP[3]I-8T1の穴から降り\n南、西、北へと進んだ先のリフトから降りよう",
+      "PSOXJA_8_9": "フォルガンディ ソ・ジヤ\nMAP[8]I-7T1から赤いモヤをくぐりMAP[9]へ",
+      "PSOXJA_9_10": "フォルガンディ ソ・ジヤ\nMAP[9]I-7T8から黒いモヤをくぐりMAP[10]へ",
+      "PSOXJA_10_11": "フォルガンディ ソ・ジヤ\nMAP[10]H-7T1から赤いモヤをくぐりMAP[11]へ",
+      "PSOXJA_11_16": "フォルガンディ ソ・ジヤ\nMAP[11]I-7T8から黒いモヤをくぐりMAP[16]へ"
+    },
+    "THE_SHROUDED_MAW": {
+      "PSOXJA": "フォルガンディ 異界の口\nソ・ジヤMAP[16]H-8T5から下り異界の口へ"
+    },
+    "XARCABARD": {
+      "BEAUCEDINE_GLACIER": "バルドニア ザルカバード\nボスディン氷河F-6T3からザルカバードへ"
+    },
+    "ULEGUERAND_RANGE": {
+      "XARCABARD": "バルドニア ウルガラン山脈\nザルカバードF-7T8からウルガラン山脈へ"
+    },
+    "BEARCLAW_PINNACLE": {
+      "ULEGUERAND_RANGE": "バルドニア 熊爪嶽\nウルガラン山脈J-9T9にある穴に落ちて\n北に向かい熊爪嶽へ"
+    },
+    "CASTLE_ZVAHL_BAILEYS": {
+      "XARCABARD": "バルドニア ズヴァール城外郭\nザルカバードD-7T2からズヴァール城外郭へ",
+      "CASTLE_ZVAHL_BAILEYS_1_2": "バルドニア ズヴァール城外郭\nMAP[1]F-8T7からMAP[2]へ",
+      "CASTLE_ZVAHL_BAILEYS_2_3": "バルドニア ズヴァール城外郭\nMAP[2]I-6T1から一番下まで落ちてMAP[3]へ",
+      "CASTLE_ZVAHL_BAILEYS_3_2": "バルドニア ズヴァール城外郭\nMAP[3]H-6T1から階段を登ってMAP[2]へ"
+    },
+    "CASTLE_ZVAHL_KEEP": {
+      "CASTLE_ZVAHL_BAILEYS": "バルドニア ズヴァール城内郭\nズヴァール城外郭MAP[2]F-8T8から内郭へ",
+      "CASTLE_ZVAHL_KEEP_1_2": "バルドニア ズヴァール城内郭\nMAP[1]M-6T2からMAP[2]へ",
+      "CASTLE_ZVAHL_KEEP_2_3": "バルドニア ズヴァール城内郭\nMAP[2]F-8T3からMAP[3]へ",
+      "CASTLE_ZVAHL_KEEP_3_4": "バルドニア ズヴァール城内郭\nMAP[3]H-8T1からワープ、H-8T5からワープ\nH-9T8からワープ、G-7T1からMAP[4]へ"
+    },
+    "THRONE_ROOM": {
+      "CASTLE_ZVAHL_KEEP": "バルドニア 王の間\nズヴァール城内郭MAP[4]G-7T1から王の間へ"
+    },
+    "QUFIM_ISLAND": {
+      "PORT_JEUNO": "クフィム クフィム島\nジュノ港F-6T9からクフィム島へ"
+    },
+    "LOWER_DELKFUTTS_TOWER": {
+      "QUFIM_ISLAND": "クフィム デルクフの塔下層\nクフィム島F-6T5からデルクフの塔下層へ",
+      "LOWER_DELKFUTTS_TOWER_1_2": "クフィム デルクフの塔下層\nMAP[2]F-6T1から階段でMAP[3]へ",
+      "LOWER_DELKFUTTS_TOWER_2_3": "クフィム デルクフの塔下層\nMAP[3]J-9T1から階段でMAP[4]へ",
+      "LOWER_DELKFUTTS_TOWER_2_1": "クフィム デルクフの塔下層\nMAP[2]E-8T5からCermet Doorを開いてMAP[1]へ"
+    },
+    "MIDDLE_DELKFUTTS_TOWER": {
+      "LOWER_DELKFUTTS_TOWER": "クフィム デルクフの塔中層\nデルクフの塔下層MAP[4]G-6T1から中層へ",
+      "MIDDLE_DELKFUTTS_TOWER_4_5": "クフィム デルクフの塔中層\nMAP[1]J-6T1から階段でMAP[2]へ",
+      "MIDDLE_DELKFUTTS_TOWER_5_6": "クフィム デルクフの塔中層\nMAP[2]H-9T2から進んでMAP[3]へ",
+      "MIDDLE_DELKFUTTS_TOWER_6_7": "クフィム デルクフの塔中層\nMAP[3]F-10T9から転送でMAP[4]へ",
+      "MIDDLE_DELKFUTTS_TOWER_7_8": "クフィム デルクフの塔中層\nMAP[4]F-6T3から階段でMAP[5]へ",
+      "MIDDLE_DELKFUTTS_TOWER_8_9": "クフィム デルクフの塔中層\nMAP[5]J-7T7から階段でMAP[6]へ",
+      "MIDDLE_DELKFUTTS_TOWER_9_8": "クフィム デルクフの塔中層\nMAP[6]J-10T7から階段でMAP[5]へ",
+      "MIDDLE_DELKFUTTS_TOWER_8_9_2": "クフィム デルクフの塔中層\nMAP[5]G-9T1から階段でMAP[6]へ"
+    },
+    "UPPER_DELKFUTTS_TOWER": {
+      "MIDDLE_DELKFUTTS_TOWER": "クフィム デルクフの塔上層\nデルクフの塔中層MAP[6]F-6T3から上層へ",
+      "LOWER_DELKFUTTS_TOWER": "クフィム デルクフの塔上層\nデルクフの塔下層MAP[1]J-8T4 Cermet Doorを\n開いて上層へ",
+      "UPPER_DELKFUTTS_TOWER_6_1": "クフィム デルクフの塔上層\nMAP[6]H-8T5 ???を調べて\nMAP[1]へ",
+      "UPPER_DELKFUTTS_TOWER_1_2": "クフィム デルクフの塔上層\nMAP[1]F-8T2のCermet Doorを開いて進み\nF-10T9から階段を登ってMAP[2]へ",
+      "UPPER_DELKFUTTS_TOWER_2_3": "クフィム デルクフの塔上層\nMAP[2]J-7T7から階段を登ってMAP[3]へ"
+    },
+    "STELLAR_FULCRUM": {
+      "UPPER_DELKFUTTS_TOWER": "クフィム 天輪の場\nデルクフの塔上層MAP[3]F-10T9から天輪の場へ"
+    },
+    "BEHEMOTHS_DOMINION": {
+      "QUFIM_ISLAND": "クフィム ベヒーモスの縄張り\nクフィム島D-5T5からベヒーモスの縄張りへ"
+    },
+    "THE_SANCTUARY_OF_ZITAH": {
+      "MERIPHATAUD_MOUNTAINS": "リ・テロア 聖地ジ・タ\nメリファト山地L-4T5から聖地ジ・タへ"
+    },
+    "THE_BOYAHDA_TREE": {
+      "THE_SANCTUARY_OF_ZITAH": "リ・テロア ボヤーダ樹\n聖地ジ・タへK-12T2からボヤーダ樹へ",
+      "THE_BOYAHDA_TREE_1_2": "リ・テロア ボヤーダ樹\nMAP[1]B-7T4からMAP[2]へ",
+      "THE_BOYAHDA_TREE_2_1": "リ・テロア ボヤーダ樹\nMAP[2]E-6T6からMAP[1]へ"
+    },
+    "ROMAEVE": {
+      "THE_SANCTUARY_OF_ZITAH": "リ・テロア ロ・メーヴ\n聖地ジ・タF-4T3からロ・メーヴへ"
+    },
+    "HALL_OF_THE_GODS": {
+      "ROMAEVE": "リ・テロア 神々の間\nロ・メーヴH-5T8から神々の間へ"
+    },
+    "EASTERN_ALTEPA_DESERT": {
+      "KORROLOKA_TUNNEL": "クゾッツ 東アルテパ砂漠\nコロロカの洞門MAP[2]C-9T9から東アルテパ砂漠へ"
+    },
+    "WESTERN_ALTEPA_DESERT": {
+      "EASTERN_ALTEPA_DESERT": "クゾッツ 西アルテパ砂漠\n東アルテパ砂漠E-9T9から西アルテパ砂漠へ",
+      "QUICKSAND_CAVES": "クゾッツ 西アルテパ砂漠\n流砂洞MAP[3]K-6T5から下に降り\nN-4T4から西アルテパ砂漠へ"
+    },
+    "RABAO": {
+      "WESTERN_ALTEPA_DESERT": "クゾッツ ラバオ\n西アルテパ砂漠L-5T6からラバオへ"
+    },
+    "QUICKSAND_CAVES": {
+      "WESTERN_ALTEPA_DESERT": "クゾッツ 流砂洞\n西アルテパ砂漠J-9T5から流砂洞へ",
+      "WESTERN_ALTEPA_DESERT_2": "クゾッツ 流砂洞\n西アルテパ砂漠D-12T5から流砂洞へ",
+      "EASTERN_ALTEPA_DESERT": "クゾッツ 流砂洞\n東アルテパ砂漠J-7T8から流砂洞へ",
+      "QUICKSAND_CAVES_4_7": "クゾッツ 流砂洞\nMAP[4]K-8T5の扉を抜けてL-8T5からMAP[7]へ"
+    },
+    "CLOISTER_OF_TREMORS": {
+      "QUICKSAND_CAVES": "クゾッツ 震動の回廊\n流砂洞MAP[1]J-7T8から段差を落ち\nE-10T8から段差を落ち、C-8T8から震動の回廊へ"
+    },
+    "CHAMBER_OF_ORACLES": {
+      "QUICKSAND_CAVES": "クゾッツ 宣託の間\n流砂洞へMAP[4]I-9T8とH-7T4の扉を抜けて\nF-7T5から落ち、D-4T2から宣託の間へ"
+    },
+    "KUFTAL_TUNNEL": {
+      "WESTERN_ALTEPA_DESERT": "ヴォルボー クフタルの洞門\n西アルテパ砂漠I-4T1からクフタルの洞門へ",
+      "KUFTAL_TUNNEL_1_2": "ヴォルボー クフタルの洞門\nMAP[1]I-7T9からMAP[2]へ"
+    },
+    "CAPE_TERIGGAN": {
+      "KUFTAL_TUNNEL": "ヴォルボー テリガン岬\nクフタルの洞門MAP[2]G-2T2からテリガン岬へ"
+    },
+    "KAZHAM_JEUNO_AIRSHIP": {
+      "PORT_JEUNO": "低地エルシモ カザム\nジュノ港I-7T9からカザム行き飛空艇に乗りカザムへ\nヴァナ時間05:45、11:45、17:45、23:45発"
+    },
+    "KAZHAM": {
+      "KAZHAM_JEUNO_AIRSHIP": "飛空艇航路：カザム行き\n飛空艇航路を飛行中。到着を待ちましょう\n到着時間はOslamに聞くことができる"
+    },
+    "YUHTUNGA_JUNGLE": {
+      "KAZHAM": "低地エルシモ ユタンガ大森林\nカザムG-7T6 Dakha Topsalwに話しかけて街に入り\nF-9T3からユタンガ大森林へ"
+    },
+    "SEA_SERPENT_GROTTO": {
+      "YUHTUNGA_JUNGLE": "低地エルシモ 海蛇の岩窟\nユタンガ大森林E-11T4から海蛇の岩窟へ"
+    },
+    "NORG": {
+      "SEA_SERPENT_GROTTO": "低地エルシモ ノーグ\n海蛇の岩窟F-1T2からノーグへ"
+    },
+    "YHOATOR_JUNGLE": {
+      "YUHTUNGA_JUNGLE": "高地エルシモ ヨアトル大森林\nユタンガ大森林I-10T3からヨアトル大森林へ",
+      "TEMPLE_OF_UGGALEPIH": "高地エルシモ ヨアトル大森林\nウガレピ寺院MAP[1]F-5T2からヨアトル大森林へ",
+      "TEMPLE_OF_UGGALEPIH_YU3": "高地エルシモ ヨアトル大森林\nウガレピ寺院MAP[1]K-3T4からヨアトル大森林へ"
+    },
+    "TEMPLE_OF_UGGALEPIH": {
+      "YHOATOR_JUNGLE": "高地エルシモ ウガレピ寺院\nヨアトル大森林J-12T8からウガレピ寺院へ",
+      "YHOATOR_JUNGLE_2": "高地エルシモ ウガレピ寺院\nヨアトル大森林H-11T5からウガレピ寺院へ",
+      "YHOATOR_JUNGLE_YU5": "高地エルシモ ウガレピ寺院\nヨアトル大森林J-9T9からウガレピ寺院へ",
+      "TEMPLE_OF_UGGALEPIH": "高地エルシモ ウガレピ寺院\nTemple Guardianを倒して扉を抜けよう",
+      "TEMPLE_OF_UGGALEPIH_2": "高地エルシモ ウガレピ寺院\nI-8T9 Stone Picture Frameを調べよう\n調べた状態で30秒待ち、I-7T6の開いた扉から進もう"
+    },
+    "DEN_OF_RANCOR": {
+      "TEMPLE_OF_UGGALEPIH": "高地エルシモ 怨念洞\nウガレピ寺院[2]I-7T6から怨念洞へ"
+    },
+    "IFRITS_CAULDRON": {
+      "YHOATOR_JUNGLE": "高地エルシモ イフリートの釜\nヨアトル大森林G-6T9からイフリートの釜へ",
+      "IFRITS_CAULDRON_4_7": "高地エルシモ イフリートの釜\nMAP[4]H-8T7からMAP[7]へ",
+      "IFRITS_CAULDRON_7_5": "高地エルシモ イフリートの釜\nMAP[7]C-12T6からMAP[5]へ",
+      "IFRITS_CAULDRON_5_2": "高地エルシモ イフリートの釜\nMAP[5]H-7T7の炎の壁を一定時間経過か\n氷の塊トレードで抜け、J-8T8からMAP[2]へ",
+      "IFRITS_CAULDRON_2_7": "高地エルシモ イフリートの釜\nMAP[2]E-7T2からMAP[7]へ",
+      "IFRITS_CAULDRON_7_8": "高地エルシモ イフリートの釜\nMAP[7]G-6T2からMAP[8]へ",
+      "YUHTUNGA_JUNGLE": "高地エルシモ ユタンガ大森林\nMAP[8]I-10T6とE-7T2の炎の壁を同様に抜け\nC-6T2からユタンガ大森林へ"
+    },
+    "SACRIFICIAL_CHAMBER": {
+      "0": "高地エルシモ 生贄の間\n怨念洞のTonberry Imprecatorから\n消えたランタンを手に入れよう",
+      "UNLIT_LANTERN": "高地エルシモ 生贄の間\n怨念洞MAP[1]E-5T4 Altar of Rancorに\n消えたランタンをトレードして怨みの炎を手に入れよう",
+      "RANCOR_FLAME": "高地エルシモ 生贄の間\n怨念洞MAP[2]E-5の4箇所のLanternに\n怨みの炎を使い扉の先に進もう"
+    },
+    "THE_SHRINE_OF_RUAVITAU": {
+      "RUAUN_GARDENS": "トゥーリア ル・アビタウ神殿\nル・オンの庭H-8T2からル・アビタウ神殿へ",
+      "RUAUN_GARDENS_2": "トゥー・リア ル・アビタウ神殿\nル・オンの庭I-6T6からル・アビタウ神殿へ",
+      "THE_SHRINE_OF_RUAVITAU_2_1": "トゥーリア ル・アビタウ神殿\nル・アビタウ神殿MAP[2]H-9T5から\n階段を下りMAP[1]へ"
+    },
+    "THE_CELESTIAL_NEXUS": {
+      "THE_SHRINE_OF_RUAVITAU": "トゥーリア 宿星の座\nル・アビタウ神殿MAP[1]H-7T5から宿星の座へ"
+    },
+    "HALL_OF_TRANSFERENCE": {
+      "LA_THEINE_PLATEAU": "転移の間\nラテーヌ高原J-8T3にある壊れたテレポイント\nShattered Telepointから転移の間へ入ろう",
+      "KONSCHTAT_HIGHLANDS": "転移の間\nコンシュタット高地I-7T5にある壊れたテレポイント\nShattered Telepointから転移の間へ入ろう",
+      "TAHRONGI_CANYON": "転移の間\nタロンギ大峡谷I-6T5にある壊れたテレポイント\nShattered Telepointから転移の間へ入ろう"
+    },
+    "PROMYVION_HOLLA": {
+      "HALL_OF_TRANSFERENCE": "プロミヴォン-ホラ\n転送の間の左側のLarge Apparatusから\nプロミヴォン-ホラへ",
+      "HALL_OF_TRANSFERENCE_OPTION_1": "プロミヴォン-ホラ\n転送の間の真ん中のCermet Gateから\nプロミヴォン-ホラへ",
+      "PROMYVION_HOLLA_1_2": "プロミヴォン-ホラ\n1層H-6T9から2層へ",
+      "PROMYVION_HOLLA_2_3": "プロミヴォン-ホラ\n2層F-8T7、E-9T9、G-11T8、I-9T8の\nいずれかから3層へ",
+      "PROMYVION_HOLLA_3_4": "プロミヴォン-ホラ\n3層D-5T3、D-7T9、E-5T9のいずれかから4層へ",
+      "PROMYVION_HOLLA_3_4_2": "プロミヴォン-ホラ\n3層I-4T3、K-3T1、M-6T7のいずれかから4層へ"
+    },
+    "SPIRE_OF_HOLLA": {
+      "PROMYVION_HOLLA": "プロミヴォン-ホラ\n4層K-8T3からホラの塔へ"
+    },
+    "PROMYVION_DEM": {
+      "HALL_OF_TRANSFERENCE": "プロミヴォン-デム\n転送の間の左側のLarge Apparatusから\nプロミヴォン-デムへ",
+      "HALL_OF_TRANSFERENCE_OPTION_1": "プロミヴォン-デム\n転送の間の真ん中のCermet Gateから\nプロミヴォン-デムへ",
+      "PROMYVION_DEM_1_2": "プロミヴォン-デム\n1層J-12T4から2層へ",
+      "PROMYVION_DEM_2_3": "プロミヴォン-デム\n2層D-8T1、G-8T9、G-10T9、E-11T4の\nいずれかから3層へ",
+      "PROMYVION_DEM_3_4": "プロミヴォン-デム\n3層D-7T9、G-7T7、H-5T7のいずれかから4層へ",
+      "PROMYVION_DEM_3_4_2": "プロミヴォン-デム\n3層G-11T1、I-11T4、G-13T1のいずれかから4層へ"
+    },
+    "SPIRE_OF_DEM": {
+      "PROMYVION_DEM": "プロミヴォン-デム\n4層H-8T6からデムの塔へ"
+    },
+    "PROMYVION_MEA": {
+      "HALL_OF_TRANSFERENCE": "プロミヴォン-メア\n転送の間の左側のLarge Apparatusから\nプロミヴォン-メアへ",
+      "HALL_OF_TRANSFERENCE_OPTION_1": "プロミヴォン-メア\n転送の間の真ん中のCermet Gateから\nプロミヴォン-メアへ",
+      "PROMYVION_MEA_1_2": "プロミヴォン-メア\n1層E-5T4から2層へ",
+      "PROMYVION_MEA_2_3": "プロミヴォン-メア\n2層G-9T8、I-11T4、G-12T6、D-12T1の\nいずれかから3層へ",
+      "PROMYVION_MEA_3_4": "プロミヴォン-メア\n3層D-9T8、E-9T8、H-8T4のいずれかから4層へ",
+      "PROMYVION_MEA_3_4_2": "プロミヴォン-メア\n3層J-8T4、L-9T9、K-12T8のいずれかから4層へ"
+    },
+    "SPIRE_OF_MEA": {
+      "PROMYVION_MEA": "プロミヴォン-メア\n4層I-6T6からメアの塔へ"
+    },
+    "PROMYVION_VAHZL": {
+      "PROMYVION_VAHZL_1_2": "プロミヴォン-ヴァズ\n1層G-12T6、I-8T5のいずれかから2層へ",
+      "PROMYVION_VAHZL_2_3": "プロミヴォン-ヴァズ\n2層F-5T9、F-6T5のいずれかから3層へ",
+      "PROMYVION_VAHZL_3_4": "プロミヴォン-ヴァズ\n3層J-10T8、K-8T2、K-11T8、L-9T9の\nいずれかから4層へ",
+      "PROMYVION_VAHZL_4_5": "プロミヴォン-ヴァズ\n4層I-7T6、N-4T4、N-7T4の\nいずれかから5層へ"
+    },
+    "SPIRE_OF_VAHZL": {
+      "PROMYVION_VAHZL": "プロミヴォン-ヴァズ\n5層F-9T9からヴァズの塔へ"
+    },
+    "TAVNAZIAN_SAFEHOLD": {
+      "TAVNAZIAN_SAFEHOLD_2_1": "タブナジア侯国 タブナジア地下壕\nMAP[2]I-9T2からMAP[1]へ",
+      "TAVNAZIAN_SAFEHOLD_1_2": "タブナジア侯国 タブナジア地下壕\nMAP[1]H-8T8から下り、MAP[2]へ",
+      "TAVNAZIAN_SAFEHOLD_2_3": "タブナジア侯国 タブナジア地下壕\nMAP[2]H-9T3から下り、MAP[3]へ"
+    },
+    "PHOMIUNA_AQUEDUCTS": {
+      "TAVNAZIAN_SAFEHOLD": "タブナジア諸島 フォミュナ水道\nタブナジア地下壕MAP[3]I-7T7からフォミュナ水道へ",
+      "PHOMIUNA_AQUEDUCTS_1_2": "タブナジア諸島 フォミュナ水道\nMAP[1]F-6T5から階段を上り、F-4T5からMAP[2]へ",
+      "PHOMIUNA_AQUEDUCTS_2_3": "タブナジア諸島 フォミュナ水道\nMAP[2]E-8T4から階段を上り、MAP[3]へ",
+      "PHOMIUNA_AQUEDUCTS_3_F7": "タブナジア諸島 フォミュナ水道\nMAP[3]F-7T1にある???を調べ\nF-7T2から隠し通路の進もう"
+    },
+    "RIVERNE_SITE_A01": {
+      "RIVERNE_SITE_A01_1": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nL-8T3 Spatial Displacementから移動しよう",
+      "RIVERNE_SITE_A01_2": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nG-10T9 Unspatial Displacementに\n巨大な鱗を使い移動しよう",
+      "RIVERNE_SITE_A01_3": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nE-10T5 Unspatial Displacementに\n巨大な鱗を使い移動しよう",
+      "RIVERNE_SITE_A01_4": "タブナジア諸島 リヴェーヌ岩塊群サイトA01\nD-9T9 Spatial Displacementから移動しよう"
+    },
+    "RIVERNE_SITE_B01": {
+      "MISAREAUX_COAST": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nミザレオ海岸F-7T7 Dilapidated Gateから入り\nSpatial Displacementからリヴェーヌ岩塊群サイトB01へ",
+      "RIVERNE_SITE_B01_1": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nM-9T1 Spatial Displacementから移動しよう",
+      "RIVERNE_SITE_B01_2": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nG-8T9 Unspatial Displacementに\n巨大な鱗を使い移動しよう",
+      "RIVERNE_SITE_B01_3": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nF-6T3 Spatial Displacementから移動しよう",
+      "RIVERNE_SITE_B01_4": "タブナジア諸島 リヴェーヌ岩塊群サイトB01\nE-7T6 Spatial Displacementから移動しよう"
+    },
+    "MONARCH_LINN": {
+      "RIVERNE_SITE_A01": "タブナジア諸島 帝龍の飛泉\nリヴェーヌ岩塊群サイトA01 E-8T5\nSpatial Displacementから帝龍の飛泉へ",
+      "RIVERNE_SITE_B01": "タブナジア諸島 帝龍の飛泉\nリヴェーヌ岩塊群サイトB01 E-8T5\nSpatial Displacementから帝龍の飛泉へ"
+    },
+    "SACRARIUM": {
+      "MISAREAUX_COAST": "タブナジア諸島 礼拝堂\nミザレオ海岸H-4T4のIron Gateから礼拝堂に入ろう",
+      "SACRARIUM_WEEKLY_0": "タブナジア諸島 礼拝堂\nMAP[1]H-7T2から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_1": "タブナジア諸島 礼拝堂\nMAP[1]G-9T6から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_2": "タブナジア諸島 礼拝堂\nMAP[1]H-7T2から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_3": "タブナジア諸島 礼拝堂\nMAP[1]G-9T6から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_4": "タブナジア諸島 礼拝堂\nMAP[1]H-7T2から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_5": "タブナジア諸島 礼拝堂\nMAP[1]G-9T6から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_6": "タブナジア諸島 礼拝堂\nMAP[1]H-7T2から進み、J-9T2からMAP[2]へ",
+      "SACRARIUM_WEEKLY_7": "タブナジア諸島 礼拝堂\nMAP[1]G-9T6から進み、J-9T2からMAP[2]へ"
+    },
+    "SEALIONS_DEN": {
+      "TAVNAZIAN_SAFEHOLD": "タブナジア侯国 海獅子の巣窟\nタブナジア地下壕1階MAP[3]H-9T2から\n海獅子の巣窟へ"
+    },
+    "OLDTON_MOVALPOLOS": {
+      "GUSGEN_MINES": "ムバルポロス ムバルポロス旧市街\nグスゲン鉱山I-9T4からムバルポロス旧市街へ"
+    },
+    "GRAND_PALACE_OF_HUXZOI": {
+      "ALTAIEU": "ルモリア フ・ゾイの王宮\nアル・タユH-11T2のCrystalline Fieldから\nフ・ゾイの王宮へ",
+      "GRAND_PALACE_OF_HUXZOI_1_2": "ルモリア フ・ゾイの王宮\nMAP[1]H-8T6 Particle GateからMAP[2]へ",
+      "GRAND_PALACE_OF_HUXZOI_2_3": "ルモリア フ・ゾイの王宮\nMAP[2]J-8T5でQuasiluminを起動しJ-8T9の\n扉を開け、反時計回りに進んでL-6T2からMAP[3]へ",
+      "GRAND_PALACE_OF_HUXZOI_3_2": "ルモリア フ・ゾイの王宮\nMAP[3]M-7T1とI-10T9でQuasiluminを起動し\nG-12T5からMAP[2]へ",
+      "GRAND_PALACE_OF_HUXZOI_2_3_2": "ルモリア フ・ゾイの王宮\nMAP[2]G-10T7でQuasiluminを起動し\nG-5T8からMAP[3]へ"
+    },
+    "THE_GARDEN_OF_RUHMET": {
+      "GRAND_PALACE_OF_HUXZOI": "ルモリア ル・メトの園\nフ・ゾイの王宮MAP[1]H-8T8Gate of the Godsから\nル・メトの園へ",
+      "THE_GARDEN_OF_RUHMET_1_2_H": "ルモリア ル・メトの園\nMAP[1]H-10T7から進みG-4T2からMAP[2]へ",
+      "THE_GARDEN_OF_RUHMET_1_2_E": "ルモリア ル・メトの園\nMAP[1]H-10T9から進みL-6T2からMAP[2]へ",
+      "THE_GARDEN_OF_RUHMET_1_2_T": "ルモリア ル・メトの園\nMAP[1]H-10T1から進みG-12T5からMAP[2]へ",
+      "THE_GARDEN_OF_RUHMET_1_2_M": "ルモリア ル・メトの園\nMAP[1]H-10T7から進みD-9T8からMAP[2]へ",
+      "THE_GARDEN_OF_RUHMET_1_2_G": "ルモリア ル・メトの園\nMAP[1]H-10T3から進みK-12T5からMAP[2]へ",
+      "THE_GARDEN_OF_RUHMET_2_3_H": "ルモリア ル・メトの園\nMAP[2]I-4T2からMAP[3]へ",
+      "THE_GARDEN_OF_RUHMET_2_3_E": "ルモリア ル・メトの園\nMAP[2]L-9T8からMAP[3]へ",
+      "THE_GARDEN_OF_RUHMET_2_3_T": "ルモリア ル・メトの園\nMAP[2]E-12T5からMAP[3]へ",
+      "THE_GARDEN_OF_RUHMET_2_3_M": "ルモリア ル・メトの園\nMAP[2]D-6T2からMAP[3]へ",
+      "THE_GARDEN_OF_RUHMET_2_3_G": "ルモリア ル・メトの園\nMAP[2]I-12T5からMAP[3]へ",
+      "THE_GARDEN_OF_RUHMET_3_4_H": "ルモリア ル・メトの園\nMAP[3]G-4T2からMAP[4]へ",
+      "THE_GARDEN_OF_RUHMET_3_4_E": "ルモリア ル・メトの園\nMAP[3]L-6T2からMAP[4]へ",
+      "THE_GARDEN_OF_RUHMET_3_4_T": "ルモリア ル・メトの園\nMAP[3]G-12T5からMAP[4]へ",
+      "THE_GARDEN_OF_RUHMET_3_4_M": "ルモリア ル・メトの園\nMAP[3]D-9T8からMAP[4]へ",
+      "THE_GARDEN_OF_RUHMET_3_4_G": "ルモリア ル・メトの園\nMAP[3]K-12T5からMAP[4]へ",
+      "THE_GARDEN_OF_RUHMET_4_H": "ルモリア ル・メトの園\nMAP[4]H-4T2のEbon Panelを調べよう",
+      "THE_GARDEN_OF_RUHMET_4_E": "ルモリア ル・メトの園\nMAP[4]L-8T8のEbon Panelを調べよう",
+      "THE_GARDEN_OF_RUHMET_4_T": "ルモリア ル・メトの園\nMAP[4]F-12T5のEbon Panelを調べよう",
+      "THE_GARDEN_OF_RUHMET_4_M": "ルモリア ル・メトの園\nMAP[4]D-7T2のEbon Panelを調べよう",
+      "THE_GARDEN_OF_RUHMET_4_G": "ルモリア ル・メトの園\nMAP[4]J-12T5のEbon Panelを調べよう",
+      "THE_GARDEN_OF_RUHMET_1_2_BRAND_OF_DAWN": "ルモリア ル・メトの園\nMAP[1]H-10T9から進みH-8T1 Qn'zdei4体がいる\n小部屋を抜けてエレベーターを上へ"
+    },
+    "EMPYREAL_PARADOX": {
+      "THE_GARDEN_OF_RUHMET": "ルモリア 天象の鎖\nル・メトの園MAP[2]H-9T2中央のエレベータから\n下に降て天象の鎖へ"
+    },
+    "OPEN_SEA_ROUTE_TO_AL_ZAHBI": {
+      "MHAURA": "西アトルガン地方 アトルガン白門\nマウラからアトルガン行きの船に乗ろう\nヴァナ時間4時、12時、20時に出港"
+    },
+    "AHT_URHGAN_WHITEGATE": {
+      "OPEN_SEA_ROUTE_TO_AL_ZAHBI": "西アトルガン地方 アトルガン白門へ到着を待とう\nAdebenが到着時間を教えてくれる",
+      "CAEDARVA_MIRE": "西アトルガン地方 アトルガン白門\nアズーフ島監視哨K-9T5 Runic Portalから\nアトルガン白門へ",
+      "CAEDARVA_MIRE_2": "西アトルガン地方 アトルガン白門\nドゥブッカ島監視哨I-9T9 Runic Portalから\nアトルガン白門へ",
+      "ALZADAAL_UNDERSEA_RUINS": "西アトルガン地方 アトルガン白門\nMAP[5]J-9T9 Runic Potalからアトルガン白門へ",
+      "MOUNT_ZHAYOLM": "西アトルガン地方 アトルガン白門\nハルブーン監視哨K-6T9 Runic Portalから\nアトルガン白門へ",
+      "BHAFLAU_THICKETS": "西アトルガン地方 アトルガン白門\nマムージャ監視哨H-11T8 Runic Portalから\nアトルガン白門へ"
+    },
+    "BHAFLAU_THICKETS": {
+      "AHT_URHGAN_WHITEGATE": "西アトルガン地方 バフラウ段丘\nアトルガン白門G-7T6 Ironbound Gateから\nバフラウ段丘へ",
+      "AHT_URHGAN_WHITEGATE_2": "西アトルガン地方 バフラウ段丘\nアトルガン白門L-7T7 Runic Portanから\nマムージャ監視哨（マムージャ兵訓練所前）へ",
+      "MAMOOK": "西アトルガン地方 バフラウ段丘\nマムークMAP[1]F-10T8からバフラウ段丘MAP[2]へ"
+    },
+    "WAJAOM_WOODLANDS": {
+      "AHT_URHGAN_WHITEGATE": "マムージャ蕃国 ワジャーム樹林\nアトルガン白門H-10T4 Ironbound Gateから\nワジャーム樹林へ"
+    },
+    "AYDEEWA_SUBTERRANE": {
+      "WAJAOM_WOODLANDS": "マムージャ蕃国 エジワ蘿洞\nワジャーム樹林G-7T4からエジワ蘿洞へ",
+      "AYDEEWA_SUBTERRANE_2_5": "マムージャ蕃国 エジワ蘿洞\nMAP[2]D-8T6から下に下りてMAP[5]へ",
+      "SURVIVAL": "マムージャ蕃国 エジワ蘿洞\nSurvival Guidの移動支援から\nエジワ蘿洞へ移動しよう"
+    },
+    "MAMOOK": {
+      "WAJAOM_WOODLANDS": "マムージャ蕃国 マムーク\nワジャーム樹林D-12T1からマムークへ",
+      "SURVIVAL": "マムージャ蕃国 マムーク\nSurvival Guidの移動支援から\nマムークへ移動しよう"
+    },
+    "JADE_SEPULCHER": {
+      "BHAFLAU_THICKETS": "マムージャ蕃国 翡翠廟\nバフラウ段丘MAP[2]H-9T1から翡翠廟へ"
+    },
+    "HALVUNG": {
+      "BHAFLAU_THICKETS": "ハルブーン傭兵団領 ハルブーン\nバフラウ段丘F-8T8からハルブーンへ",
+      "MOUNT_ZHAYOLM": "ハルブーン傭兵団領 ハルブーン\nゼオルム火山G-6T4からハルブーンへ"
+    },
+    "MOUNT_ZHAYOLM": {
+      "HALVUNG": "ハルブーン傭兵団領 ゼオルム火山\nハルブーンMAP[1]J-7T7からゼオルム火山へ",
+      "HALVUNG_2": "ハルブーン傭兵団領 ゼオルム火山\nハルブーンMAP[2]E-7T7からゼオルム火山へ",
+      "AHT_URHGAN_WHITEGATE": "ハルブーン傭兵団領 ゼオルム火山\nアトルガン白門L-7T7 Runic Portanから\nハルブーン監視哨（レベロス風穴前）へ"
+    },
+    "NAVUKGO_EXECUTION_CHAMBER": {
+      "MOUNT_ZHAYOLM": "ハルブーン傭兵団領 ナバゴ処刑場\nゼオルム火山D-8T7からナバゴ処刑場へ"
+    },
+    "SILVER_SEA_ROUTE_TO_NASHMAU": {
+      "AHT_URHGAN_WHITEGATE": "アラパゴ諸島 ナシュモ\nアトルガン白門I-6T4からナシュモ行きの船に乗ろう\nヴァナ時間0時、8時、16時に出港"
+    },
+    "NASHMAU": {
+      "SILVER_SEA_ROUTE_TO_NASHMAU": "アラパゴ諸島 ナシュモへ到着を待とう\nQudamahfが到着時間を教えてくれる"
+    },
+    "CAEDARVA_MIRE": {
+      "NASHMAU": "アラパゴ諸島 カダーバの浮沼\nナシュモI-8T4からカダーバの浮沼へ",
+      "NASHMAU_2": "アラパゴ諸島 カダーバの浮沼\nナシュモG-7T7からカダーバの浮沼へ",
+      "AHT_URHGAN_WHITEGATE": "アラパゴ諸島 カダーバの浮沼\nアトルガン白門L-7T7 Runic Portanから\nドゥブッカ島監視哨（ペリキア島前）へ",
+      "ALZADAAL_UNDERSEA_RUINS": "アラパゴ諸島 カダーバの浮沼\nMAP[7]I-8T7からカダーバの浮沼へ",
+      "HOMEPOINT": "アラパゴ諸島 カダーバの浮沼\nHome Pointからカダーバの浮沼#1へ"
+    },
+    "ARRAPAGO_REEF": {
+      "CAEDARVA_MIRE": "アラパゴ諸島 アラパゴ暗礁域\nカダーバの浮沼MAP[2]G-9T7からアラパゴ暗礁域へ"
+    },
+    "HAZHALM_TESTING_GROUNDS": {
+      "CAEDARVA_MIRE": "アラパゴ諸島 ハザルム試験場\nカダーバの浮沼MAP[1]D-10T9からハザルム試験場へ"
+    },
+    "ALZADAAL_UNDERSEA_RUINS": {
+      "BHAFLAU_THICKETS": "アルザダール文明遺跡群 アルザダール海底遺跡群\nバフラウ段丘F-6T6でアトルガン白銀貨1枚トレードし\nアルザダール海底遺跡群へ",
+      "ALZADAAL_UNDERSEA_RUINS_8_3": "アルザダール文明遺跡群 アルザダール海底遺跡群\nMAP[8]H-8T9の装置からMAP[3]へ",
+      "ALZADAAL_UNDERSEA_RUINS_3_5": "アルザダール文明遺跡群 アルザダール海底遺跡群\nMAP[3]H-9T7の装置からMAP[5]へ",
+      "ALZADAAL_UNDERSEA_RUINS_5_2": "アルザダール文明遺跡群 アルザダール海底遺跡群\nMAP[5]G-8T5の装置からMAP[2]へ",
+      "ALZADAAL_UNDERSEA_RUINS_2_7": "アルザダール文明遺跡群 アルザダール海底遺跡群\nMAP[2]H-7T1の装置からMAP[7]へ",
+      "AHT_URHGAN_WHITEGATE": "アルザダール文明遺跡群 アルザダール海底遺跡群\nアトルガン白門L-7T7 Runic Portanから\nナイズル島監視哨（ナイズル島前）へ"
+    },
+    "SOUTHERN_SAN_DORIA_S": {
+      "EAST_RONFAURE_S": "ロンフォール戦線 南サンドリア〔Ｓ〕\n東ロンフォール〔Ｓ〕G-6T4から南サンドリア〔Ｓ〕へ"
+    },
+    "EAST_RONFAURE_S": {
+      "SOUTHERN_SAN_DORIA_S": "ロンフォール戦線 東ロンフォール〔Ｓ〕\n南サンドリア〔Ｓ〕L-10T6 Eauvague, T.K.に話しかけて\n東ロンフォール〔Ｓ〕へ",
+      "JUGNER_FOREST_S": "ロンフォール戦線 東ロンフォール〔Ｓ〕\nジャグナー森林〔Ｓ〕F-5T5から東ロンフォール〔Ｓ〕へ",
+      "SURVIVAL": "ロンフォール戦線 東ロンフォール〔Ｓ〕\nSurvival Guidの移動支援から\n東ロンフォール〔Ｓ〕へ移動しよう"
+    },
+    "VUNKERL_INLET_S": {
+      "JUGNER_FOREST_S": "ノルバレン戦線 ブンカール浦〔Ｓ〕\nジャグナー森林〔Ｓ〕L-6T6からブンカール浦〔Ｓ〕へ"
+    },
+    "JUGNER_FOREST_S": {
+      "EAST_RONFAURE_S": "ノルバレン戦線 ジャグナー森林〔Ｓ〕\n東ロンフォール〔Ｓ〕K-11T1からジャグナー森林〔Ｓ〕へ",
+      "BATALLIA_DOWNS_S": "ノルバレン戦線 ジャグナー森林〔Ｓ〕\nバタリア丘陵〔Ｓ〕F-9T4からジャグナー森林〔Ｓ〕へ",
+      "VUNKERL_INLET_S": "ノルバレン戦線 ジャグナー森林〔Ｓ〕\nブンカール浦〔Ｓ〕D-10T2からジャグナー森林〔Ｓ〕へ"
+    },
+    "BATALLIA_DOWNS_S": {
+      "ROLANBERRY_FIELDS_S": "ノルバレン戦線 バタリア丘陵〔Ｓ〕\nロランベリー耕地〔Ｓ〕I-4T1からバタリア丘陵〔Ｓ〕へ",
+      "THE_ELDIEME_NECROPOLIS_S": "ノルバレン戦線 バタリア丘陵〔Ｓ〕\nエルディーム古墳〔Ｓ〕J-9T3からバタリア丘陵〔Ｓ〕へ",
+      "BATALLIA_DOWNS": "ノルバレン戦線 バタリア丘陵〔Ｓ〕\nバタリア丘陵 H-5T9 Cavernous Mawから\nバタリア丘陵〔Ｓ〕へ"
+    },
+    "THE_ELDIEME_NECROPOLIS_S": {
+      "BATALLIA_DOWNS_S": "ノルバレン戦線 エルディーム古墳〔Ｓ〕\nバタリア丘陵〔Ｓ〕J-10T4 Crypt Doorから\nエルディーム古墳〔Ｓ〕へ",
+      "THE_ELDIEME_NECROPOLIS_S_1_2": "ノルバレン戦線 エルディーム古墳〔Ｓ〕\nMAP[1]G-9T3の真ん中から落ちてMAP[2]へ",
+      "THE_ELDIEME_NECROPOLIS_S_2_3": "ノルバレン戦線 エルディーム古墳〔Ｓ〕\nMAP[2]L-12T6からMAP[3]へ",
+      "SURVIVAL": "ノルバレン戦線 エルディーム古墳〔Ｓ〕\nSurvival Guidの移動支援から\nエルディーム古墳〔Ｓ〕へ移動しよう"
+    },
+    "BASTOK_MARKETS_S": {
+      "NORTH_GUSTABERG_S": "グスタベルグ戦線 バストゥーク商業区〔Ｓ〕\n北グスタベルグ〔Ｓ〕J-9T2からバストゥーク商業区〔Ｓ〕へ"
+    },
+    "NORTH_GUSTABERG_S": {
+      "BASTOK_MARKETS_S": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕\nバストゥーク商業区〔Ｓ〕H-4T3 Red Canyonに\n話しかけて北グスタベルグ〔Ｓ〕へ",
+      "GRAUBERG_S": "グスタベルグ戦線 北グスタベルグ〔Ｓ〕\nグロウベルグ〔Ｓ〕C-14T1から北グスタベルグ〔Ｓ〕へ"
+    },
+    "GRAUBERG_S": {
+      "PASHHOW_MARSHLANDS_S": "グスタベルグ戦線 グロウベルグ〔Ｓ〕\nパシュハウ沼〔Ｓ〕H-11T3からグロウベルグ〔Ｓ〕へ",
+      "NORTH_GUSTABERG_S": "グスタベルグ戦線 グロウベルグ〔Ｓ〕\n北グスタベルグ〔Ｓ〕F-7T8からグロウベルグ〔Ｓ〕へ"
+    },
+    "PASHHOW_MARSHLANDS_S": {
+      "ROLANBERRY_FIELDS_S": "デルフラント戦線 パシュハウ沼〔Ｓ〕\nロランベリー耕地〔Ｓ〕H-14T5からパシュハウ沼〔Ｓ〕へ",
+      "GRAUBERG_S": "デルフラント戦線 パシュハウ沼〔Ｓ〕\nグロウベルグ〔Ｓ〕L-4T7からパシュハウ沼〔Ｓ〕へ"
+    },
+    "ROLANBERRY_FIELDS_S": {
+      "BATALLIA_DOWNS_S": "デルフラント戦線 ロランベリー耕地〔Ｓ〕\nバタリア丘陵〔Ｓ〕K-10T9からロランベリー耕地〔Ｓ〕へ",
+      "SAUROMUGUE_CHAMPAIGN_S": "デルフラント戦線 ロランベリー耕地〔Ｓ〕\nソロムグ原野〔Ｓ〕E-7T7からロランベリー耕地〔Ｓ〕へ",
+      "CRAWLERS_NEST_S": "デルフラント戦線 ロランベリー耕地〔Ｓ〕\nクロウラーの巣〔Ｓ〕M-8T7からロランベリー耕地〔Ｓ〕へ",
+      "PASHHOW_MARSHLANDS_S": "デルフラント戦線 ロランベリー耕地〔Ｓ〕\nパシュハウ沼〔Ｓ〕K-4T9からロランベリー耕地〔Ｓ〕へ"
+    },
+    "CRAWLERS_NEST_S": {
+      "ROLANBERRY_FIELDS_S": "デルフラント戦線 クロウラーの巣〔Ｓ〕\nロランベリー耕地〔Ｓ〕F-13T6からクロウラーの巣〔Ｓ〕へ"
+    },
+    "WINDURST_WATERS_S": {
+      "WEST_SARUTABARUTA_S": "サルタバルタ戦線 ウィンダス水の区〔Ｓ〕\n西サルタバルタ〔Ｓ〕J-9T8からウィンダス水の区〔Ｓ〕へ"
+    },
+    "WEST_SARUTABARUTA_S": {
+      "FORT_KARUGO_NARUGO_S": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕\nカルゴナルゴ城砦〔Ｓ〕D-14T8から\n西サルタバルタ〔Ｓ〕へ",
+      "WINDURST_WATERS_S": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕\nウィンダス水の区〔Ｓ〕F-4T3 Ajon-Myoojenに\n話しかけて西サルタバルタ〔Ｓ〕へ",
+      "SURVIVAL": "サルタバルタ戦線 西サルタバルタ〔Ｓ〕\nSurvival Guidの移動支援から\n西サルタバルタ〔Ｓ〕へ移動しよう"
+    },
+    "FORT_KARUGO_NARUGO_S": {
+      "FORT_KARUGO_NARUGO_S_1_2": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕\nMAP[1]H-9T7からMAP[2]へ",
+      "FORT_KARUGO_NARUGO_S_2_1": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕\nMAP[2]K-8T1からMAP[1]へ",
+      "MERIPHATAUD_MOUNTAINS_S": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕\nメリファト山地〔Ｓ〕C-7T8からカルゴナルゴ城砦〔Ｓ〕へ",
+      "WEST_SARUTABARUTA_S": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕\n西サルタバルタ〔Ｓ〕I-4T1から\nカルゴナルゴ城砦〔Ｓ〕へ",
+      "SURVIVAL": "サルタバルタ戦線 カルゴナルゴ城砦〔Ｓ〕\nSurvival Guidの移動支援から\nカルゴナルゴ城砦〔Ｓ〕へ移動しよう"
+    },
+    "MERIPHATAUD_MOUNTAINS_S": {
+      "SAUROMUGUE_CHAMPAIGN_S": "アラゴーニュ戦線 メリファト山地〔Ｓ〕\nソロムグ原野〔Ｓ〕K-11T3からメリファト山地〔Ｓ〕へ",
+      "FORT_KARUGO_NARUGO_S": "アラゴーニュ戦線 メリファト山地〔Ｓ〕\nカルゴナルゴ城砦〔Ｓ〕I-5T3からメリファト山地〔Ｓ〕へ",
+      "SURVIVAL": "アラゴーニュ戦線 メリファト山地〔Ｓ〕\nSurvival Guidの移動支援から\nメリファト山地〔Ｓ〕へ移動しよう"
+    },
+    "SAUROMUGUE_CHAMPAIGN_S": {
+      "ROLANBERRY_FIELDS_S": "アラゴーニュ戦線 ソロムグ原野〔Ｓ〕\nロランベリー耕地〔Ｓ〕K-5T2からソロムグ原野〔Ｓ〕へ",
+      "GARLAIGE_CITADEL_S": "アラゴーニュ戦線 ソロムグ原野〔Ｓ〕\nガルレージュ要塞〔Ｓ〕MAP[2]I-5T6から\nソロムグ原野〔Ｓ〕へ"
+    },
+    "GARLAIGE_CITADEL_S": {
+      "GARLAIGE_CITADEL_S_1_2": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕\nMAP[1]J-6T1からMAP[2]へ",
+      "SAUROMUGUE_CHAMPAIGN_S": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕\nソロムグ原野〔Ｓ〕H-11T7 Ebon Doorから\nガルレージュ要塞〔Ｓ〕へ",
+      "SURVIVAL": "アラゴーニュ戦線 ガルレージュ要塞〔Ｓ〕\nSurvival Guidの移動支援から\nガルレージュ要塞〔Ｓ〕へ移動しよう"
+    },
+    "CASTLE_OZTROJA_S": {
+      "MERIPHATAUD_MOUNTAINS_S": "アラゴーニュ戦線 オズトロヤ城〔Ｓ〕\nメリファト山地〔Ｓ〕L-8T1 Iron Protcullisから\nオズトロヤ城〔Ｓ〕へ"
+    }
+  }
+}
