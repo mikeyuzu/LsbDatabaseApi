@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LsbDatabaseApi.@struct;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LsbDatabaseApi.Controllers
 {
@@ -29,6 +30,50 @@ namespace LsbDatabaseApi.Controllers
             var message = messageParam.GetMessageParam(database, charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates);
 
             return Ok(message);
+        }
+
+        /// <summary>
+        /// 合成倉庫のアイテムを返す
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSynergyInventoryItems")]
+        public ActionResult<List<DatabaseApi.SynergyInventoryItem>> GetSynergyInventoryItems(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var items = database.GetSynergyInventoryItems(charaId);
+
+            return Ok(items);
+        }
+
+        // 合成倉庫から取り出す
+        [HttpGet("RemoveSynergyInventoryItem")]
+        public ActionResult RemoveSynergyInventoryItem(int charaId, int itemId, int subId, int usenum, int quantity)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            // ポストに入れる
+            var extra = "000000000000000000000000000000000000000000000000";
+            database.InsertDeliveryBoxItem(charaId, itemId, subId, usenum, extra);
+
+            // データベースを更新
+            if (quantity <= usenum)
+            {
+                // 在庫が0以下になったらレコードを削除
+                database.DeleteCustomInventory(charaId, (ItemId)itemId);
+            }
+            else
+            {
+                // 在庫が残っている場合はレコードを更新
+                database.UpdateCustomInventory(charaId, (ItemId)itemId, usenum);
+            }
+
+            return Ok();
         }
     }
 }

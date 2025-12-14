@@ -34,6 +34,9 @@ namespace LsbDatabaseApi
         public const int _MAX_QUESTAREA = 11;       // クエストのエリア数
         public const int _MISSION_COP = 6;          // プロマシアの呪縛
 
+        // 合成倉庫のキャラID
+        private const int _synergyInventoryCharacterId = 1000000;
+
         // キャッシュ
         private readonly ConcurrentDictionary<int, MissionInfo> CacheMissionInfo = new();                   // ミッション
         private readonly ConcurrentDictionary<int, QuestInfo> CacheQuestInfo = new();                       // クエスト
@@ -1441,6 +1444,225 @@ namespace LsbDatabaseApi
             }
 
             return look;
+        }
+
+        /// <summary>
+        /// 合成倉庫情報
+        /// </summary>
+        public struct SynergyInventoryItem
+        {
+            public int id { get; set; }              // アイテムID
+            public int SubId { get; set; }           // サブID
+            public int Quantity { get; set; }        // 数量
+            public int AuctionHouseId { get; set; }  // 競売ID
+            public int StackSize { get; set; }       // スタックサイズ
+            public string Name { get; set; }         // アイテム名
+        }
+
+        /// <summary>
+        /// 合成倉庫情報取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        public List<SynergyInventoryItem> GetSynergyInventoryItems(int charaId)
+        {
+            var inventory = new List<SynergyInventoryItem>();
+
+                string query = "SELECT" +
+                    "     ci.itemId, ib.subid, ci.quantity, ib.aH, ib.stackSize," +
+                    "     MAX(sr.Wood) AS Wood," +
+                    "     MAX(sr.Smith) AS Smith," +
+                    "     MAX(sr.Gold) AS Gold," +
+                    "     MAX(sr.Cloth) AS Cloth," +
+                    "     MAX(sr.Leather) AS Leather," +
+                    "     MAX(sr.Bone) AS Bone," +
+                    "     MAX(sr.Alchemy) AS Alchemy," +
+                    "     MAX(sr.Cook) AS Cook," +
+                    "     ji.name" +
+                    " FROM custom_inventory AS ci" +
+                    " INNER JOIN item_basic AS ib ON ib.itemid = ci.itemId" +
+                    " INNER JOIN japanese_item AS ji ON ji.itemid = ci.itemId" +
+                    " LEFT JOIN synth_recipes AS sr ON ib.aH = 0 AND (sr.Ingredient1 = ci.itemId OR sr.Ingredient2 = ci.itemId OR sr.Ingredient3 = ci.itemId OR sr.Ingredient4 = ci.itemId OR sr.Ingredient5 = ci.itemId OR sr.Ingredient6 = ci.itemId OR sr.Ingredient7 = ci.itemId OR sr.Ingredient8 = ci.itemId)" +
+                    " WHERE ci.charid = @characterId" +
+                    " GROUP BY ci.itemId";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@characterId", charaId);
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var inventoryItem = new SynergyInventoryItem();
+                        // データの処理
+                        inventoryItem.id = Convert.ToInt32(reader["itemId"]);
+                        inventoryItem.SubId = Convert.ToInt32(reader["subid"]);
+                        inventoryItem.Quantity = Convert.ToInt32(reader["quantity"]);
+                        inventoryItem.AuctionHouseId = Convert.ToInt32(reader["aH"]);
+                        inventoryItem.StackSize = Convert.ToInt32(reader["stackSize"]);
+                        if (inventoryItem.AuctionHouseId == 0)
+                        {
+                            var craftSkills = new Dictionary<string, int>();
+                            craftSkills.Add("Wood", Convert.ToInt32(reader["Wood"]));
+                            craftSkills.Add("Smith", Convert.ToInt32(reader["Smith"]));
+                            craftSkills.Add("Gold", Convert.ToInt32(reader["Gold"]));
+                            craftSkills.Add("Cloth", Convert.ToInt32(reader["Cloth"]));
+                            craftSkills.Add("Leather", Convert.ToInt32(reader["Leather"]));
+                            craftSkills.Add("Bone", Convert.ToInt32(reader["Bone"]));
+                            craftSkills.Add("Alchemy", Convert.ToInt32(reader["Alchemy"]));
+                            craftSkills.Add("Cook", Convert.ToInt32(reader["Cook"]));
+
+                            int maxSkillLevel = int.MinValue; // 最小のint値で初期化（確実に更新されるように）
+                            string maxSkillName = "";
+
+                            foreach (var pair in craftSkills)
+                            {
+                                if (pair.Value > maxSkillLevel)
+                                {
+                                    maxSkillLevel = pair.Value;
+                                    maxSkillName = pair.Key;
+                                }
+                            }
+
+                            switch (maxSkillName)
+                            {
+                                case "Wood":    inventoryItem.AuctionHouseId = (int)AuctionHouseId.WOODWORKING; break;
+                                case "Smith":   inventoryItem.AuctionHouseId = (int)AuctionHouseId.SMITHING; break;
+                                case "Gold":    inventoryItem.AuctionHouseId = (int)AuctionHouseId.GOLDSMITHING; break;
+                                case "Cloth":   inventoryItem.AuctionHouseId = (int)AuctionHouseId.CLOTHCRAFT; break;
+                                case "Leather": inventoryItem.AuctionHouseId = (int)AuctionHouseId.LEATHERCRAFT; break;
+                                case "Bone":    inventoryItem.AuctionHouseId = (int)AuctionHouseId.BONECRAFT; break;
+                                case "Alchemy": inventoryItem.AuctionHouseId = (int)AuctionHouseId.ALCHEMY; break;
+                                case "Cook":    inventoryItem.AuctionHouseId = (int)AuctionHouseId.INGREDIENTS; break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        inventoryItem.Name = (string)reader["name"];
+                        inventory.Add(inventoryItem);
+                    }
+                }
+            }
+
+            return inventory;
+        }
+
+        /// <summary>
+        /// 合成倉庫からアイテム数を減らす
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="usernum"></param>
+        public void UpdateCustomInventory(int charaId, ItemId itemId, int usernum)
+        {
+                string query = "UPDATE custom_inventory SET quantity = quantity - @quantity WHERE charid = @characterId AND itemId = @itemId";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@characterId", charaId);
+                command.Parameters.AddWithValue("@itemId", itemId);
+                command.Parameters.AddWithValue("@quantity", usernum);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
+        /// <summary>
+        /// 合成倉庫からアイテム数を減らす
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="itemId"></param>
+        public void DeleteCustomInventory(int charaId, ItemId itemId)
+        {
+            string query = "DELETE FROM custom_inventory WHERE charid = @characterId AND itemId = @itemId";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@characterId", charaId);
+                command.Parameters.AddWithValue("@itemId", itemId);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 送信済みのアイテム情報を削除する
+        /// </summary>
+        /// <param name="charaId"></param>
+        private void DeleteDeliveryBoxSentItem(int charaId)
+        {
+            string query = "DELETE FROM delivery_box WHERE charid = @characterId AND received = 1";
+            using MySqlCommand command = new MySqlCommand(query, _connection);
+            command.Parameters.AddWithValue("@characterId", _synergyInventoryCharacterId + charaId);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// ポストに送信済みのスロットを得る
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        private List<int> GetDeliveryBoxSentSlots(int charaId)
+        {
+            var slots = new List<int>();
+            string query = "SELECT slot FROM delivery_box WHERE charid = @characterId";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@characterId", _synergyInventoryCharacterId + charaId);
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    slots.Add(Convert.ToInt32(reader["slot"]));
+                }
+            }
+            return slots;
+        }
+
+        /// <summary>
+        /// デリバリーボックスにアイテムを追加する
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="subId"></param>
+        /// <param name="quantity"></param>
+        public void InsertDeliveryBoxItem(int charaId, int itemId, int subId, int quantity, string extra)
+        {
+            // すでに送り済みのレコードを削除する
+            DeleteDeliveryBoxSentItem(charaId);
+            // 使われているスロットを取得
+            var usedSlots = GetDeliveryBoxSentSlots(charaId);
+            // 一番小さい使われていないスロットを探す
+            int slot = 0;
+            while (usedSlots.Contains(slot))
+            {
+                slot++;
+            }
+
+            // 送り主
+            string query = "INSERT INTO delivery_box (charid, charname, box, slot, itemid, itemsubid, quantity, extra, senderid, sender, received, sent) SELECT @senderCharacterId, @senderCharacterName, 2, @slotId, @itemId, @subId, @quantity, UNHEX(@extra), c.charid, c.charname, 0, 1 FROM chars c WHERE c.charid = @characterId;";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@senderCharacterId", _synergyInventoryCharacterId + charaId);
+                command.Parameters.AddWithValue("@senderCharacterName", "CustomBox1");
+                command.Parameters.AddWithValue("@slotId", slot);
+                command.Parameters.AddWithValue("@itemId", itemId);
+                command.Parameters.AddWithValue("@subId", subId);
+                command.Parameters.AddWithValue("@quantity", quantity);
+                command.Parameters.AddWithValue("@extra", extra);
+                command.Parameters.AddWithValue("@characterId", charaId);
+                command.ExecuteNonQuery();
+            }
+
+            // 送り先
+            query = "INSERT INTO delivery_box (charid, charname, box, slot, itemid, itemsubid, quantity, extra, senderid, sender, received, sent) SELECT c.charid, c.charname, 1, 8, @itemId, @subId, @quantity, UNHEX(@extra), @senderCharacterId, @senderCharacterName, 0, 0 FROM chars c WHERE c.charid = @characterId;";
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@senderCharacterId", _synergyInventoryCharacterId + charaId);
+                command.Parameters.AddWithValue("@senderCharacterName", "CustomBox1");
+                command.Parameters.AddWithValue("@itemId", itemId);
+                command.Parameters.AddWithValue("@subId", subId);
+                command.Parameters.AddWithValue("@quantity", quantity);
+                command.Parameters.AddWithValue("@extra", extra);
+                command.Parameters.AddWithValue("@characterId", charaId);
+                command.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
