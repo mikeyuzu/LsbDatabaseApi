@@ -27,4 +27,22 @@
 
         MAX
     }
+
+    /// <summary>
+    /// ペットタイプ
+    /// </summary>
+    public enum PetType
+    {
+        PET = 0,        // ペット 
+        AVATAR = 1,     // 召喚獣
+        WYVERN = 2,     // 飛竜
+        AUTOMATON1 = 3, // オートマトン
+        AUTOMATON2 = 4, // オートマトン
+        AUTOMATON3 = 5, // オートマトン
+        AUTOMATON4 = 6, // オートマトン
+        AUTOMATON5 = 7, // オートマトン
+        LUOPAN = 8,     // 羅盤
+
+        NONE
+    }
 }

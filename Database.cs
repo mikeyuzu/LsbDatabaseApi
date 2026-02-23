@@ -1,10 +1,13 @@
 ﻿using LsbDatabaseApi.@struct;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics.Eventing.Reader;
 using System.Runtime.InteropServices;
+using static LsbDatabaseApi.DatabaseApi;
 using static LsbDatabaseApi.MessageParam;
 
 namespace LsbDatabaseApi
@@ -38,21 +41,22 @@ namespace LsbDatabaseApi
         private const int _synergyInventoryCharacterId = 1000000;
 
         // キャッシュ
-        private readonly ConcurrentDictionary<int, MissionInfo> CacheMissionInfo = new();                   // ミッション
-        private readonly ConcurrentDictionary<int, QuestInfo> CacheQuestInfo = new();                       // クエスト
-        private readonly ConcurrentDictionary<int, ZoneList> CacheZoneList = new();                         // ゾーン
-        private readonly ConcurrentDictionary<int, KeyItems> CacheKeyItems = new();                        // だいじなもの
-        private readonly ConcurrentDictionary<int, byte> CacheNation = new();                               // 所属国
-        private readonly ConcurrentDictionary<int, byte> CacheCampaignAllegiance = new();                   // アルタナ所属国
-        private readonly ConcurrentDictionary<int, CharacterVariableList> CacheVarList = new();             // 変数リスト
-        private readonly ConcurrentDictionary<int, TeleportInfo> CacheTeleportInfo = new();                 // テレポート情報
-        private readonly ConcurrentDictionary<int, CharacterProfile> CacheProfile = new();                  // プロフィール情報
-        private readonly ConcurrentDictionary<int, List<Inventory>> CacheInventory = new();                // インベントリー情報
-        private readonly ConcurrentDictionary<int, List<CharaEffect>> CacheCharaEffect = new();            // キャラクター効果情報
-        private readonly ConcurrentDictionary<int, Dictionary<int, CharaSkill>> CacheCharaSkill = new();   // キャラクタースキル情報
-        private readonly ConcurrentDictionary<int, CharaStatus> CacheCharaStatus = new();                  // ステータス情報
-        private readonly ConcurrentDictionary<int, CharaJob> CacheCharaJob = new();                        // ジョブ情報
-        private readonly ConcurrentDictionary<int, CharaMagic> CacheCharaMagic = new();                    // 魔法情報
+        private static readonly ConcurrentDictionary<int, MissionInfo> CacheMissionInfo = new();                   // ミッション
+        private static readonly ConcurrentDictionary<int, QuestInfo> CacheQuestInfo = new();                       // クエスト
+        private static readonly ConcurrentDictionary<int, ZoneList> CacheZoneList = new();                         // ゾーン
+        private static readonly ConcurrentDictionary<int, KeyItems> CacheKeyItems = new();                         // だいじなもの
+        private static readonly ConcurrentDictionary<int, byte> CacheNation = new();                               // 所属国
+        private static readonly ConcurrentDictionary<int, byte> CacheCampaignAllegiance = new();                   // アルタナ所属国
+        private static readonly ConcurrentDictionary<int, CharacterVariableList> CacheVarList = new();             // 変数リスト
+        private static readonly ConcurrentDictionary<int, TeleportInfo> CacheTeleportInfo = new();                 // テレポート情報
+        private static readonly ConcurrentDictionary<int, CharacterProfile> CacheProfile = new();                  // プロフィール情報
+        private static readonly ConcurrentDictionary<int, List<Inventory>> CacheInventory = new();                 // インベントリー情報
+        private static readonly ConcurrentDictionary<int, List<CharaEffect>> CacheCharaEffect = new();             // キャラクター効果情報
+        private static readonly ConcurrentDictionary<int, Dictionary<int, CharaSkill>> CacheCharaSkill = new();    // キャラクタースキル情報
+        private static readonly ConcurrentDictionary<int, CharaStatus> CacheCharaStatus = new();                   // ステータス情報
+        private static readonly ConcurrentDictionary<int, CharaJob> CacheCharaJob = new();                         // ジョブ情報
+        private static readonly ConcurrentDictionary<int, CharaMagic> CacheCharaMagic = new();                     // 魔法情報
+        private static readonly ConcurrentDictionary<int, SynthesisRecipe> CacheSynthesisRecipes = new();          // レシピ情報
 
         private MySqlConnection? _connection = null;
 
@@ -61,20 +65,6 @@ namespace LsbDatabaseApi
         /// </summary>
         public DatabaseApi()
         {
-            // キャッシュ
-            CacheMissionInfo = new();       // ミッション
-            CacheQuestInfo = new();         // クエスト
-            CacheZoneList = new();          // ゾーン
-            CacheVarList = new();           // 変数リスト
-            CacheTeleportInfo = new();      // テレポート情報
-            CacheProfile = new();           // プロフィール情報
-            CacheInventory = new();         // インベントリー情報
-            CacheCharaEffect = new();       // キャラクター効果情報
-            CacheCharaSkill = new();        // キャラクタースキル情報
-            CacheCharaStatus = new();       // ステータス情報
-            CacheCharaJob = new();          // ジョブ情報
-            CacheCharaMagic = new();        // 魔法情報
-
             _connection = null;
         }
 
@@ -967,7 +957,6 @@ namespace LsbDatabaseApi
                 return;
             }
 
-            ClearAllCaches();
             _connection = new MySqlConnection(connectionString);
             _connection.Open();
         }
@@ -1468,23 +1457,24 @@ namespace LsbDatabaseApi
         {
             var inventory = new List<SynergyInventoryItem>();
 
-                string query = "SELECT" +
-                    "     ci.itemId, ib.subid, ci.quantity, ib.aH, ib.stackSize," +
-                    "     MAX(sr.Wood) AS Wood," +
-                    "     MAX(sr.Smith) AS Smith," +
-                    "     MAX(sr.Gold) AS Gold," +
-                    "     MAX(sr.Cloth) AS Cloth," +
-                    "     MAX(sr.Leather) AS Leather," +
-                    "     MAX(sr.Bone) AS Bone," +
-                    "     MAX(sr.Alchemy) AS Alchemy," +
-                    "     MAX(sr.Cook) AS Cook," +
-                    "     ji.name" +
-                    " FROM custom_inventory AS ci" +
-                    " INNER JOIN item_basic AS ib ON ib.itemid = ci.itemId" +
-                    " INNER JOIN japanese_item AS ji ON ji.itemid = ci.itemId" +
-                    " LEFT JOIN synth_recipes AS sr ON ib.aH = 0 AND (sr.Ingredient1 = ci.itemId OR sr.Ingredient2 = ci.itemId OR sr.Ingredient3 = ci.itemId OR sr.Ingredient4 = ci.itemId OR sr.Ingredient5 = ci.itemId OR sr.Ingredient6 = ci.itemId OR sr.Ingredient7 = ci.itemId OR sr.Ingredient8 = ci.itemId)" +
-                    " WHERE ci.charid = @characterId" +
-                    " GROUP BY ci.itemId";
+            string query = "SELECT" +
+                "     ci.itemId, ib.subid, ci.quantity, ib.aH, ib.stackSize," +
+                "     MAX(sr.Wood) AS Wood," +
+                "     MAX(sr.Smith) AS Smith," +
+                "     MAX(sr.Gold) AS Gold," +
+                "     MAX(sr.Cloth) AS Cloth," +
+                "     MAX(sr.Leather) AS Leather," +
+                "     MAX(sr.Bone) AS Bone," +
+                "     MAX(sr.Alchemy) AS Alchemy," +
+                "     MAX(sr.Cook) AS Cook," +
+                "     ji.name" +
+                " FROM custom_inventory AS ci" +
+                " INNER JOIN item_basic AS ib ON ib.itemid = ci.itemId" +
+                " INNER JOIN japanese_item AS ji ON ji.itemid = ci.itemId" +
+                " LEFT JOIN synth_recipes AS sr ON ib.aH = 0 AND (sr.Ingredient1 = ci.itemId OR sr.Ingredient2 = ci.itemId OR sr.Ingredient3 = ci.itemId OR sr.Ingredient4 = ci.itemId OR sr.Ingredient5 = ci.itemId OR sr.Ingredient6 = ci.itemId OR sr.Ingredient7 = ci.itemId OR sr.Ingredient8 = ci.itemId)" +
+                " WHERE ci.charid = @characterId" +
+                " GROUP BY ci.itemId";
+
             using (MySqlCommand command = new(query, _connection))
             {
                 command.Parameters.AddWithValue("@characterId", charaId);
@@ -1554,14 +1544,26 @@ namespace LsbDatabaseApi
         /// </summary>
         /// <param name="charaId"></param>
         /// <param name="itemId"></param>
-        /// <param name="usernum"></param>
-        public void UpdateCustomInventory(int charaId, ItemId itemId, int usernum)
+        /// <param name="amount"></param>
+        public void UpdateCustomInventory(int charaId, ItemId itemId, int amount)
         {
-                string query = "UPDATE custom_inventory SET quantity = quantity - @usernum WHERE charid = @characterId AND itemId = @itemId";
+            // 減算後に0より大きい場合はUPDATE、0以下の場合はDELETE
+            string query = @"
+                DELETE FROM custom_inventory 
+                WHERE charid = @characterId 
+                AND itemId = @itemId 
+                AND quantity - @amount <= 0;
+        
+                UPDATE custom_inventory 
+                SET quantity = quantity - @amount 
+                WHERE charid = @characterId 
+                AND itemId = @itemId 
+                AND quantity - @amount > 0";
+
             using MySqlCommand command = new(query, _connection);
             command.Parameters.AddWithValue("@characterId", charaId);
             command.Parameters.AddWithValue("@itemId", itemId);
-            command.Parameters.AddWithValue("@usernum", usernum);
+            command.Parameters.AddWithValue("@amount", amount);
             command.ExecuteNonQuery();
         }
 
@@ -1578,6 +1580,67 @@ namespace LsbDatabaseApi
             command.Parameters.AddWithValue("@characterId", charaId);
             command.Parameters.AddWithValue("@itemId", itemId);
             command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// 素材倉庫にいれる
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="quantity"></param>
+        public void InsertCustomInventory(int charaId, int itemId, int quantity)
+        {
+            string query = "INSERT INTO custom_inventory (charid, location, slot, itemId, quantity) " +
+                "VALUES (@characterId, 0, 0, @itemId, @quantity) " +
+                "ON DUPLICATE KEY UPDATE quantity = quantity + @quantity";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@characterId", charaId);
+            command.Parameters.AddWithValue("@itemId", itemId);
+            command.Parameters.AddWithValue("@quantity", quantity);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// CharaSkillをUPDATEする
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="skillid"></param>
+        /// <param name="addValue">加算する値</param>
+        public int UpdateCharaSkill(int charaId, SkillId skillid, int addValue)
+        {
+            // 既存の値を取得
+            int currentValue = 0;
+            string selectQuery = "SELECT value FROM char_skills WHERE charid = @characterId AND skillid = @skillId";
+            using (MySqlCommand selectCommand = new(selectQuery, _connection))
+            {
+                selectCommand.Parameters.AddWithValue("@characterId", charaId);
+                selectCommand.Parameters.AddWithValue("@skillId", (int)skillid);
+                object result = selectCommand.ExecuteScalar();
+                if (result != null)
+                {
+                    currentValue = Convert.ToInt32(result);
+                }
+            }
+
+            // 新しい値を計算
+            int newValue = currentValue + addValue;
+
+            // 新しいランクを計算
+            var rank = Math.Max(0, (newValue - 1) / 100);
+
+            string query = "INSERT INTO char_skills (charid, skillid, value, rank) VALUES (@characterId, @skillId, @value, @rank) ON DUPLICATE KEY UPDATE value = value + @addValue, rank = @rank";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@characterId", charaId);
+            command.Parameters.AddWithValue("@skillId", (int)skillid);
+            command.Parameters.AddWithValue("@value", addValue);
+            command.Parameters.AddWithValue("@addValue", addValue);
+            command.Parameters.AddWithValue("@rank", rank);
+            command.ExecuteNonQuery();
+
+            // 新しいレベル
+            var newLevel = Math.Max(0, newValue / 10);
+
+            return newLevel;
         }
 
         /// <summary>
@@ -1664,6 +1727,800 @@ namespace LsbDatabaseApi
         }
 
         /// <summary>
+        /// アイテム情報
+        /// </summary>
+        public struct Item
+        {
+            public int ItemId { get; set; }         // アイテムID
+            public int SubId { get; set; }          // サブID
+            public string Name { get; set; }        // 名前
+            public string Description { get; set; } // 説明
+            public int Quantity { get; set; }       // 個数
+            public int StackSize { get; set; }      // スタックサイズ
+            public int AuctionHouseId { get; set; } // 競売種別ID
+            // equipment
+            public int Level { get; set; }          // 装備可能なレベル
+            public int ItemLevel { get; set; }      // アイテムレベル
+            public int SuLevel { get; set; }        // SUレベル
+            public int Jobs { get; set; }           // 装備可能なジョブ
+        }
+        
+        /// <summary>
+        /// 合成レシピ情報
+        /// </summary>
+        public struct SynthesisRecipe
+        {
+            public int Id { get; set; }                 // レシピID
+            public int Desynth { get; set; }            // 分解フラグ
+            public int KeyItem { get; set; }            // だいじなものID
+            public List<int> CraftRank { get; set; }    // 合成ランク
+            public Item Crystal { get; set; }           // クリスタル
+            public Item HQCrystal { get; set; }         // 特殊クリスタル
+            public List<Item> Ingredient { get; set; }  // 合成素材
+            public Item Result { get; set; }            // 完成品
+            public Item ResultHQ1 { get; set; }         // 完成品HQ1
+            public Item ResultHQ2 { get; set; }         // 完成品HQ2
+            public Item ResultHQ3 { get; set; }         // 完成品HQ3
+            public int IsOpen { get; set; }             // レシピ開放フラグ
+        }
+
+        /// <summary>
+        /// アイテム情報をマージする
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="dst"></param>
+        /// <returns></returns>
+        private static Item GetMergeItem(Item src, Item dst)
+        {
+            var resultItem = dst;
+            resultItem.Quantity += src.Quantity;
+            return resultItem;
+        }
+
+        /// <summary>
+        /// 合成レシピ情報取得
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="guildId"></param>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        public List<SynthesisRecipe> GetSynthesisRecipes(int charaId, GuildId guildId, CraftRank rank)
+        {
+            var recipes = new Dictionary<int, SynthesisRecipe>();
+
+            // レシピ情報取得クエリ
+            string query1 = "SELECT" +
+                "    sr.ID," +
+                "    Desynth," +
+                "    KeyItem," +
+                "    Wood," +
+                "    Smith," +
+                "    Gold," +
+                "    Cloth," +
+                "    Leather," +
+                "    Bone," +
+                "    Alchemy," +
+                "    Cook," +
+                "    Crystal," +
+                "    HQCrystal," +
+                "    Ingredient1," +
+                "    Ingredient2," +
+                "    Ingredient3," +
+                "    Ingredient4," +
+                "    Ingredient5," +
+                "    Ingredient6," +
+                "    Ingredient7," +
+                "    Ingredient8," +
+                "    Result," +
+                "    ResultHQ1," +
+                "    ResultHQ2," +
+                "    ResultHQ3," +
+                "    ResultQty," +
+                "    ResultHQ1Qty," +
+                "    ResultHQ2Qty," +
+                "    ResultHQ3Qty," +
+                "    cor.ID AS flag " +
+                "FROM synth_recipes AS sr " +
+                "LEFT JOIN custom_open_recipes AS cor " +
+                "ON cor.charid = @CharaId AND sr.ID = cor.ID WHERE ";
+
+            var minRank = (int)rank * 10 + 1;
+            var maxRank = (int)rank * 10 + 10;
+
+            switch (guildId)
+            {
+                case GuildId.WOODWORKING:
+                    query1 += "Wood BETWEEN @rankMin AND @rankMax AND Wood >= GREATEST(Smith, Gold, Cloth, Leather, Bone, Alchemy, Cook)";
+                    break;
+                case GuildId.SMITHING:
+                    query1 += "Smith BETWEEN @rankMin AND @rankMax AND Smith >= GREATEST(Wood, Gold, Cloth, Leather, Bone, Alchemy, Cook)";
+                    break;
+                case GuildId.GOLDSMITHING:
+                    query1 += "Gold BETWEEN @rankMin AND @rankMax AND Gold >= GREATEST(Wood, Smith, Cloth, Leather, Bone, Alchemy, Cook)";
+                    break;
+                case GuildId.CLOTHCRAFT:
+                    query1 += "Cloth BETWEEN @rankMin AND @rankMax AND Cloth >= GREATEST(Wood, Smith, Gold, Leather, Bone, Alchemy, Cook)";
+                    break;
+                case GuildId.LEATHERCRAFT:
+                    query1 += "Leather BETWEEN @rankMin AND @rankMax AND Leather >= GREATEST(Wood, Smith, Gold, Cloth, Bone, Alchemy, Cook)";
+                    break;
+                case GuildId.BONECRAFT:
+                    query1 += "Bone BETWEEN @rankMin AND @rankMax AND Bone >= GREATEST(Wood, Smith, Gold, Cloth, Leather, Alchemy, Cook)";
+                    break;
+                case GuildId.ALCHEMY:
+                    query1 += "Alchemy BETWEEN @rankMin AND @rankMax AND Alchemy >= GREATEST(Wood, Smith, Gold, Cloth, Leather, Bone, Cook)";
+                    break;
+                case GuildId.COOKING:
+                    query1 += "Cook BETWEEN @rankMin AND @rankMax AND Cook >= GREATEST(Wood, Smith, Gold, Cloth, Leather, Bone, Alchemy)";
+                    break;
+                default:
+                    return []; // 空のリストを返す
+            }
+
+            // アイテム情報取得クエリ
+            string query2 = "SELECT" +
+                "    ji.itemid," +
+                "    ib.subid," +
+                "    ji.name," +
+                "    ji.description," +
+                "    ib.stackSize," +
+                "    ib.aH," +
+                "    ie.level," +
+                "    ie.ilevel," +
+                "    ie.su_level," +
+                "    ie.jobs," +
+                "    iw.dmg," +
+                "    iw.delay," +
+                "    iw.skill," +
+                "    iw.ilvl_skill," +
+                "    iw.ilvl_parry," +
+                "    iw.ilvl_macc " +
+                "FROM japanese_item ji " +
+                "INNER JOIN item_basic ib ON ji.itemid = ib.itemid " +
+                "LEFT JOIN item_equipment ie ON ji.itemid = ie.itemId " +
+                "LEFT JOIN item_weapon iw ON ji.itemid = iw.itemId " +
+                "WHERE ji.itemid in ({0});";
+
+            // アイテムIDリスト作成
+            var items = new Dictionary<int, bool>();
+            using (MySqlCommand command = new(query1, _connection))
+            {
+                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@rankMin", minRank);
+                command.Parameters.AddWithValue("@rankMax", maxRank);
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var recipe = new SynthesisRecipe
+                    {
+                        // データの処理
+                        Id = Convert.ToInt32(reader["ID"]),
+                        Desynth = Convert.ToInt32(reader["Desynth"]),
+                        KeyItem = Convert.ToInt32(reader["KeyItem"]),
+                        CraftRank = [
+                            Convert.ToInt32(reader["Wood"]),
+                            Convert.ToInt32(reader["Smith"]),
+                            Convert.ToInt32(reader["Gold"]),
+                            Convert.ToInt32(reader["Cloth"]),
+                            Convert.ToInt32(reader["Leather"]),
+                            Convert.ToInt32(reader["Bone"]),
+                            Convert.ToInt32(reader["Alchemy"]),
+                            Convert.ToInt32(reader["Cook"])
+                        ],
+                        Crystal = new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["Crystal"]),
+                            Quantity = 1,
+                        },
+                        HQCrystal = new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["HQCrystal"]),
+                            Quantity = 1,
+                        },
+                        // flagはNULLの場合は0、数字がある場合は1をIsOpenにセットする
+                        IsOpen = reader["flag"] == DBNull.Value ? 0 : 1,
+                    };
+                    // 素材リスト作成
+                    var ingredient = new List<Item>();
+                    // 1番目の素材
+                    var ingredient1 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient1"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient1);
+                    // 2番目の素材
+                    var ingredient2 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient2"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient2);
+                    // 3番目の素材
+                    var ingredient3 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient3"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient3);
+                    // 4番目の素材
+                    var ingredient4 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient4"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient4);
+                    // 5番目の素材
+                    var ingredient5 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient5"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient5);
+                    // 6番目の素材
+                    var ingredient6 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient6"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient6);
+                    // 7番目の素材
+                    var ingredient7 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient7"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient7);
+                    // 8番目の素材
+                    var ingredient8 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient8"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient8);
+                    // 完成品
+                    recipe.Result = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Result"]),
+                        Quantity = Convert.ToInt32(reader["ResultQty"]),
+                    };
+                    // 完成品HQ1
+                    recipe.ResultHQ1 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ1"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ1Qty"]),
+                    };
+                    // 完成品HQ2
+                    recipe.ResultHQ2 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ2"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ2Qty"]),
+                    };
+                    // 完成品HQ3
+                    recipe.ResultHQ3 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ3"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ3Qty"]),
+                    };
+
+                    // 素材の同じアイテムをマージする
+                    recipe.Ingredient = [];
+                    var currentItem = new Item
+                    {
+                        ItemId = 0
+                    };
+                    foreach (var item in ingredient)
+                    {
+                        if (item.ItemId > 0)
+                        {
+                            if (currentItem.ItemId != item.ItemId)
+                            {
+                                if (currentItem.ItemId > 0)
+                                {
+                                    recipe.Ingredient.Add(currentItem);
+                                }
+                                currentItem = item;
+                            }
+                            else
+                            {
+                                currentItem.Quantity++;
+                            }
+                        }
+                    }
+                    recipe.Ingredient.Add(currentItem);
+
+                    recipes.Add(recipe.Id, recipe);
+
+                    // アイテムリスト作成
+                    items[recipe.Crystal.ItemId] = true;
+                    items[recipe.HQCrystal.ItemId] = true;
+                    items[ingredient1.ItemId] = true;
+                    items[ingredient2.ItemId] = true;
+                    items[ingredient3.ItemId] = true;
+                    items[ingredient4.ItemId] = true;
+                    items[ingredient5.ItemId] = true;
+                    items[ingredient6.ItemId] = true;
+                    items[ingredient7.ItemId] = true;
+                    items[ingredient8.ItemId] = true;
+                    items[recipe.Result.ItemId] = true;
+                    items[recipe.ResultHQ1.ItemId] = true;
+                    items[recipe.ResultHQ2.ItemId] = true;
+                    items[recipe.ResultHQ3.ItemId] = true;
+                }
+            }
+
+            if (items.Count == 0)
+            {
+                return [];
+            }
+
+            // IN句のパラメータ化
+            var itemIds = items.Keys.ToList();
+            var itemParameters = new List<string>();
+            var itemCommands = new MySqlCommand();
+            for (int i = 0; i < itemIds.Count; i++)
+            {
+                var paramName = $"@itemId{i}";
+                itemParameters.Add(paramName);
+                itemCommands.Parameters.AddWithValue(paramName, itemIds[i]);
+            }
+
+            // アイテム情報取得
+            var itemDatabase = new Dictionary<int, Item>();
+            using (MySqlCommand command = new(string.Format(query2, string.Join(",", itemParameters)), _connection))
+            {
+                foreach (MySqlParameter p in itemCommands.Parameters) { command.Parameters.Add(p.ParameterName, p.MySqlDbType).Value = p.Value; }
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var item = new Item
+                    {
+                        // データの処理
+                        ItemId = Convert.ToInt32(reader["itemid"]),
+                        SubId = Convert.ToInt32(reader["subid"]),
+                        Name = Convert.ToString(reader["name"]) ?? "",
+                        Description = Convert.ToString(reader["description"]) ?? "",
+                        StackSize = Convert.ToInt32(reader["stackSize"]),
+                        AuctionHouseId = Convert.ToInt32(reader["aH"]),
+                        Level = reader.IsDBNull(reader.GetOrdinal("level")) ? 0 : Convert.ToInt32(reader["level"]),
+                        ItemLevel = reader.IsDBNull(reader.GetOrdinal("ilevel")) ? 0 : Convert.ToInt32(reader["ilevel"]),
+                        SuLevel = reader.IsDBNull(reader.GetOrdinal("su_level")) ? 0 : Convert.ToInt32(reader["su_level"]),
+                        Jobs = reader.IsDBNull(reader.GetOrdinal("jobs")) ? 0 : Convert.ToInt32(reader["jobs"])
+                    };
+
+                    itemDatabase[item.ItemId] = item;
+                }
+            }
+
+            // マージする
+            foreach (var recipeKey in recipes.Keys.ToList())
+            {
+                var recipe = recipes[recipeKey];
+                recipe.Crystal = GetMergeItem(recipe.Crystal, itemDatabase[recipe.Crystal.ItemId]);
+                recipe.HQCrystal = GetMergeItem(recipe.HQCrystal, itemDatabase[recipe.HQCrystal.ItemId]);
+                var ingredient = new List<Item>();
+                foreach (var item in recipe.Ingredient)
+                {
+                    if (item.ItemId > 0)
+                    {
+                        ingredient.Add(GetMergeItem(item, itemDatabase[item.ItemId]));
+                    }
+                }
+                recipe.Ingredient = ingredient;
+                recipe.Result = GetMergeItem(recipe.Result, itemDatabase[recipe.Result.ItemId]);
+                recipe.ResultHQ1 = GetMergeItem(recipe.ResultHQ1, itemDatabase[recipe.ResultHQ1.ItemId]);
+                recipe.ResultHQ2 = GetMergeItem(recipe.ResultHQ2, itemDatabase[recipe.ResultHQ2.ItemId]);
+                recipe.ResultHQ3 = GetMergeItem(recipe.ResultHQ3, itemDatabase[recipe.ResultHQ3.ItemId]);
+                recipes[recipeKey] = recipe;
+            }
+
+            int sortid = guildId - GuildId.WOODWORKING;
+            List<SynthesisRecipe> sortedRecipes = [.. recipes.Values
+                .OrderBy(r => r.CraftRank.ElementAtOrDefault(sortid))   // CraftRankの3つ目の要素で昇順
+                .ThenBy(r => r.Result.ItemId)                           // Result.itemIdで昇順
+                .ThenBy(r => r.Id)];
+
+            // キャッシュCacheSynthesisRecipesに入れる
+            foreach (var recipe in sortedRecipes)
+            {
+                CacheSynthesisRecipes.AddOrUpdate(recipe.Id, recipe, (key, oldValue) => recipe);
+            }
+
+            return sortedRecipes;
+        }
+
+        /// <summary>
+        /// アイテム別合成レシピ情報取得
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="guildId"></param>
+        /// <param name="rank"></param>
+        /// <returns></returns>
+        public List<SynthesisRecipe> GetSynthesisRecipesByItem(int charaId, AuctionHouseId ahId, int level)
+        {
+            var recipes = new Dictionary<int, SynthesisRecipe>();
+
+            // レシピ情報取得クエリ
+            string query1 = "SELECT" +
+                "    sr.ID," +
+                "    Desynth," +
+                "    KeyItem," +
+                "    Wood," +
+                "    Smith," +
+                "    Gold," +
+                "    Cloth," +
+                "    Leather," +
+                "    Bone," +
+                "    Alchemy," +
+                "    Cook," +
+                "    Crystal," +
+                "    HQCrystal," +
+                "    Ingredient1," +
+                "    Ingredient2," +
+                "    Ingredient3," +
+                "    Ingredient4," +
+                "    Ingredient5," +
+                "    Ingredient6," +
+                "    Ingredient7," +
+                "    Ingredient8," +
+                "    Result," +
+                "    ResultHQ1," +
+                "    ResultHQ2," +
+                "    ResultHQ3," +
+                "    ResultQty," +
+                "    ResultHQ1Qty," +
+                "    ResultHQ2Qty," +
+                "    ResultHQ3Qty," +
+                "    cor.ID AS flag " +
+                "FROM synth_recipes AS sr " +
+                "INNER JOIN item_basic AS ib ON ib.itemid = sr.Result " +
+                "LEFT JOIN item_equipment AS ie ON ie.itemId = sr.Result " +
+                "LEFT JOIN custom_open_recipes AS cor ON cor.ID = sr.ID AND cor.charid = @CharaId " +
+                "WHERE ib.aH = @ahId AND(ie.itemId IS NULL OR(GREATEST(ie.level, ie.ilevel) >= @level AND GREATEST(ie.level, ie.ilevel) < (@level + 10)));";
+
+            // アイテム情報取得クエリ
+            string query2 = "SELECT" +
+                "    ji.itemid," +
+                "    ib.subid," +
+                "    ji.name," +
+                "    ji.description," +
+                "    ib.stackSize," +
+                "    ib.aH," +
+                "    ie.level," +
+                "    ie.ilevel," +
+                "    ie.su_level," +
+                "    ie.jobs," +
+                "    iw.dmg," +
+                "    iw.delay," +
+                "    iw.skill," +
+                "    iw.ilvl_skill," +
+                "    iw.ilvl_parry," +
+                "    iw.ilvl_macc " +
+                "FROM japanese_item ji " +
+                "INNER JOIN item_basic ib ON ji.itemid = ib.itemid " +
+                "LEFT JOIN item_equipment ie ON ji.itemid = ie.itemId " +
+                "LEFT JOIN item_weapon iw ON ji.itemid = iw.itemId " +
+                "WHERE ji.itemid in ({0});";
+
+            // アイテムIDリスト作成
+            var items = new Dictionary<int, bool>();
+            using (MySqlCommand command = new(query1, _connection))
+            {
+                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@ahId", ahId);
+                command.Parameters.AddWithValue("@level", level);
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var recipe = new SynthesisRecipe
+                    {
+                        // データの処理
+                        Id = Convert.ToInt32(reader["ID"]),
+                        Desynth = Convert.ToInt32(reader["Desynth"]),
+                        KeyItem = Convert.ToInt32(reader["KeyItem"]),
+                        CraftRank = [
+                            Convert.ToInt32(reader["Wood"]),
+                            Convert.ToInt32(reader["Smith"]),
+                            Convert.ToInt32(reader["Gold"]),
+                            Convert.ToInt32(reader["Cloth"]),
+                            Convert.ToInt32(reader["Leather"]),
+                            Convert.ToInt32(reader["Bone"]),
+                            Convert.ToInt32(reader["Alchemy"]),
+                            Convert.ToInt32(reader["Cook"])
+                        ],
+                        Crystal = new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["Crystal"]),
+                            Quantity = 1,
+                        },
+                        HQCrystal = new Item
+                        {
+                            ItemId = Convert.ToInt32(reader["HQCrystal"]),
+                            Quantity = 1,
+                        },
+                        // flagはNULLの場合は0、数字がある場合は1をIsOpenにセットする
+                        IsOpen = reader["flag"] == DBNull.Value ? 0 : 1,
+                    };
+                    // 素材リスト作成
+                    var ingredient = new List<Item>();
+                    // 1番目の素材
+                    var ingredient1 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient1"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient1);
+                    // 2番目の素材
+                    var ingredient2 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient2"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient2);
+                    // 3番目の素材
+                    var ingredient3 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient3"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient3);
+                    // 4番目の素材
+                    var ingredient4 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient4"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient4);
+                    // 5番目の素材
+                    var ingredient5 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient5"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient5);
+                    // 6番目の素材
+                    var ingredient6 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient6"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient6);
+                    // 7番目の素材
+                    var ingredient7 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient7"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient7);
+                    // 8番目の素材
+                    var ingredient8 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Ingredient8"]),
+                        Quantity = 1,
+                    };
+                    ingredient.Add(ingredient8);
+                    // 完成品
+                    recipe.Result = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["Result"]),
+                        Quantity = Convert.ToInt32(reader["ResultQty"]),
+                    };
+                    // 完成品HQ1
+                    recipe.ResultHQ1 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ1"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ1Qty"]),
+                    };
+                    // 完成品HQ2
+                    recipe.ResultHQ2 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ2"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ2Qty"]),
+                    };
+                    // 完成品HQ3
+                    recipe.ResultHQ3 = new Item
+                    {
+                        ItemId = Convert.ToInt32(reader["ResultHQ3"]),
+                        Quantity = Convert.ToInt32(reader["ResultHQ3Qty"]),
+                    };
+
+                    // 素材の同じアイテムをマージする
+                    recipe.Ingredient = [];
+                    var currentItem = new Item
+                    {
+                        ItemId = 0
+                    };
+                    foreach (var item in ingredient)
+                    {
+                        if (item.ItemId > 0)
+                        {
+                            if (currentItem.ItemId != item.ItemId)
+                            {
+                                if (currentItem.ItemId > 0)
+                                {
+                                    recipe.Ingredient.Add(currentItem);
+                                }
+                                currentItem = item;
+                            }
+                            else
+                            {
+                                currentItem.Quantity++;
+                            }
+                        }
+                    }
+                    recipe.Ingredient.Add(currentItem);
+
+                    recipes.Add(recipe.Id, recipe);
+
+                    // アイテムリスト作成
+                    items[recipe.Crystal.ItemId] = true;
+                    items[recipe.HQCrystal.ItemId] = true;
+                    items[ingredient1.ItemId] = true;
+                    items[ingredient2.ItemId] = true;
+                    items[ingredient3.ItemId] = true;
+                    items[ingredient4.ItemId] = true;
+                    items[ingredient5.ItemId] = true;
+                    items[ingredient6.ItemId] = true;
+                    items[ingredient7.ItemId] = true;
+                    items[ingredient8.ItemId] = true;
+                    items[recipe.Result.ItemId] = true;
+                    items[recipe.ResultHQ1.ItemId] = true;
+                    items[recipe.ResultHQ2.ItemId] = true;
+                    items[recipe.ResultHQ3.ItemId] = true;
+                }
+            }
+
+            if (items.Count == 0)
+            {
+                return [];
+            }
+
+            // IN句のパラメータ化
+            var itemIds = items.Keys.ToList();
+            var itemParameters = new List<string>();
+            var itemCommands = new MySqlCommand();
+            for (int i = 0; i < itemIds.Count; i++)
+            {
+                var paramName = $"@itemId{i}";
+                itemParameters.Add(paramName);
+                itemCommands.Parameters.AddWithValue(paramName, itemIds[i]);
+            }
+
+            // アイテム情報取得
+            var itemDatabase = new Dictionary<int, Item>();
+            using (MySqlCommand command = new(string.Format(query2, string.Join(",", itemParameters)), _connection))
+            {
+                foreach (MySqlParameter p in itemCommands.Parameters) { command.Parameters.Add(p.ParameterName, p.MySqlDbType).Value = p.Value; }
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var item = new Item
+                    {
+                        // データの処理
+                        ItemId = Convert.ToInt32(reader["itemid"]),
+                        SubId = Convert.ToInt32(reader["subid"]),
+                        Name = Convert.ToString(reader["name"]) ?? "",
+                        Description = Convert.ToString(reader["description"]) ?? "",
+                        StackSize = Convert.ToInt32(reader["stackSize"]),
+                        AuctionHouseId = Convert.ToInt32(reader["aH"]),
+                        Level = reader.IsDBNull(reader.GetOrdinal("level")) ? 0 : Convert.ToInt32(reader["level"]),
+                        ItemLevel = reader.IsDBNull(reader.GetOrdinal("ilevel")) ? 0 : Convert.ToInt32(reader["ilevel"]),
+                        SuLevel = reader.IsDBNull(reader.GetOrdinal("su_level")) ? 0 : Convert.ToInt32(reader["su_level"]),
+                        Jobs = reader.IsDBNull(reader.GetOrdinal("jobs")) ? 0 : Convert.ToInt32(reader["jobs"])
+                    };
+
+                    itemDatabase[item.ItemId] = item;
+                }
+            }
+
+            // マージする
+            foreach (var recipeKey in recipes.Keys.ToList())
+            {
+                var recipe = recipes[recipeKey];
+                recipe.Crystal = GetMergeItem(recipe.Crystal, itemDatabase[recipe.Crystal.ItemId]);
+                recipe.HQCrystal = GetMergeItem(recipe.HQCrystal, itemDatabase[recipe.HQCrystal.ItemId]);
+                var ingredient = new List<Item>();
+                foreach (var item in recipe.Ingredient)
+                {
+                    if (item.ItemId > 0)
+                    {
+                        ingredient.Add(GetMergeItem(item, itemDatabase[item.ItemId]));
+                    }
+                }
+                recipe.Ingredient = ingredient;
+                recipe.Result = GetMergeItem(recipe.Result, itemDatabase[recipe.Result.ItemId]);
+                recipe.ResultHQ1 = GetMergeItem(recipe.ResultHQ1, itemDatabase[recipe.ResultHQ1.ItemId]);
+                recipe.ResultHQ2 = GetMergeItem(recipe.ResultHQ2, itemDatabase[recipe.ResultHQ2.ItemId]);
+                recipe.ResultHQ3 = GetMergeItem(recipe.ResultHQ3, itemDatabase[recipe.ResultHQ3.ItemId]);
+                recipes[recipeKey] = recipe;
+            }
+
+            // levelとitemLevelの両方を考慮してソートする
+            List<SynthesisRecipe> sortedRecipes = [.. recipes.Values
+                .OrderBy(r => Math.Max(r.Result.Level, r.Result.ItemLevel))
+                .ThenBy(r => r.Result.ItemId)
+                .ThenBy(r => r.Id)];
+
+            // キャッシュCacheSynthesisRecipesに入れる
+            foreach (var recipe in sortedRecipes)
+            {
+                CacheSynthesisRecipes.AddOrUpdate(recipe.Id, recipe, (key, oldValue) => recipe);
+            }
+
+            return sortedRecipes;
+        }
+
+        /// <summary>
+        /// レシピをオープンする
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="id"></param>
+        public void InsertOpenRecipe(int charaId, int id)
+        {
+            string query = "INSERT INTO custom_open_recipes (charid, ID) VALUES (@charaId, @id);";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@charaId", charaId);
+            command.Parameters.AddWithValue("@id", id);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// 合成素材かチェックする
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public bool CheckIngredientItem(int itemId)
+        {
+            var result = false;
+
+            string query = "SELECT Result " +
+                "FROM synth_recipes " +
+                "WHERE" +
+                "    Ingredient1 = @itemId1 OR" +
+                "    Ingredient2 = @itemId2 OR" +
+                "    Ingredient3 = @itemId3 OR" +
+                "    Ingredient4 = @itemId4 OR" +
+                "    Ingredient5 = @itemId5 OR" +
+                "    Ingredient6 = @itemId6 OR" +
+                "    Ingredient7 = @itemId7 OR" +
+                "    Ingredient8 = @itemId8;";
+
+            using (MySqlCommand command = new(query, _connection))
+            {
+                command.Parameters.AddWithValue("@itemId1", itemId);
+                command.Parameters.AddWithValue("@itemId2", itemId);
+                command.Parameters.AddWithValue("@itemId3", itemId);
+                command.Parameters.AddWithValue("@itemId4", itemId);
+                command.Parameters.AddWithValue("@itemId5", itemId);
+                command.Parameters.AddWithValue("@itemId6", itemId);
+                command.Parameters.AddWithValue("@itemId7", itemId);
+                command.Parameters.AddWithValue("@itemId8", itemId);
+                using MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// キャッシュから合成レシピ情報を取得する。
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public SynthesisRecipe? GetCachedSynthesisRecipe(int recipeId)
+        {
+            if (CacheSynthesisRecipes.TryGetValue(recipeId, out var recipe))
+            {
+                return recipe;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// すべてのキャッシュをクリアする。
         /// </summary>
         public void ClearAllCaches()
@@ -1677,13 +2534,13 @@ namespace LsbDatabaseApi
             CacheNation.Clear();
             CacheCampaignAllegiance.Clear();
             CacheProfile.Clear();
-            CacheMissionInfo.Clear();
             CacheInventory.Clear();
             CacheCharaEffect.Clear();
             CacheCharaSkill.Clear();
             CacheCharaStatus.Clear();
             CacheCharaJob.Clear();
             CacheCharaMagic.Clear();
+            CacheSynthesisRecipes.Clear();
         }
 
         /// <summary>

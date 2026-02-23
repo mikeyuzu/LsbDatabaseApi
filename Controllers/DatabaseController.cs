@@ -1,5 +1,8 @@
-﻿using LsbDatabaseApi.@struct;
+﻿using Google.Protobuf.WellKnownTypes;
+using LsbDatabaseApi.@struct;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using static LsbDatabaseApi.DatabaseApi;
 
 namespace LsbDatabaseApi.Controllers
 {
@@ -49,9 +52,16 @@ namespace LsbDatabaseApi.Controllers
             return Ok(items);
         }
 
-        // 合成倉庫から取り出す
+        /// <summary>
+        /// 合成倉庫のアイテムを削除する
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="subId"></param>
+        /// <param name="usenum"></param>
+        /// <returns></returns>
         [HttpGet("RemoveSynergyInventoryItem")]
-        public ActionResult RemoveSynergyInventoryItem(int charaId, int itemId, int subId, int usenum, int quantity)
+        public ActionResult RemoveSynergyInventoryItem(int charaId, int itemId, int subId, int usenum)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
@@ -62,18 +72,127 @@ namespace LsbDatabaseApi.Controllers
             database.InsertDeliveryBoxItem(charaId, itemId, subId, usenum, extra);
 
             // データベースを更新
-            if (quantity <= usenum)
-            {
-                // 在庫が0以下になったらレコードを削除
-                database.DeleteCustomInventory(charaId, (ItemId)itemId);
-            }
-            else
-            {
-                // 在庫が残っている場合はレコードを更新
-                database.UpdateCustomInventory(charaId, (ItemId)itemId, usenum);
-            }
+            database.UpdateCustomInventory(charaId, (ItemId)itemId, usenum);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// 合成レシピを返す
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSynthesisRecipes")]
+        public ActionResult<List<DatabaseApi.SynergyInventoryItem>> GetSynthesisRecipes(int charaId, int guildId, int rank)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var recipes = database.GetSynthesisRecipes(charaId, (GuildId)guildId, (CraftRank)rank);
+
+            return Ok(recipes);
+        }
+
+        /// <summary>
+        /// アイテム別合成レシピを返す
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSynthesisRecipesByItem")]
+        public ActionResult<List<DatabaseApi.SynergyInventoryItem>> GetSynthesisRecipesByItem(int charaId, int auctionHouseId, int minLevel)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var recipes = database.GetSynthesisRecipesByItem(charaId, (AuctionHouseId)auctionHouseId, minLevel);
+
+            return Ok(recipes);
+        }
+
+        /// <summary>
+        /// 合成レシピを開放する
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("OpenRecipes")]
+        public ActionResult OpenRecipes(int charaId, int id)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            database.InsertOpenRecipe(charaId, id);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// 合成結果情報
+        /// </summary>
+        public struct SynergyResult
+        {
+            public int StorageType { get; set; }    // 格納先 0:素材倉庫, 1:ポスト
+            public int SkillId { get; set; }        // スキルID
+            public int SkillLevel { get; set; }     // スキルレベル
+        }
+
+        /// <summary>
+        /// アイテムを合成する
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="recipeId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="subId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        [HttpGet("SynthesizeItem")]
+        public ActionResult<SynergyResult> SynthesizeItem(int charaId, int skillId, int recipeId, int itemId, int subId, int quantity)
+        {
+            SynergyResult synergy_result = new();
+
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+            var recipeInfo = database.GetCachedSynthesisRecipe(recipeId);
+            if (recipeInfo != null)
+            {
+                var isIngredient = database.CheckIngredientItem(itemId);
+
+                if (isIngredient)
+                {
+                    // 素材倉庫に入れる
+                    database.InsertCustomInventory(charaId, itemId, quantity);
+                    synergy_result.StorageType = 0;
+                }
+                else
+                {
+                    // ポストに入れる
+                    var extra = "000000000000000000000000000000000000000000000000";
+                    database.InsertDeliveryBoxItem(charaId, itemId, subId, quantity, extra);
+                    synergy_result.StorageType = 1;
+                }
+
+                // 合成倉庫から削除する (消費アイテム)
+                // クリスタル
+                database.UpdateCustomInventory(charaId, (ItemId)recipeInfo.Value.Crystal.ItemId, recipeInfo.Value.Crystal.Quantity);
+                // 素材
+                foreach (var ingredient in recipeInfo.Value.Ingredient)
+                {
+                    if (ingredient.ItemId > 0)
+                    {
+                        database.UpdateCustomInventory(charaId, (ItemId)ingredient.ItemId, ingredient.Quantity);
+                    }
+                }
+
+                synergy_result.SkillId = skillId;
+                var addSkillPoint = 10;
+                synergy_result.SkillLevel = database.UpdateCharaSkill(charaId, (SkillId)synergy_result.SkillId, addSkillPoint);
+            }
+
+            return Ok(synergy_result);
         }
     }
 }
