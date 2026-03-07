@@ -194,6 +194,40 @@ namespace LsbDatabaseApi.Controllers
 
             return Ok(synergy_result);
         }
+
+        /// <summary>
+        /// 図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetCollectionList")]
+        public ActionResult<List<int>> GetCollectionList(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetCollectionList(charaId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// ミッションのリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetMissionList")]
+        public ActionResult<MissionClearInfo> GetMissionList(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetMissionList(charaId);
+
+            return Ok(list);
+        }
     }
 }
 ﻿

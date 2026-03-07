@@ -1,4 +1,5 @@
-﻿using LsbDatabaseApi.@struct;
+﻿using LsbDatabaseApi.mission;
+using LsbDatabaseApi.@struct;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections;
@@ -2504,6 +2505,206 @@ namespace LsbDatabaseApi
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 図鑑のリスト取得
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="id"></param>
+        public List<int> GetCollectionList(int charaId)
+        {
+            // CompendiumTypeの数のリストにする
+            var list = new List<int>();
+            for (int i = 0; i < (int)CompendiumType.Max; i++)
+            {
+                list.Add(0);
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// ミッションステータス
+        /// </summary>
+        public enum MissionStatus
+        {
+            COMPLETED = -1,     // クリア済み
+            NOT_STARTED = 0,    // 未受託
+        }
+
+        /// <summary>
+        /// ミッションリストを取得する
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="id"></param>
+        public MissionClearInfo GetMissionList(int charaId)
+        {
+            var list = new MissionClearInfo();
+            try
+            {
+                string query = "SELECT missions FROM chars WHERE charid = @CharaId";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    MissionInfo missionInfo = ExtractMissionsFromBlob(reader, "missions");
+                    CacheMissionInfo.AddOrUpdate(charaId, missionInfo, (key, oldInfo) => missionInfo);
+
+                    // サンドリアの進捗状況
+                    {
+                        var sandoriaMission = missionInfo.Tables[(int)MissionId.SANDORIA];
+                        for (var missionId = 0; missionId < MissionSandoriaTable.GetMissionMax(); missionId++)
+                        {
+                            var mission = MissionSandoriaTable.ToMissionId(missionId);
+                            if (sandoriaMission.Complete[(int)mission])
+                            {
+                                list.Sandoria[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Sandoria[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if ((int)mission == sandoriaMission.Current)
+                            {
+                                list.Sandoria[missionId] = sandoriaMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // バストゥーク進捗状況
+                    {
+                        var bastokMission = missionInfo.Tables[(int)MissionId.BASTOK];
+                        for (var missionId = 0; missionId < MissionBastokTable.GetMissionMax(); missionId++)
+                        {
+                            var mission = MissionBastokTable.ToMissionId(missionId);
+                            if (bastokMission.Complete[(int)mission])
+                            {
+                                list.Bastok[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Bastok[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if ((int)mission == bastokMission.Current)
+                            {
+                                list.Bastok[missionId] = bastokMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // ウィンダス進捗状況
+                    {
+                        var windurstMission = missionInfo.Tables[(int)MissionId.WINDURST];
+                        for (var missionId = 0; missionId < MissionWindurstTable.GetMissionMax(); missionId++)
+                        {
+                            var mission = MissionWindurstTable.ToMissionId(missionId);
+                            if (windurstMission.Complete[(int)mission])
+                            {
+                                list.Windurst[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Windurst[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if ((int)mission == windurstMission.Current)
+                            {
+                                list.Windurst[missionId] = windurstMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // ジラート進捗状況
+                    {
+                        var zilartMission = missionInfo.Tables[(int)MissionId.ZILART];
+                        for (var missionId = 0; missionId < MissionZilartTable.GetMissionMax(); missionId++)
+                        {
+                            var mission = MissionZilartTable.ToMissionId(missionId);
+                            if (zilartMission.Complete[(int)mission])
+                            {
+                                list.Zilart[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Zilart[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if ((int)mission == zilartMission.Current)
+                            {
+                                list.Zilart[missionId] = zilartMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // プロマシア進捗状況
+                    {
+                        var copMission = missionInfo.Tables[(int)MissionId.COP];
+                        for (var missionId = 0; missionId < MissionCOPTable.GetMissionMax(); missionId++)
+                        {
+                            var mission = MissionCOPTable.ToMissionId(missionId);
+                            if ((int)mission < copMission.Current)
+                            {
+                                list.Cop[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Cop[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if ((int)mission == copMission.Current)
+                            {
+                                list.Cop[missionId] = copMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // アトルガン進捗状況
+                    {
+                        var toauMission = missionInfo.Tables[(int)MissionId.TOAU];
+                        for (var missionId = 0; missionId < (int)MissionTOAU.MAX; missionId++)
+                        {
+                            if (toauMission.Complete[missionId])
+                            {
+                                list.Toau[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Toau[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if (missionId == toauMission.Current)
+                            {
+                                list.Toau[missionId] = toauMission.StatusLower;
+                            }
+                        }
+                    }
+
+                    // アルタナ進捗状況
+                    {
+                        var wotgMission = missionInfo.Tables[(int)MissionId.WOTG];
+                        for (var missionId = 0; missionId < (int)MissionWOTG.MAX; missionId++)
+                        {
+                            if (wotgMission.Complete[missionId])
+                            {
+                                list.Wotg[missionId] = (int)MissionStatus.COMPLETED;
+                            }
+                            else
+                            {
+                                list.Wotg[missionId] = (int)MissionStatus.NOT_STARTED;
+                            }
+                            if (missionId == wotgMission.Current)
+                            {
+                                list.Wotg[missionId] = wotgMission.StatusLower;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
         }
 
         /// <summary>

@@ -32,61 +32,64 @@
         MAX_MISSIONAREA = 15
     }
 
+    /// <summary>
+    /// サンドリアミッション
+    /// </summary>
     public enum MissionSandoria
     {
-        SMASH_THE_ORCISH_SCOUTS = 0,
-        BAT_HUNT = 1,
-        SAVE_THE_CHILDREN = 2,
-        THE_RESCUE_DRILL = 3,
-        THE_DAVOI_REPORT = 4,
-        JOURNEY_ABROAD = 5,
-        JOURNEY_TO_BASTOK = 6,
-        JOURNEY_TO_WINDURST = 7,
-        JOURNEY_TO_BASTOK2 = 8,
-        JOURNEY_TO_WINDURST2 = 9,
-        INFILTRATE_DAVOI = 10,
-        THE_CRYSTAL_SPRING = 11,
-        APPOINTMENT_TO_JEUNO = 12,
-        MAGICITE = 13,
-        THE_RUINS_OF_FEI_YIN = 14,
-        THE_SHADOW_LORD = 15,
-        LEAUTES_LAST_WISHES = 16,
-        RANPERRES_FINAL_REST = 17,
-        PRESTIGE_OF_THE_PAPSQUE = 18,
-        THE_SECRET_WEAPON = 19,
-        COMING_OF_AGE = 20,
-        LIGHTBRINGER = 21,
-        BREAKING_BARRIERS = 22,
-        THE_HEIR_TO_THE_LIGHT = 23,
+        SMASH_THE_ORCISH_SCOUTS = 0,    // オークの斥候を倒せ
+        BAT_HUNT = 1,                   // コウモリ退治
+        SAVE_THE_CHILDREN = 2,          // 子供の救助
+        THE_RESCUE_DRILL = 3,           // 救助訓練
+        THE_DAVOI_REPORT = 4,           // ダボイ調査報告
+        JOURNEY_ABROAD = 5,             // 他国を回れ
+        JOURNEY_TO_BASTOK = 6,          // 他国を回れ バストゥークルート
+        JOURNEY_TO_WINDURST = 7,        // 他国を回れ ウィンダスルート
+        JOURNEY_TO_BASTOK2 = 8,         // 他国を回れ バストゥークからウィンダスルート
+        JOURNEY_TO_WINDURST2 = 9,       // 他国を回れ ウィンダスからバストゥークルート
+        INFILTRATE_DAVOI = 10,          // ダボイ潜入計画
+        THE_CRYSTAL_SPRING = 11,        // クリスタルの泉
+        APPOINTMENT_TO_JEUNO = 12,      // ジュノ大使館へ赴任
+        MAGICITE = 13,                  // 魔晶石を奪え
+        THE_RUINS_OF_FEI_YIN = 14,      // 廃墟フェ・イン
+        THE_SHADOW_LORD = 15,           // 闇の王を討て！
+        LEAUTES_LAST_WISHES = 16,       // ローテ王妃の遺言
+        RANPERRES_FINAL_REST = 17,      // 龍王の眠る場所
+        PRESTIGE_OF_THE_PAPSQUE = 18,   // 教皇の威信
+        THE_SECRET_WEAPON = 19,         // 獣人兵器の秘密
+        COMING_OF_AGE = 20,             // 成人の儀
+        LIGHTBRINGER = 21,              // 聖剣探索
+        BREAKING_BARRIERS = 22,         // 厚き壁
+        THE_HEIR_TO_THE_LIGHT = 23,     // 光の継承者
         NONE = 65535,
     }
 
     public enum MissionBastok
     {
-        THE_ZERUHN_REPORT = 0,
-        GEOLOGICAL_SURVEY = 1,
-        FETICHISM = 2,
-        THE_CRYSTAL_LINE = 3,
-        WADING_BEASTS = 4,
-        THE_EMISSARY = 5,
-        THE_EMISSARY_SANDORIA = 6,
-        THE_EMISSARY_WINDURST = 7,
-        THE_EMISSARY_SANDORIA2 = 8,
-        THE_EMISSARY_WINDURST2 = 9,
-        THE_FOUR_MUSKETEERS = 10,
-        TO_THE_FORSAKEN_MINES = 11,
-        JEUNO = 12,
-        MAGICITE = 13,
-        DARKNESS_RISING = 14,
-        XARCABARD_LAND_OF_TRUTHS = 15,
-        RETURN_OF_THE_TALEKEEPER = 16,
-        THE_PIRATES_COVE = 17,
-        THE_FINAL_IMAGE = 18,
-        ON_MY_WAY = 19,
-        THE_CHAINS_THAT_BIND_US = 20,
-        ENTER_THE_TALEKEEPER = 21,
-        THE_SALT_OF_THE_EARTH = 22,
-        WHERE_TWO_PATHS_CONVERGE = 23,
+        THE_ZERUHN_REPORT = 0,          // ツェールン鉱山からの報告
+        GEOLOGICAL_SURVEY = 1,          // 彼の名はシド
+        FETICHISM = 2,                  // 終わらぬ戦い
+        THE_CRYSTAL_LINE = 3,           // クリスタルライン
+        WADING_BEASTS = 4,              // 涸れ谷の怪物
+        THE_EMISSARY = 5,               // バストゥークを離れて
+        THE_EMISSARY_SANDORIA = 6,      // バストゥークを離れて サンドリアルート
+        THE_EMISSARY_WINDURST = 7,      // バストゥークを離れて ウィンダスルート
+        THE_EMISSARY_SANDORIA2 = 8,     // バストゥークを離れて サンドリアからウィンダスルート
+        THE_EMISSARY_WINDURST2 = 9,     // バストゥークを離れて ウィンダスからサンドリアルート
+        THE_FOUR_MUSKETEERS = 10,       // 四銃士
+        TO_THE_FORSAKEN_MINES = 11,     // 忘れられた鉱山にて
+        JEUNO = 12,                     // ジュノへ
+        MAGICITE = 13,                  // 魔晶石を奪え
+        DARKNESS_RISING = 14,           // 闇、再び
+        XARCABARD_LAND_OF_TRUTHS = 15,  // ザルカバードに眠る真実
+        RETURN_OF_THE_TALEKEEPER = 16,  // 語り部現る！？
+        THE_PIRATES_COVE = 17,          // 海賊たちの唄
+        THE_FINAL_IMAGE = 18,           // 完成品のイメージ
+        ON_MY_WAY = 19,                 // それぞれの行方
+        THE_CHAINS_THAT_BIND_US = 20,   // 流砂の鎖
+        ENTER_THE_TALEKEEPER = 21,      // その記憶を紡ぐ者
+        THE_SALT_OF_THE_EARTH = 22,     // 最後の幻想
+        WHERE_TWO_PATHS_CONVERGE = 23,  // 双刃の邂逅
         NONE = 65535,
     }
 
@@ -219,6 +222,7 @@
         WHEN_ANGELS_FALL = 828,             // 天使たちの抗い
         DAWN = 840,                         // 暁
         THE_LAST_VERSE = 850,               // すべての終わりが閉ざされん
+        NONE = 65535,
     }
 
     /// <summary>
@@ -274,6 +278,8 @@
         IMPERIAL_CORONATION     = 45,   // 戴冠の儀
         THE_EMPRESS_CROWNED     = 46,   // 大団円
         ETERNAL_MERCENARY       = 47,   // 永遠の傭兵
+        MAX,
+        NONE = 65535,
     }
 
     /// <summary>
@@ -335,5 +341,332 @@
         WHERE_IT_ALL_BEGAN         = 51,    // はじまりの地
         A_TOKEN_OF_TROTH           = 52,    // 約束の刻
         LEST_WE_FORGET             = 53,    // 忘らるる君へ
+        MAX,
+        NONE = 65535,
+    }
+
+    /// <summary>
+    /// サンドリアミッション連番IDからミッションIDへの変換テーブル
+    /// </summary>
+    public static class MissionSandoriaTable
+    {
+        private static readonly MissionSandoria[] Table =
+        [
+            MissionSandoria.SMASH_THE_ORCISH_SCOUTS,    // オークの斥候を倒せ
+            MissionSandoria.BAT_HUNT,                   // コウモリ退治
+            MissionSandoria.SAVE_THE_CHILDREN,          // 子供の救助
+            MissionSandoria.THE_RESCUE_DRILL,           // 救助訓練
+            MissionSandoria.THE_DAVOI_REPORT,           // ダボイ調査報告
+            MissionSandoria.JOURNEY_ABROAD,             // 他国を回れ
+            MissionSandoria.INFILTRATE_DAVOI,           // ダボイ潜入計画
+            MissionSandoria.THE_CRYSTAL_SPRING,         // クリスタルの泉
+            MissionSandoria.APPOINTMENT_TO_JEUNO,       // ジュノ大使館へ赴任
+            MissionSandoria.MAGICITE,                   // 魔晶石を奪え
+            MissionSandoria.THE_RUINS_OF_FEI_YIN,       // 廃墟フェ・イン
+            MissionSandoria.THE_SHADOW_LORD,            // 闇の王を討て！
+            MissionSandoria.LEAUTES_LAST_WISHES,        // ローテ王妃の遺言
+            MissionSandoria.RANPERRES_FINAL_REST,       // 龍王の眠る場所
+            MissionSandoria.PRESTIGE_OF_THE_PAPSQUE,    // 教皇の威信
+            MissionSandoria.THE_SECRET_WEAPON,          // 獣人兵器の秘密
+            MissionSandoria.COMING_OF_AGE,              // 成人の儀
+            MissionSandoria.LIGHTBRINGER,               // 聖剣探索
+            MissionSandoria.BREAKING_BARRIERS,          // 厚き壁
+            MissionSandoria.THE_HEIR_TO_THE_LIGHT,      // 光の継承者
+        ];
+
+        /// <summary>
+        /// 連番IDからミッションIDを取得する
+        /// </summary>
+        public static MissionSandoria ToMissionId(int index)
+        {
+            if (index < 0 || index >= Table.Length)
+            {
+                return MissionSandoria.NONE;
+            }
+            return Table[index];
+        }
+
+        /// <summary>
+        /// ミッション数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetMissionMax()
+        {
+            return Table.Length;
+        }
+    }
+
+    /// <summary>
+    /// バストゥークミッション連番IDからミッションIDへの変換テーブル
+    /// </summary>
+    public static class MissionBastokTable
+    {
+        private static readonly MissionBastok[] Table =
+        [
+            MissionBastok.THE_ZERUHN_REPORT,        // ツェールン鉱山からの報告
+            MissionBastok.GEOLOGICAL_SURVEY,        // 彼の名はシド
+            MissionBastok.FETICHISM,                // 終わらぬ戦い
+            MissionBastok.THE_CRYSTAL_LINE,         // クリスタルライン
+            MissionBastok.WADING_BEASTS,            // 涸れ谷の怪物
+            MissionBastok.THE_EMISSARY,             // バストゥークを離れて
+            MissionBastok.THE_FOUR_MUSKETEERS,      // 四銃士
+            MissionBastok.TO_THE_FORSAKEN_MINES,    // 忘れられた鉱山にて
+            MissionBastok.JEUNO,                    // ジュノへ
+            MissionBastok.MAGICITE,                 // 魔晶石を奪え
+            MissionBastok.DARKNESS_RISING,          // 闇、再び
+            MissionBastok.XARCABARD_LAND_OF_TRUTHS, // ザルカバードに眠る真実
+            MissionBastok.RETURN_OF_THE_TALEKEEPER, // 語り部現る！？
+            MissionBastok.THE_PIRATES_COVE,         // 海賊たちの唄
+            MissionBastok.THE_FINAL_IMAGE,          // 完成品のイメージ
+            MissionBastok.ON_MY_WAY,                // それぞれの行方
+            MissionBastok.THE_CHAINS_THAT_BIND_US,  // 流砂の鎖
+            MissionBastok.ENTER_THE_TALEKEEPER,     // その記憶を紡ぐ者
+            MissionBastok.THE_SALT_OF_THE_EARTH,    // 最後の幻想
+            MissionBastok.WHERE_TWO_PATHS_CONVERGE, // 双刃の邂逅
+        ];
+
+        /// <summary>
+        /// 連番IDからミッションIDを取得する
+        /// </summary>
+        public static MissionBastok ToMissionId(int index)
+        {
+            if (index < 0 || index >= Table.Length)
+            {
+                return MissionBastok.NONE;
+            }
+            return Table[index];
+        }
+
+        /// <summary>
+        /// ミッション数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetMissionMax()
+        {
+            return Table.Length;
+        }
+    }
+
+    /// <summary>
+    /// ウィンダスミッション連番IDからミッションIDへの変換テーブル
+    /// </summary>
+    public static class MissionWindurstTable
+    {
+        private static readonly MissionWindurst[] Table =
+        [
+            MissionWindurst.THE_HORUTOTO_RUINS_EXPERIMENT,  // ホルトト遺跡の大実験
+            MissionWindurst.THE_HEART_OF_THE_MATTER,        // カーディアンの心
+            MissionWindurst.THE_PRICE_OF_PEACE,             // 平和のために
+            MissionWindurst.LOST_FOR_WORDS,                 // 白き書
+            MissionWindurst.A_TESTING_TIME,                 // 試験の行方
+            MissionWindurst.THE_THREE_KINGDOMS,             // 三大強国
+            MissionWindurst.TO_EACH_HIS_OWN_RIGHT,          // それぞれの正義
+            MissionWindurst.WRITTEN_IN_THE_STARS,           // 星読み
+            MissionWindurst.A_NEW_JOURNEY,                  // 新たなる旅立ち
+            MissionWindurst.MAGICITE,                       // 魔晶石を奪え
+            MissionWindurst.THE_FINAL_SEAL,                 // 最後の護符
+            MissionWindurst.THE_SHADOW_AWAITS,              // 最果てにて君を待つ闇
+            MissionWindurst.FULL_MOON_FOUNTAIN,             // 満月の泉
+            MissionWindurst.SAINTLY_INVITATION,             // 聖者の招待
+            MissionWindurst.THE_SIXTH_MINISTRY,             // 第6の院
+            MissionWindurst.AWAKENING_OF_THE_GODS,          // 蘇る神々
+            MissionWindurst.VAIN,                           // ヴェイン
+            MissionWindurst.THE_JESTER_WHOD_BE_KING,        // 王と道化師
+            MissionWindurst.DOLL_OF_THE_DEAD,               // 死者の人形
+            MissionWindurst.MOON_READING,                   // 月詠み
+        ];
+
+        /// <summary>
+        /// 連番IDからミッションIDを取得する
+        /// </summary>
+        public static MissionWindurst ToMissionId(int index)
+        {
+            if (index < 0 || index >= Table.Length)
+            {
+                return MissionWindurst.NONE;
+            }
+            return Table[index];
+        }
+
+        /// <summary>
+        /// ミッション数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetMissionMax()
+        {
+            return Table.Length;
+        }
+    }
+
+    /// <summary>
+    /// ジラートミッション連番IDからミッションIDへの変換テーブル
+    /// </summary>
+    public static class MissionZilartTable
+    {
+        private static readonly MissionZilart[] Table =
+        [
+            MissionZilart.THE_NEW_FRONTIER,             // 新たなる世界
+            MissionZilart.WELCOME_TNORG,                // 海賊の巣窟ノーグ
+            MissionZilart.KAZHAMS_CHIEFTAINESS,         // カザム族長
+            MissionZilart.THE_TEMPLE_OF_UGGALEPIH,      // ウガレピ寺院
+            MissionZilart.HEADSTONE_PILGRIMAGE,         // 古代石碑巡礼
+            MissionZilart.THROUGH_THE_QUICKSAND_CAVES,  // 流砂洞を越えて
+            MissionZilart.THE_CHAMBER_OF_ORACLES,       // 宣託の間
+            MissionZilart.RETURN_TO_DELKFUTTS_TOWER,    // デルクフの塔再び
+            MissionZilart.ROMAEVE,                      // ロ・メーヴ
+            MissionZilart.THE_TEMPLE_OF_DESOLATION,     // 聖地ジ・タ～滅びの神殿
+            MissionZilart.THE_HALL_OF_THE_GODS,         // 神々の間
+            MissionZilart.THE_MITHRA_AND_THE_CRYSTAL,   // ミスラとクリスタル
+            MissionZilart.THE_GATE_OF_THE_GODS,         // 神の扉トゥー・リア
+            MissionZilart.ARK_ANGELS,                   // アーク・ガーディアン
+            MissionZilart.THE_SEALED_SHRINE,            // 閉ざされし門
+            MissionZilart.THE_CELESTIAL_NEXUS,          // 宿星の座
+            MissionZilart.AWAKENING,                    // 1万年の夢の終わりに
+        ];
+
+        /// <summary>
+        /// 連番IDからミッションIDを取得する
+        /// </summary>
+        public static MissionZilart ToMissionId(int index)
+        {
+            if (index < 0 || index >= Table.Length)
+            {
+                return MissionZilart.NONE;
+            }
+            return Table[index];
+        }
+
+        /// <summary>
+        /// ミッション数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetMissionMax()
+        {
+            return Table.Length;
+        }
+    }
+
+    /// <summary>
+    /// プロマシアミッション連番IDからミッションIDへの変換テーブル
+    /// </summary>
+    public static class MissionCOPTable
+    {
+        private static readonly MissionCOP[] Table =
+        [
+            MissionCOP.THE_RITES_OF_LIFE,           // 命の洗礼
+            MissionCOP.BELOW_THE_ARKS,              // 楼閣の下に
+            MissionCOP.THE_MOTHERCRYSTALS,          // 母なる石
+            MissionCOP.AN_INVITATION_WEST,          // 西への誘い
+            MissionCOP.THE_LOST_CITY,               // 忘却の町
+            MissionCOP.THE_LOST_CITY,               // 隔たれし信仰 MissionCOP.DISTANT_BELIEF
+            MissionCOP.AN_ETERNAL_MELODY,           // とこしえに響く歌
+            MissionCOP.ANCIENT_VOWS,                // 誓いの雄叫び
+            MissionCOP.THE_CALL_OF_THE_WYRMKING,    // 龍王の導き
+            MissionCOP.A_VESSEL_WITHOUT_A_CAPTAIN,  // 主のなき都
+            MissionCOP.THE_ROAD_FORKS,              // ふたつの道
+            MissionCOP.THE_ROAD_FORKS,              // 瑠璃色の川 MissionCOP.EMERALD_WATERS
+            MissionCOP.THE_ROAD_FORKS,              // 流転 MissionCOP.VICISSITUDES
+            MissionCOP.DESCENDANTS_OF_A_LINE_LOST,  // 累家の末流
+            MissionCOP.DESCENDANTS_OF_A_LINE_LOST,  // ルーヴランスという者 MissionCOP.LOUVERANCE
+            MissionCOP.DESCENDANTS_OF_A_LINE_LOST,  // をとめの記憶 MissionCOP.MEMORIES_OF_A_MAIDEN
+            MissionCOP.COMEDY_OF_ERRORS_ACT_I,      // をかしき祖国
+            MissionCOP.COMEDY_OF_ERRORS_ACT_I,      // をかしき再会 MissionCOP.COMEDY_OF_ERRORS_ACT_II
+            MissionCOP.COMEDY_OF_ERRORS_ACT_I,      // をかしき旅立ち MissionCOP.EXIT_STAGE_LEFT
+            MissionCOP.TENDING_AGED_WOUNDS,         // 戦慄き
+            MissionCOP.DARKNESS_NAMED,              // 神を名乗りて
+            MissionCOP.SHELTERING_DOUBT,            // よりしろ
+            MissionCOP.THE_SAVAGE,                  // 猛き者たちよ
+            MissionCOP.THE_SECRETS_OF_WORSHIP,      // 礼拝の意味
+            MissionCOP.SLANDEROUS_UTTERINGS,        // そしりを受けつつも
+            MissionCOP.THE_ENDURING_TUMULT_OF_WAR,  // 鍔音やむことなく
+            MissionCOP.DESIRES_OF_EMPTINESS,        // 願わくば闇よ
+            MissionCOP.THREE_PATHS,                 // みっつの道
+            MissionCOP.THREE_PATHS,                 // 汝の罪は MissionCOP.PAST_SINS
+            MissionCOP.THREE_PATHS,                 // 南方の伝説 MissionCOP.SOUTHERN_LEGEND
+            MissionCOP.PARTNERS_WITHOUT_FAME,       // 名捨て人ふたり
+            MissionCOP.PARTNERS_WITHOUT_FAME,       // なにゆえにその子は MissionCOP.A_CENTURY_OF_HARDSHIP
+            MissionCOP.PARTNERS_WITHOUT_FAME,       // 永いお別れ MissionCOP.DEPARTURES
+            MissionCOP.PARTNERS_WITHOUT_FAME,       // 楽園を求めるは MissionCOP.THE_PURSUIT_OF_PARADISE
+            MissionCOP.SPIRAL,                      // 螺旋
+            MissionCOP.SPIRAL,                      // 烙印ありて MissionCOP.BRANDED
+            MissionCOP.SPIRAL,                      // 礼賛者 MissionCOP.PRIDE_AND_HONOR
+            MissionCOP.SPIRAL,                      // 羅針の示すもの MissionCOP.AND_THE_COMPASS_GUIDES
+            MissionCOP.WHERE_MESSENGERS_GATHER,     // 群れ立つ使者は
+            MissionCOP.WHERE_MESSENGERS_GATHER,     // 結び目 MissionCOP.ENTANGLEMENT
+            MissionCOP.WHERE_MESSENGERS_GATHER,     // 向かい風 MissionCOP.HEAD_WIND
+            MissionCOP.FLAMES_FOR_THE_DEAD,         // 迎え火
+            MissionCOP.FOR_WHOM_THE_VERSE_IS_SUNG,  // 歌うは誰がため
+            MissionCOP.A_PLACE_TO_RETURN,           // ゐぬる場所
+            MissionCOP.MORE_QUESTIONS_THAN_ANSWERS, // 望むはあらゆる答え
+            MissionCOP.ONE_TO_BE_FEARED,            // 畏れよ、我を
+            MissionCOP.CHAINS_AND_BONDS,            // 鎖と絆
+            MissionCOP.FLAMES_IN_THE_DARKNESS,      // 闇に炎
+            MissionCOP.FIRE_IN_THE_EYES_OF_MEN,     // 眦決して
+            MissionCOP.CALM_BEFORE_THE_STORM,       // 決別の前
+            MissionCOP.THE_WARRIORS_PATH,           // 武士道とは
+            MissionCOP.GARDEN_OF_ANTIQUITY,         // 古代の園
+            MissionCOP.A_FATE_DECIDED,              // 選ばれし死
+            MissionCOP.WHEN_ANGELS_FALL,            // 天使たちの抗い
+            MissionCOP.DAWN,                        // 暁
+        ];
+
+        /// <summary>
+        /// 連番IDからミッションIDを取得する
+        /// </summary>
+        public static MissionCOP ToMissionId(int index)
+        {
+            if (index < 0 || index >= Table.Length)
+            {
+                return MissionCOP.NONE;
+            }
+            return Table[index];
+        }
+
+        /// <summary>
+        /// ミッション数
+        /// </summary>
+        /// <returns></returns>
+        public static int GetMissionMax()
+        {
+            return Table.Length;
+        }
+    }
+
+    // ミッションクリア情報
+    public struct MissionClearInfo
+    {
+        public int[] Sandoria { get; set; }   // サンドリアミッション
+        public int[] Bastok { get; set; }     // バストゥークミッション
+        public int[] Windurst { get; set; }   // ウィンダスミッション
+        public int[] Zilart { get; set; }     // ジラートの幻影
+        public int[] Cop { get; set; }        // プロマシアの呪縛
+        public int[] Toau { get; set; }       // アトルガンの秘宝
+        public int[] Assault { get; set; }    // アサルト
+        public int[] Wotg { get; set; }       // アルタナの神兵
+        public int[] Campaign { get; set; }   // カンパニエ
+        public int[] Acp { get; set; }        // 追加シナリオ「石を見る夢」
+        public int[] Amk { get; set; }       // 追加シナリオ「戦慄！モグ祭りの夜」
+        public int[] Asa { get; set; }       // 追加シナリオ「シャントット帝国の陰謀」
+        public int[] Soa { get; set; }       // アドゥリンの魔境
+        public int[] Rov { get; set; }       // ヴァナ・ディールの星唄
+        public int[] Vr { get; set; }       // 蝕世のエンブリオ
+
+        public MissionClearInfo() {
+            Sandoria = new int[MissionSandoriaTable.GetMissionMax()];
+            Bastok = new int[MissionBastokTable.GetMissionMax()];
+            Windurst = new int[MissionWindurstTable.GetMissionMax()];
+            Zilart = new int[MissionZilartTable.GetMissionMax()];
+            Cop = new int[MissionCOPTable.GetMissionMax()];
+            Toau = new int[(int)MissionTOAU.MAX];
+            Assault = new int[10];   // dummy
+            Wotg = new int[(int)MissionWOTG.MAX];
+            Campaign = new int[10];  // dummy
+            Acp = new int[10];       // dummy
+            Amk = new int[10];       // dummy
+            Asa = new int[10];       // dummy
+            Soa = new int[10];       // dummy
+            Rov = new int[10];       // dummy
+            Vr = new int[10];       // dummy
+        }
     }
 }
