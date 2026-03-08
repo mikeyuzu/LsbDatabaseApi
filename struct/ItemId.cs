@@ -147,6 +147,16 @@
         RED_INSTITUTE_CARD = 2500,              // 魔法学会の赤いカード
         SAN_DORIA_TRUST_PERMIT = 2501,          // サンドリアのフェイス使用許可証
         TEMPLE_KNIGHT_KEY = 2506,               // 侯国騎士団長のカギ
+        RHAPSODY_IN_WHITE = 2884,               // 星唄の煌めき【一奏】	
+        RHAPSODY_IN_UMBER = 2885,               // 星唄の煌めき【二奏】
+        RHAPSODY_IN_AZURE = 2886,               // 星唄の煌めき【三奏】
+        RHAPSODY_IN_CRIMSON = 2887,             // 星唄の煌めき【四奏】
+        RHAPSODY_IN_EMERALD = 2888,             // 星唄の煌めき【五奏】
+        RHAPSODY_IN_MAUVE = 2889,               // 星唄の煌めき【六奏】
+        RHAPSODY_IN_FUCHSIA = 2890,             // 星唄の煌めき【七奏】
+        RHAPSODY_IN_PUCE = 2891,                // 星唄の煌めき【八奏】
+        RHAPSODY_IN_OCHRE = 2892,               // 星唄の煌めき【九奏】
+        SCINTILLATING_RHAPSODY = 2893,          // 星唄の煌めき【終奏】
     }
 
     /// <summary>

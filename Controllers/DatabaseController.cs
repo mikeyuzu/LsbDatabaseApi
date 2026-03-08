@@ -243,6 +243,28 @@ namespace LsbDatabaseApi.Controllers
             var list = database.GetEminenceRecordList(charaId);
             return Ok(list);
         }
+
+        /// <summary>
+        /// エミネンス・レコードの報酬を受け取る
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="category"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        [HttpGet("ReceiveEminenceRecordReward")]
+        public ActionResult<EminenceRecordRewardDestination> ReceiveEminenceRecordReward(int charaId, int category, int item)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            // 報酬を処理する
+            var result = EminenceRecordRewardProcessor.ProcessReward(database, charaId, (EminenceRecordCategory)category, item);
+            // データベースを更新する
+            database.ReceiveEminenceRecordReward(charaId, (EminenceRecordCategory)category, item);
+
+            return Ok(result);
+        }
     }
 }
 ﻿

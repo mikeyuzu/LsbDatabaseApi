@@ -1036,6 +1036,87 @@ namespace LsbDatabaseApi
         }
 
         /// <summary>
+        /// だいじなものをDBから読み込み、キャッシュする。
+        /// </summary>
+        /// <param name="charaId"></param>
+        public void LoadKeyItems(int charaId)
+        {
+            try
+            {
+                string query = "SELECT keyitems FROM chars WHERE charid = @CharaId";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    KeyItems keyitems = ExtractKeyitemsFromBlob(reader, "keyitems");
+                    CacheKeyItems.AddOrUpdate(charaId, keyitems, (key, oldInfo) => keyitems);
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        // だいじなもののキャッシュのフラグを更新する
+        public void UpdateKeyItemCache(int charaId, KeyItemId keyItemId, bool hasKeyItem)
+        {
+            if (!CacheKeyItems.ContainsKey(charaId))
+            {
+                LoadKeyItems(charaId);
+            }
+
+            var keyItems = CacheKeyItems[charaId];
+            var table = (int)keyItemId / 512;
+            var id = (int)keyItemId % 512;
+            if (table < _MAX_KEYS_TABLE)
+            {
+                keyItems.Tables[table].KeyList[id] = hasKeyItem;
+                CacheKeyItems[charaId] = keyItems; // キャッシュを更新
+            }
+        }
+
+        /// <summary>
+        /// だいじなものを更新
+        /// </summary>
+        public void UpdateKeyItems(int charaId)
+        {
+            if (!CacheKeyItems.ContainsKey(charaId))
+            {
+                LoadKeyItems(charaId);
+            }
+
+            // KeyItemsのキャッシュをBLOBデータに変換
+            byte[] data = new byte[_MAX_KEYS_TABLE * 512 / 8 * 2];
+            int byteIndex = 0;
+            for (int tableIndex = 0; tableIndex < _MAX_KEYS_TABLE; tableIndex++)
+            {
+                for (int listIndex = 0; listIndex < 2; listIndex++)
+                {
+                    BitArray currentList = (listIndex == 0) ? CacheKeyItems[charaId].Tables[tableIndex].KeyList : CacheKeyItems[charaId].Tables[tableIndex].SeenList;
+                    for (int bitIndex = 0; bitIndex < 512; bitIndex++)
+                    {
+                        int bytePos = byteIndex / 8;
+                        int bitPos = byteIndex % 8;
+                        if (currentList[bitIndex])
+                        {
+                            data[bytePos] |= (byte)(1 << bitPos);
+                        }
+                        byteIndex++;
+                    }
+                }
+            }
+
+            string query = "UPDATE chars SET keyitems = @keyItems WHERE charid = @charaId";
+            using MySqlCommand command = new MySqlCommand(query, _connection);
+            command.Parameters.AddWithValue("@keyItems", data);
+            command.Parameters.AddWithValue("@charaId", charaId);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
         /// 変数データをDBから読み込み、キャッシュする。
         /// </summary>
         /// <param name="charaId"></param>
@@ -1438,6 +1519,27 @@ namespace LsbDatabaseApi
             return magicList;
         }
 
+        /// <summary>
+        /// 魔法を覚える
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="spellId"></param>
+        public void LearnMagic(int charaId, MagicId spellId)
+        {
+            string query = "INSERT INTO char_spells (charid, spellid) VALUES (@CharaId, @SpellId)";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@CharaId", charaId);
+            command.Parameters.AddWithValue("@SpellId", spellId);
+            command.ExecuteNonQuery();
+            // キャッシュを更新
+            if (CacheCharaMagic.TryGetValue(charaId, out CharaMagic magic))
+            {
+                magic.magicIds.Add((int)spellId);
+                CacheCharaMagic[charaId] = magic;
+            }
+        }
+
+
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct Look
         {
@@ -1460,8 +1562,7 @@ namespace LsbDatabaseApi
         public Look GetLook(int charaId)
         {
             var look = new Look();
-            const string query = "SELECT face, race " +
-                                 "FROM char_look WHERE charid = @Charid";
+            const string query = "SELECT face, race FROM char_look WHERE charid = @Charid";
             using (MySqlCommand command = new(query, _connection))
             {
                 command.Parameters.AddWithValue("@Charid", charaId);
@@ -2772,6 +2873,48 @@ namespace LsbDatabaseApi
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// エミネンス・レコードの報酬を受け取る
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="category"></param>
+        /// <param name="id"></param>
+        public void ReceiveEminenceRecordReward(int charaId, EminenceRecordCategory category, int id)
+        {
+            string item = string.Empty;
+            switch (category)
+            {
+                case EminenceRecordCategory.MISSION:
+                    if (id < 0 || id >= (int)EminenceRecordMission.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordMission)id).ToString();
+                    break;
+                case EminenceRecordCategory.AREA:
+                    if (id < 0 || id >= (int)EminenceRecordArea.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordArea)id).ToString();
+                    break;
+                case EminenceRecordCategory.FACE:
+                    if (id < 0 || id >= (int)EminenceRecordFace.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordFace)id).ToString();
+                    break;
+            }
+
+            string query = "UPDATE custom_char_reward SET status = 2 WHERE charid = @CharaId AND category = @Category AND item = @Item;";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@CharaId", charaId);
+            command.Parameters.AddWithValue("@Category", category.ToString());
+            command.Parameters.AddWithValue("@Item", item);
+            command.ExecuteNonQuery();
         }
 
         /// <summary>
