@@ -228,6 +228,21 @@ namespace LsbDatabaseApi.Controllers
 
             return Ok(list);
         }
+
+        /// <summary>
+        /// エミネンス・レコードのリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetEminenceRecordList")]
+        public ActionResult<EminenceRecord> GetEminenceRecordList(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+            var list = database.GetEminenceRecordList(charaId);
+            return Ok(list);
+        }
     }
 }
 ﻿

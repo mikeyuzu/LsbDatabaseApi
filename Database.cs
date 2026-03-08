@@ -1,9 +1,11 @@
-﻿using LsbDatabaseApi.mission;
+﻿using Google.Protobuf.WellKnownTypes;
+using LsbDatabaseApi.mission;
 using LsbDatabaseApi.@struct;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
@@ -869,6 +871,44 @@ namespace LsbDatabaseApi
             {
                 return new KeyItems(0, 0); // NULLの場合
             }
+        }
+
+        /// <summary>
+        /// エミネンス・レコードを構造体に格納
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static EminenceRecord ExtractEminenceRecordFromBlob(DbDataReader reader)
+        {
+            var list = new EminenceRecord();
+            if (reader == null || reader.IsClosed || !reader.HasRows)
+            {
+                return list; // または例外をスロー
+            }
+
+            // データの処理
+            var category = reader.Get<string>("category");
+            var item = reader.Get<string>("item");
+            var status = reader.GetInt32("status");
+
+            if (category == EminenceRecordCategory.MISSION.ToString() && item != null)
+            {
+                var id = (EminenceRecordMission)System.Enum.Parse(typeof(EminenceRecordMission), item);
+                list.Mission[(int)id] = status;
+            }
+            else if (category == "AREA" && item != null)
+            {
+                var id = (EminenceRecordArea)System.Enum.Parse(typeof(EminenceRecordArea), item);
+                list.Area[(int)id] = status;
+            }
+            else if (category == "FACE" && item != null)
+            {
+                var id = (EminenceRecordFace)System.Enum.Parse(typeof(EminenceRecordFace), item);
+                list.Face[(int)id] = status;
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -2697,6 +2737,33 @@ namespace LsbDatabaseApi
                             }
                         }
                     }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// エミネンス・レコードのリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        public EminenceRecord GetEminenceRecordList(int charaId)
+        {
+            var list = new EminenceRecord();
+            try
+            {
+                string query = "SELECT category, item, status FROM custom_char_reward WHERE charid = @CharaId";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    list = ExtractEminenceRecordFromBlob(reader);
                 }
             }
             catch (Exception)
