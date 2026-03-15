@@ -2,6 +2,7 @@
 using LsbDatabaseApi.@struct;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Policy;
 using static LsbDatabaseApi.DatabaseApi;
 
 namespace LsbDatabaseApi.Controllers
@@ -14,16 +15,34 @@ namespace LsbDatabaseApi.Controllers
         private readonly ILogger<Database> _logger = logger;
 
         /// <summary>
-        /// ナビゲーションメッセージを返す
+        /// カスタムメニューの情報を返す
         /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="zoneId"></param>
+        /// <param name="mapId"></param>
+        /// <param name="coordinates"></param>
+        /// <param name="preZoneId"></param>
+        /// <param name="preMapId"></param>
+        /// <param name="preCoordinates"></param>
+        /// <param name="clip1Category"></param>
+        /// <param name="clip1Id"></param>
+        /// <param name="clip2Category"></param>
+        /// <param name="clip2Id"></param>
+        /// <param name="clip3Category"></param>
+        /// <param name="clip3Id"></param>
+        /// <param name="clip4Category"></param>
+        /// <param name="clip4Id"></param>
         /// <returns></returns>
-        [HttpGet("GetMessage")]
-        public ActionResult<string> GetNaviMessage(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates)
+        [HttpGet("GetCustomMenuInfo")]
+        public ActionResult<CustomMenuInfo> GetCustomMenuInfo(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates, int clip1Category, int clip1Id, int clip2Category, int clip2Id, int clip3Category, int clip3Id, int clip4Category, int clip4Id)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
             database.DatabaseInitialize(connectionString);
 
+            var customMenuInfo = new CustomMenuInfo();
+
+            // ナビゲーションメッセージ
             database.LoadChars(charaId);
             database.LoadVariables(charaId);
             database.LoadTeleportInfo(charaId);
@@ -31,8 +50,39 @@ namespace LsbDatabaseApi.Controllers
 
             var messageParam = new MessageParam();
             var message = messageParam.GetMessageParam(database, charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates);
+            customMenuInfo.MainNaviMessage = message;
 
-            return Ok(message);
+            // クリップ1
+            if ((ClipCategory)clip1Category != ClipCategory.NONE && clip1Id >= 0)
+            {
+                // クリップ処理
+            }
+
+            // クリップ2
+            if ((ClipCategory)clip2Category != ClipCategory.NONE && clip2Id >= 0)
+            {
+                // クリップ処理
+            }
+
+            // クリップ3
+            if ((ClipCategory)clip3Category != ClipCategory.NONE && clip3Id >= 0)
+            {
+                // クリップ処理
+            }
+
+            // クリップ4
+            if ((ClipCategory)clip4Category != ClipCategory.NONE && clip4Id >= 0)
+            {
+                // クリップ処理
+            }
+
+            // ビックリマーク
+            if (database.IsExclamationMark(charaId))
+            {
+                customMenuInfo.ExclamationMark = 1;
+            }
+
+            return Ok(customMenuInfo);
         }
 
         /// <summary>

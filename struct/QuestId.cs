@@ -33,6 +33,7 @@
     // ウィンダスクエスト
     public enum QuestWindurst
     {
+        NOTHING_MATTERS = 79,               // 錬金術の実験
         TRUST_WINDURST = 96,                // 新魔法フェイス（ウィンダス）
     }
 

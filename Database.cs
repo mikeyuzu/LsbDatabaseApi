@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.WellKnownTypes;
+using LsbDatabaseApi.Controllers;
 using LsbDatabaseApi.mission;
 using LsbDatabaseApi.@struct;
 using MySql.Data.MySqlClient;
@@ -887,25 +888,28 @@ namespace LsbDatabaseApi
                 return list; // または例外をスロー
             }
 
-            // データの処理
-            var category = reader.Get<string>("category");
-            var item = reader.Get<string>("item");
-            var status = reader.GetInt32("status");
+            while (reader.Read())
+            {
+                // データの処理
+                var category = reader.Get<string>("category");
+                var item = reader.Get<string>("item");
+                var status = reader.GetInt32("status");
 
-            if (category == EminenceRecordCategory.MISSION.ToString() && item != null)
-            {
-                var id = (EminenceRecordMission)System.Enum.Parse(typeof(EminenceRecordMission), item);
-                list.Mission[(int)id] = status;
-            }
-            else if (category == "AREA" && item != null)
-            {
-                var id = (EminenceRecordArea)System.Enum.Parse(typeof(EminenceRecordArea), item);
-                list.Area[(int)id] = status;
-            }
-            else if (category == "FACE" && item != null)
-            {
-                var id = (EminenceRecordFace)System.Enum.Parse(typeof(EminenceRecordFace), item);
-                list.Face[(int)id] = status;
+                if (category == EminenceRecordCategory.MISSION.ToString() && item != null)
+                {
+                    var id = (EminenceRecordMission)System.Enum.Parse(typeof(EminenceRecordMission), item);
+                    list.Mission[(int)id] = status;
+                }
+                else if (category == EminenceRecordCategory.AREA.ToString() && item != null)
+                {
+                    var id = (EminenceRecordArea)System.Enum.Parse(typeof(EminenceRecordArea), item);
+                    list.Area[(int)id] = status;
+                }
+                else if (category == EminenceRecordCategory.FACE.ToString() && item != null)
+                {
+                    var id = (EminenceRecordFace)System.Enum.Parse(typeof(EminenceRecordFace), item);
+                    list.Face[(int)id] = status;
+                }
             }
 
             return list;
@@ -1110,7 +1114,7 @@ namespace LsbDatabaseApi
             }
 
             string query = "UPDATE chars SET keyitems = @keyItems WHERE charid = @charaId";
-            using MySqlCommand command = new MySqlCommand(query, _connection);
+            using MySqlCommand command = new(query, _connection);
             command.Parameters.AddWithValue("@keyItems", data);
             command.Parameters.AddWithValue("@charaId", charaId);
             command.ExecuteNonQuery();
@@ -1886,7 +1890,7 @@ namespace LsbDatabaseApi
             public int SuLevel { get; set; }        // SUレベル
             public int Jobs { get; set; }           // 装備可能なジョブ
         }
-        
+
         /// <summary>
         /// 合成レシピ情報
         /// </summary>
@@ -2862,10 +2866,7 @@ namespace LsbDatabaseApi
                 using var command = new MySqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@CharaId", charaId);
                 using var reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    list = ExtractEminenceRecordFromBlob(reader);
-                }
+                list = ExtractEminenceRecordFromBlob(reader);
             }
             catch (Exception)
             {
@@ -2873,6 +2874,48 @@ namespace LsbDatabaseApi
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// エミネンス・レコードを達成にする
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="category"></param>
+        /// <param name="id"></param>
+        public void EminenceRecordAchieve(int charaId, EminenceRecordCategory category, int id)
+        {
+            string item = string.Empty;
+            switch (category)
+            {
+                case EminenceRecordCategory.MISSION:
+                    if (id < 0 || id >= (int)EminenceRecordMission.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordMission)id).ToString();
+                    break;
+                case EminenceRecordCategory.AREA:
+                    if (id < 0 || id >= (int)EminenceRecordArea.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordArea)id).ToString();
+                    break;
+                case EminenceRecordCategory.FACE:
+                    if (id < 0 || id >= (int)EminenceRecordFace.MAX)
+                    {
+                        return;
+                    }
+                    item = ((EminenceRecordFace)id).ToString();
+                    break;
+            }
+
+            string query = "INSERT INTO custom_char_reward (charid, category, item, status) VALUES (@CharaId, @Category, @Item, 1) ON DUPLICATE KEY UPDATE status = 1";
+            using MySqlCommand command = new(query, _connection);
+            command.Parameters.AddWithValue("@CharaId", charaId);
+            command.Parameters.AddWithValue("@Category", category.ToString());
+            command.Parameters.AddWithValue("@Item", item);
+            command.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -3359,9 +3402,258 @@ namespace LsbDatabaseApi
             return CacheProfile[charaId];
         }
 
+        // クエストが完了しているかをキャッシュから取得する。キャッシュにない場合はDBから読み込む。
         internal bool HasQuestComplete(int charaId, object oTHER_AREAS, int tHE_OLD_LADY)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// クエスチョンマークが必要化チェックする
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        public bool IsExclamationMark(int charaId)
+        {
+            var result = false;
+
+            // エミネンス・レコードの情報を取得する
+            var list = GetEminenceRecordList(charaId);
+
+            // ミッション
+            for (var i = 0; i < list.Mission.Length; i++)
+            {
+                // 未達成を調査する
+                if (list.Mission[i] == (int)EminenceRecordStatus.NOT_ACHIEVED)
+                {
+                    list.Mission[i] = (int)CheckEminenceRecord(charaId, EminenceRecordCategory.MISSION, i);
+                    if (list.Mission[i] == (int)EminenceRecordStatus.ACHIEVED)
+                    {
+                        EminenceRecordAchieve(charaId, EminenceRecordCategory.MISSION, i);
+                    }
+                }
+                // 達成項目があるか調べる
+                if (list.Mission[i] == (int)EminenceRecordStatus.ACHIEVED)
+                {
+                    result = true;
+                }
+            }
+            for (var i = 0; i < list.Area.Length; i++)
+            {
+                // 未達成を調査する
+                if (list.Area[i] == (int)EminenceRecordStatus.NOT_ACHIEVED)
+                {
+                    list.Area[i] = (int)CheckEminenceRecord(charaId, EminenceRecordCategory.AREA, i);
+                    if (list.Area[i] == (int)EminenceRecordStatus.ACHIEVED)
+                    {
+                        EminenceRecordAchieve(charaId, EminenceRecordCategory.AREA, i);
+                    }
+                }
+                // 達成項目があるか調べる
+                if (list.Area[i] == (int)EminenceRecordStatus.ACHIEVED)
+                {
+                    result = true;
+                }
+            }
+            for (var i = 0; i < list.Face.Length; i++)
+            {
+                // 未達成を調査する
+                if (list.Face[i] == (int)EminenceRecordStatus.NOT_ACHIEVED)
+                {
+                    list.Face[i] = (int)CheckEminenceRecord(charaId, EminenceRecordCategory.FACE, i);
+                    if (list.Face[i] == (int)EminenceRecordStatus.ACHIEVED)
+                    {
+                        EminenceRecordAchieve(charaId, EminenceRecordCategory.FACE, i);
+                    }
+                }
+                // 達成項目があるか調べる
+                if (list.Face[i] == (int)EminenceRecordStatus.ACHIEVED)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// エミネンス・レコードの達成状況を調査する
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="category"></param>
+        /// <param name="id"></param>
+        public EminenceRecordStatus CheckEminenceRecord(int charaId, EminenceRecordCategory category, int id)
+        {
+            switch (category)
+            {
+                case EminenceRecordCategory.MISSION:
+                    switch ((EminenceRecordMission)id)
+                    {
+                        case EminenceRecordMission.TUTORIAL:
+                            // チュートリアルミッションの達成状況を調査する
+                            {
+                                LoadVariables(charaId);
+                                var tutorialProgress = GetVarNum(charaId, "TutorialProgress");
+                                if (tutorialProgress == 0)
+                                {
+                                    // チュートリアルをクリアしている
+                                    return EminenceRecordStatus.ACHIEVED;
+                                }
+                            }
+                            break;
+                        case EminenceRecordMission.MISSION_RANK_3:
+                            // ミッションランク3の達成状況を調査する
+                            {
+                                var isSandoria = HasMissionComplete(charaId, MissionId.SANDORIA, (int)MissionSandoria.JOURNEY_ABROAD);
+                                var isBastok = HasMissionComplete(charaId, MissionId.BASTOK, (int)MissionBastok.THE_EMISSARY);
+                                var isWindurst = HasMissionComplete(charaId, MissionId.WINDURST, (int)MissionWindurst.THE_THREE_KINGDOMS);
+
+                                if (isSandoria || isBastok || isWindurst)
+                                {
+                                    return EminenceRecordStatus.ACHIEVED;
+                                }
+                            }
+                            break;
+                        case EminenceRecordMission.MISSION_RANK_4:
+                            // ミッションランク4の達成状況を調査する
+                            {
+                                var isSandoria = HasMissionComplete(charaId, MissionId.SANDORIA, (int)MissionSandoria.APPOINTMENT_TO_JEUNO);
+                                var isBastok = HasMissionComplete(charaId, MissionId.BASTOK, (int)MissionBastok.JEUNO);
+                                var isWindurst = HasMissionComplete(charaId, MissionId.WINDURST, (int)MissionWindurst.A_NEW_JOURNEY);
+
+                                if (isSandoria || isBastok || isWindurst)
+                                {
+                                    return EminenceRecordStatus.ACHIEVED;
+                                }
+                            }
+                            break;
+                        case EminenceRecordMission.MISSION_RANK_5:
+                            // ミッションランク5の達成状況を調査する
+                            {
+                                var isSandoria = HasMissionComplete(charaId, MissionId.SANDORIA, (int)MissionSandoria.MAGICITE);
+                                var isBastok = HasMissionComplete(charaId, MissionId.BASTOK, (int)MissionBastok.MAGICITE);
+                                var isWindurst = HasMissionComplete(charaId, MissionId.WINDURST, (int)MissionWindurst.MAGICITE);
+
+                                if (isSandoria || isBastok || isWindurst)
+                                {
+                                    return EminenceRecordStatus.ACHIEVED;
+                                }
+                            }
+                            break;
+                        case EminenceRecordMission.ZILART_COMPLETE:
+                            // ジラートミッションの達成状況を調査する
+                            if (HasMissionComplete(charaId, MissionId.ZILART, (int)MissionZilart.THE_CELESTIAL_NEXUS))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordMission.COP_PARTNERS_WITHOUT_FAME:
+                            // プロマシアミッションの「名声なしでパートナーと共にクリア」の達成状況を調査する
+                            if (HasMissionComplete(charaId, MissionId.COP, (int)MissionCOP.PARTNERS_WITHOUT_FAME))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordMission.COP_COMPLETE:
+                            // プロマシアミッションの達成状況を調査する
+                            if (HasMissionComplete(charaId, MissionId.COP, (int)MissionCOP.DAWN))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordMission.TOAU_COMPLETE:
+                            // アトルガンミッションの達成状況を調査する
+                            if (HasMissionComplete(charaId, MissionId.TOAU, (int)MissionTOAU.THE_EMPRESS_CROWNED))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                    }
+                    break;
+                case EminenceRecordCategory.AREA:
+                    // 未実装
+                    return EminenceRecordStatus.NOT_ACHIEVED;
+                case EminenceRecordCategory.FACE:
+                    switch ((EminenceRecordFace)id)
+                    {
+                        case EminenceRecordFace.SANDORIA_FACE:
+                            // サンドリアのフェイス使用許可証を入手する
+                            if (HasKeyItem(charaId, KeyItemId.SAN_DORIA_TRUST_PERMIT))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.BASTOK_FACE:
+                            // バストゥークのフェイス使用許可証を入手する
+                            if (HasKeyItem(charaId, KeyItemId.BASTOK_TRUST_PERMIT))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.WINDURST_FACE:
+                            // ウィンダスのフェイス使用許可証を入手する
+                            if (HasKeyItem(charaId, KeyItemId.BASTOK_TRUST_PERMIT))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.KORUMORU:
+                            // クエスト「錬金術の実験」をクリアする
+                            if (HasQuestComplete(charaId, QuestId.WINDURST, (int)QuestWindurst.NOTHING_MATTERS))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.AAHM:
+                            // ジラートミッションで無知のかけらを入手する
+                            if (HasKeyItem(charaId, KeyItemId.SHARD_OF_APATHY))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.AAEV:
+                            // ジラートミッションで驕慢のかけらを入手する
+                            if (HasKeyItem(charaId, KeyItemId.SHARD_OF_ARROGANCE))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.AAMR:
+                            // ジラートミッションで怯懦のかけらを入手する
+                            if (HasKeyItem(charaId, KeyItemId.SHARD_OF_ENVY))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.AATT:
+                            // ジラートミッションで嫉妬のかけらを入手する
+                            if (HasKeyItem(charaId, KeyItemId.SHARD_OF_COWARDICE))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.AAGK:
+                            // ジラートミッションで憎悪のかけらを入手する
+                            if (HasKeyItem(charaId, KeyItemId.SHARD_OF_RAGE))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        case EminenceRecordFace.MONBERAUX:
+                            // プロマシアミッション烙印ありてをクリアする
+                            if (HasMissionComplete(charaId, MissionId.COP, (int)MissionCOP.SPIRAL))
+                            {
+                                return EminenceRecordStatus.ACHIEVED;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+            }
+
+            return EminenceRecordStatus.NOT_ACHIEVED;
         }
     }
 }

@@ -162,10 +162,10 @@ namespace LsbDatabaseApi.@struct
                             break;
                         case EminenceRecordMission.COP_PARTNERS_WITHOUT_FAME:
                             {
-                                int[] itemIds = { 11273, 11274, 11275, 11276, 11277, 11278, 11279, 11280 };    // 種族別水着のアイテムID
+                                int[] itemIds = [11273, 11274, 11275, 11276, 11277, 11278, 11279, 11280];       // 種族別水着のアイテムID
                                 var look = database.GetLook(charaId);
                                 var extra = "0001000000D0000000000000000000000000000000000000";
-                                database.InsertDeliveryBoxItem(charaId, itemIds[(int)look.race], 0, 1, extra);    // 種族別水着
+                                database.InsertDeliveryBoxItem(charaId, itemIds[(int)look.race], 0, 1, extra);  // 種族別水着
                             }
                             break;
                         case EminenceRecordMission.COP_COMPLETE:
