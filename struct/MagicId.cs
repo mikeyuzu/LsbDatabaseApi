@@ -1,5 +1,8 @@
 ﻿namespace LsbDatabaseApi.@struct
 {
+    /// <summary>
+    /// グループID
+    /// </summary>
     public enum SpellGroup
     {
         NONE = 0,
@@ -11,8 +14,30 @@
         WHITE = 6,          // 白魔法
         GEOMANCY = 7,       // 風水魔法
         TRUST = 8,          // フェイス
+
+        MAX
     }
 
+    /// <summary>
+    /// 魔法図鑑表示ID
+    /// </summary>
+    public enum MagicDispId
+    {
+        WHITE = 0,          // 白魔法
+        BLACK,              // 黒魔法
+        SONG,               // 歌
+        NINJUTSU,           // 忍術
+        SUMMONING,          // 召喚魔法
+        BLUE,               // 青魔法
+        GEOMANCY,           // 風水魔法
+        TRUST,              // フェイス
+
+        MAX
+    }
+
+    /// <summary>
+    /// 魔法ID１
+    /// </summary>
     public enum MagicId
     {
         NAJI = 897,                 // ナジ
@@ -32,16 +57,16 @@
     }
 
     /// <summary>
-    /// 魔法情報
+    /// 魔法グループ別情報
     /// </summary>
-    public struct MagicInfo
+    public struct MagicGroupInfo
     {
-        public MagicId Id { get; set; }     // 魔法ID
+        public int Id { get; set; }     // 魔法ID
         public int[] Jobs { get; set; }     // 使用可能なジョブレベル
         public int MinLevel { get; set; }   // 使用可能な最小レベル（ソート用）
         public int Flag { get; set; }       // 所持フラグ
 
-        public MagicInfo()
+        public MagicGroupInfo()
         {
             Jobs = new int[(int)JobId.MAX];
             Flag = 0;

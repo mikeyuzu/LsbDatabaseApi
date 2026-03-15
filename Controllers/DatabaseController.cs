@@ -263,6 +263,41 @@ namespace LsbDatabaseApi.Controllers
         }
 
         /// <summary>
+        /// 魔法図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetMagicCollectionList")]
+        public ActionResult<List<int>> GetMagicCollectionList(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetMagicCollectionList(charaId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// 魔法グループ別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        [HttpGet("GetMagicGroupCollectionList")]
+        public ActionResult<List<MagicGroupInfo>> GetMagicGroupCollectionList(int charaId, int groupId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetMagicGroupCollectionList(charaId, groupId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
         /// ミッションのリスト取得
         /// </summary>
         /// <param name="charaId"></param>

@@ -11,6 +11,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using static LsbDatabaseApi.DatabaseApi;
 using static LsbDatabaseApi.MessageParam;
 
@@ -2665,6 +2666,121 @@ namespace LsbDatabaseApi
             {
                 list.Add(0);
             }
+
+            // 魔法図鑑の達成率を取得する
+            try
+            {
+                string query = "SELECT COUNT(*) AS total_count, SUM(CASE WHEN cs.spellid IS NULL THEN 0 ELSE 1 END) AS flag_sum FROM spell_list AS sl LEFT JOIN char_spells AS cs ON cs.spellid = sl.spellid AND cs.charid = @CharaId";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    var total_count = Convert.ToInt32(reader["total_count"]);
+                    var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+
+                    if (total_count > 0)
+                    {
+                        var percentage = (int)((double)flag_sum / total_count * 10000);
+                        list[(int)CompendiumType.Magic] = percentage;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// 魔法図鑑のリスト取得
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="id"></param>
+        public List<int> GetMagicCollectionList(int charaId)
+        {
+            // MagicDispIdの数のリストにする
+            var list = new List<int>();
+            for (int i = 0; i < (int)MagicDispId.MAX; i++)
+            {
+                list.Add(0);
+            }
+
+            // 魔法図鑑の達成率を取得する
+            try
+            {
+                string query = "SELECT sl.group, COUNT(*) AS total_count, SUM(CASE WHEN cs.spellid IS NULL THEN 0 ELSE 1 END) AS flag_sum FROM spell_list AS sl LEFT JOIN char_spells AS cs ON cs.spellid = sl.spellid AND cs.charid = @CharaId GROUP BY sl.group";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var groupid = Convert.ToInt32(reader["group"]);
+                    var total_count = Convert.ToInt32(reader["total_count"]);
+                    var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+
+                    if (total_count > 0)
+                    {
+                        if (groupid <= (int)SpellGroup.NONE || groupid >= (int)SpellGroup.MAX)
+                        {
+                            continue;
+                        }
+                        var dispIdList = new List<MagicDispId>() { MagicDispId.MAX, MagicDispId.SONG, MagicDispId.BLACK, MagicDispId.BLUE, MagicDispId.NINJUTSU, MagicDispId.SUMMONING, MagicDispId.WHITE, MagicDispId.GEOMANCY, MagicDispId.TRUST };
+                        var dispId = dispIdList[groupid];
+
+                        var percentage = (int)((double)flag_sum / total_count * 10000);
+                        list[(int)dispId] = percentage;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// 魔法グループ別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public List<MagicGroupInfo> GetMagicGroupCollectionList(int charaId, int groupId)
+        {
+            var list = new List<MagicGroupInfo>();
+            try
+            {
+                string query = "SELECT sl.spellid, sl.jobs, CASE WHEN cs.spellid IS NULL THEN 0 ELSE 1 END AS flag FROM spell_list AS sl LEFT JOIN char_spells AS cs ON cs.spellid = sl.spellid AND cs.charid = @CharaId WHERE sl.group = @GroupId";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+                command.Parameters.AddWithValue("@GroupId", groupId);
+
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var info = new MagicGroupInfo();
+                    info.Id = Convert.ToInt32(reader["spellid"]);
+                    var jobs = (reader["jobs"] as byte[]) ?? new byte[(int)JobId.MAX];
+                    info.Jobs = jobs.Select(b => (int)b).ToArray();
+                    info.MinLevel = jobs.Where(b => b > 0).Min();
+                    info.Flag = Convert.ToInt32(reader["flag"]);
+
+                    list.Add(info);
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            // MinLevelで昇順、Idで昇順にソートする
+            list = list.OrderBy(m => m.MinLevel).ThenBy(m => m.Id).ToList();
 
             return list;
         }
