@@ -175,10 +175,13 @@ namespace LsbDatabaseApi
         /// <param name="preZoneId"></param>
         /// <param name="preMapId"></param>
         /// <param name="preCoordinates"></param>
+        /// <param name="posx"></param>
+        /// <param name="posy"></param>
+        /// <param name="posz"></param>
         /// <returns></returns>
-        public string GetMessageParam(DatabaseApi database, int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates)
+        public string GetMessageParam(DatabaseApi database, int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates, float posx, float posy, float posz)
         {
-            var charaInfo = new CharaInfo(charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates);
+            var charaInfo = new CharaInfo(charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates, posx, posy, posz);
 
             if (TutorialMission.IsTutorialMission(database, charaInfo))
             {
@@ -213,7 +216,7 @@ namespace LsbDatabaseApi
                     case NationId.SANDORIA:
                         if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_RUINS_OF_FEI_YIN))
                         {
-                            //TODO SetMessageParam(BastokMission.GetMessageSandoria(database, charaInfo));
+                            SetMessageParam(SandoriaMission.GetMessageSandoria(database, charaInfo));
                             return GetMessage();
                         }
                         break;

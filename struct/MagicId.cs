@@ -36,6 +36,54 @@
     }
 
     /// <summary>
+    /// IDコンバータ
+    /// </summary>
+    public static class SpellGroupConverter
+    {
+        /// <summary>
+        /// グループIDから魔法図鑑表示IDへの変換
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public static MagicDispId ConvertToDispId(SpellGroup group)
+        {
+            return group switch
+            {
+                SpellGroup.WHITE => MagicDispId.WHITE,
+                SpellGroup.BLACK => MagicDispId.BLACK,
+                SpellGroup.SONG => MagicDispId.SONG,
+                SpellGroup.NINJUTSU => MagicDispId.NINJUTSU,
+                SpellGroup.SUMMONING => MagicDispId.SUMMONING,
+                SpellGroup.BLUE => MagicDispId.BLUE,
+                SpellGroup.GEOMANCY => MagicDispId.GEOMANCY,
+                SpellGroup.TRUST => MagicDispId.TRUST,
+                _ => MagicDispId.MAX, // 不明なグループはMAXに
+            };
+        }
+
+        /// <summary>
+        /// 魔法図鑑表示IDからグループIDへの変換
+        /// </summary>
+        /// <param name="dispId"></param>
+        /// <returns></returns>
+        public static SpellGroup ConvertToSpellGroup(MagicDispId dispId)
+        {
+            return dispId switch
+            {
+                MagicDispId.WHITE => SpellGroup.WHITE,
+                MagicDispId.BLACK => SpellGroup.BLACK,
+                MagicDispId.SONG => SpellGroup.SONG,
+                MagicDispId.NINJUTSU => SpellGroup.NINJUTSU,
+                MagicDispId.SUMMONING => SpellGroup.SUMMONING,
+                MagicDispId.BLUE => SpellGroup.BLUE,
+                MagicDispId.GEOMANCY => SpellGroup.GEOMANCY,
+                MagicDispId.TRUST => SpellGroup.TRUST,
+                _ => SpellGroup.NONE, // 不明な表示IDはNONEに
+            };
+        }
+    }
+
+    /// <summary>
     /// 魔法ID１
     /// </summary>
     public enum MagicId
@@ -68,7 +116,9 @@
 
         public MagicGroupInfo()
         {
+            Id = 0;
             Jobs = new int[(int)JobId.MAX];
+            MinLevel = 0;
             Flag = 0;
         }
     }

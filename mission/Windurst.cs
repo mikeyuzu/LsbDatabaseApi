@@ -249,7 +249,7 @@ namespace LsbDatabaseApi.mission
                         }
                     }
                     break;
-                // 三大強国 サンドリアルート
+                // 三大強国 サンドリア前半ルート
                 case MissionWindurst.THE_THREE_KINGDOMS_SANDORIA:
                     if (windurstMission.StatusLower == 3)
                     {
@@ -288,7 +288,7 @@ namespace LsbDatabaseApi.mission
                         }
                     }
                     break;
-                // 三大強国 サンドリアからバストゥークルート
+                // 三大強国 バストゥーク後半ルート
                 case MissionWindurst.THE_THREE_KINGDOMS_BASTOK2:
                     if (windurstMission.StatusLower == 10)
                     {

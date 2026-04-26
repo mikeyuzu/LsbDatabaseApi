@@ -46,7 +46,7 @@
         DYNAMIS_QUFIM = 41,                         // デュナミス-クフィム
         DYNAMIS_TAVNAZIA = 42,                      // デュナミス-タブナジア
         DIORAMA_ABDHALJS_GHELSBA = 43,              // アブダルスの箱庭-ゲルスバ
-        ABDHALJS_ISLE_PURGONORGO = 44,              // プルゴノルゴ島
+        ABDHALJS_ISLE_PURGONORGO = 44,              // アブダルスの島-プルゴノルゴ島
         ABYSSEA_TAHRONGI = 45,                      // アビセア-タロンギ
         OPEN_SEA_ROUTE_TO_AL_ZAHBI = 46,            // 外洋航路アルザビ行き
         OPEN_SEA_ROUTE_TO_MHAURA = 47,              // 外洋航路マウラ行き

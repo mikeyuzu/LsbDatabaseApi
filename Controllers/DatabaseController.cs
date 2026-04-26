@@ -32,9 +32,12 @@ namespace LsbDatabaseApi.Controllers
         /// <param name="clip3Id"></param>
         /// <param name="clip4Category"></param>
         /// <param name="clip4Id"></param>
+        /// <param name="posx"></param>
+        /// <param name="posy"></param>
+        /// <param name="posz"></param>
         /// <returns></returns>
         [HttpGet("GetCustomMenuInfo")]
-        public ActionResult<CustomMenuInfo> GetCustomMenuInfo(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates, int clip1Category, int clip1Id, int clip2Category, int clip2Id, int clip3Category, int clip3Id, int clip4Category, int clip4Id)
+        public ActionResult<CustomMenuInfo> GetCustomMenuInfo(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates, int clip1Category, int clip1Id, int clip2Category, int clip2Id, int clip3Category, int clip3Id, int clip4Category, int clip4Id, float posx, float posy, float posz)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
@@ -42,14 +45,15 @@ namespace LsbDatabaseApi.Controllers
 
             var customMenuInfo = new CustomMenuInfo();
 
-            // ナビゲーションメッセージ
+            database.ClearAllCaches();
             database.LoadChars(charaId);
             database.LoadVariables(charaId);
             database.LoadTeleportInfo(charaId);
             database.LoadProfile(charaId);
 
+            // ナビゲーションメッセージ
             var messageParam = new MessageParam();
-            var message = messageParam.GetMessageParam(database, charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates);
+            var message = messageParam.GetMessageParam(database, charaId, zoneId, mapId, coordinates, preZoneId, preMapId, preCoordinates, posx, posy, posz);
             customMenuInfo.MainNaviMessage = message;
 
             // クリップ1
@@ -133,7 +137,7 @@ namespace LsbDatabaseApi.Controllers
         /// <param name="charaId"></param>
         /// <returns></returns>
         [HttpGet("GetSynthesisRecipes")]
-        public ActionResult<List<DatabaseApi.SynergyInventoryItem>> GetSynthesisRecipes(int charaId, int guildId, int rank)
+        public ActionResult<List<SynthesisRecipe>> GetSynthesisRecipes(int charaId, int guildId, int rank)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
@@ -150,7 +154,7 @@ namespace LsbDatabaseApi.Controllers
         /// <param name="charaId"></param>
         /// <returns></returns>
         [HttpGet("GetSynthesisRecipesByItem")]
-        public ActionResult<List<DatabaseApi.SynergyInventoryItem>> GetSynthesisRecipesByItem(int charaId, int auctionHouseId, int minLevel)
+        public ActionResult<List<SynthesisRecipe>> GetSynthesisRecipesByItem(int charaId, int auctionHouseId, int minLevel)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
@@ -206,6 +210,7 @@ namespace LsbDatabaseApi.Controllers
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
             database.DatabaseInitialize(connectionString);
+            database.GetSynthesisRecipesById(charaId, recipeId);
             var recipeInfo = database.GetCachedSynthesisRecipe(recipeId);
             if (recipeInfo != null)
             {
@@ -283,15 +288,16 @@ namespace LsbDatabaseApi.Controllers
         /// 魔法グループ別図鑑のリスト取得
         /// </summary>
         /// <param name="charaId"></param>
-        /// <param name="groupId"></param>
+        /// <param name="listId"></param>
         /// <returns></returns>
         [HttpGet("GetMagicGroupCollectionList")]
-        public ActionResult<List<MagicGroupInfo>> GetMagicGroupCollectionList(int charaId, int groupId)
+        public ActionResult<List<MagicGroupInfo>> GetMagicGroupCollectionList(int charaId, int listId)
         {
             string? connectionString = _configuration.GetConnectionString("LandSandBoat");
             var database = new DatabaseApi();
             database.DatabaseInitialize(connectionString);
 
+            var groupId = SpellGroupConverter.ConvertToSpellGroup((MagicDispId)listId);
             var list = database.GetMagicGroupCollectionList(charaId, groupId);
 
             return Ok(list);

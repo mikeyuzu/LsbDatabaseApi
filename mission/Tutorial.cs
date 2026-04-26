@@ -74,7 +74,22 @@ namespace LsbDatabaseApi.mission
                     switch (database.GetNation(charaInfo.CharaId))
                     {
                         case NationId.SANDORIA:
-                            break;
+                            switch (charaInfo.ZoneId)
+                            {
+                                case ZoneId.NORTHERN_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                    message.missionPhase = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                    break;
+                                case ZoneId.PORT_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                    message.missionPhase = ZoneId.PORT_SAN_DORIA.ToString();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return message;
                         case NationId.BASTOK:
                             break;
                         case NationId.WINDURST:
@@ -148,7 +163,22 @@ namespace LsbDatabaseApi.mission
                     switch (database.GetNation(charaInfo.CharaId))
                     {
                         case NationId.SANDORIA:
-                            break;
+                            switch (charaInfo.ZoneId)
+                            {
+                                case ZoneId.NORTHERN_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                    message.missionPhase = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                    break;
+                                case ZoneId.SOUTHERN_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                    message.missionPhase = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return message;
                         case NationId.BASTOK:
                             break;
                         case NationId.WINDURST:
@@ -278,6 +308,21 @@ namespace LsbDatabaseApi.mission
                             switch (database.GetNation(charaInfo.CharaId))
                             {
                                 case NationId.SANDORIA:
+                                    switch (charaInfo.ZoneId)
+                                    {
+                                        case ZoneId.SOUTHERN_SAN_DORIA:
+                                            message.missionKind = MissionKind.Area;
+                                            message.missionType = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                            message.missionPhase = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                            return message;
+                                        case ZoneId.PORT_SAN_DORIA:
+                                            message.missionKind = MissionKind.Area;
+                                            message.missionType = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                            message.missionPhase = ZoneId.PORT_SAN_DORIA.ToString();
+                                            return message;
+                                        default:
+                                            break;
+                                    }
                                     break;
                                 case NationId.BASTOK:
                                     break;
@@ -338,6 +383,31 @@ namespace LsbDatabaseApi.mission
                         switch (database.GetNation(charaInfo.CharaId))
                         {
                             case NationId.SANDORIA:
+                                switch (charaInfo.ZoneId)
+                                {
+                                    case ZoneId.WEST_RONFAURE:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.LA_THEINE_PLATEAU.ToString();
+                                        message.missionPhase = ZoneId.WEST_RONFAURE.ToString();
+                                        return message;
+                                    case ZoneId.SOUTHERN_SAN_DORIA:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                        message.missionPhase = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                        return message;
+                                    case ZoneId.NORTHERN_SAN_DORIA:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                        message.missionPhase = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                        return message;
+                                    case ZoneId.PORT_SAN_DORIA:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                        message.missionPhase = ZoneId.PORT_SAN_DORIA.ToString();
+                                        return message;
+                                    default:
+                                        break;
+                                }
                                 break;
                             case NationId.BASTOK:
                                 break;

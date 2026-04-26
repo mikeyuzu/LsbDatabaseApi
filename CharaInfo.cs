@@ -1,5 +1,6 @@
 ﻿
 using LsbDatabaseApi.@struct;
+using System.Numerics;
 
 namespace LsbDatabaseApi
 {
@@ -13,7 +14,10 @@ namespace LsbDatabaseApi
     /// <param name="preZoneId"></param>
     /// <param name="preMapId"></param>
     /// <param name="preCoordinates"></param>
-    internal class CharaInfo(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates)
+    /// <param name="posx"></param>
+    /// <param name="posy"></param>
+    /// <param name="posz"></param>
+    internal class CharaInfo(int charaId, int zoneId, int mapId, string coordinates, int preZoneId, int preMapId, string preCoordinates, float posx, float posy, float posz)
     {
         public int CharaId = charaId;
         public ZoneId ZoneId = (ZoneId)zoneId;
@@ -22,5 +26,6 @@ namespace LsbDatabaseApi
         public ZoneId PreZoneId = (ZoneId)preZoneId;
         public int PreMapId = preMapId;
         public string PreCoordinates = preCoordinates;
+        public Vector3 Pos = new Vector3(posx, posy, posz);
     }
 }

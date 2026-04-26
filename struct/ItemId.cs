@@ -6,14 +6,20 @@
         QUADAV_CHARM = 495,                     // クゥダフの呪符
         CLUMP_OF_GAUSEBIT_WILDGRASS = 534,      // ゴゼビの野草
         ADVENTURER_COUPON = 536,                // 冒険者優待券
+        DAMSELFLY_WORM = 537,                   // ガガンボの腹虫
+        MAGICKED_SKULL = 538,                   // 呪われたサレコウベ
+        CRAB_APRON = 539,                       // 陸ガニのふんどし
         BLOODY_ROBE = 540,                      // 血染めの衣
         CUP_OF_DHALMEL_SALIVA = 541,            // ダルメルの唾液
         WILD_RABBIT_TAIL = 542,                 // 野兎の尻尾
         DELKFUTT_KEY = 549,                     // デルクフのカギ
         METEORITE = 582,                        // 隕石
+        CHUNK_OF_MINE_GRAVEL = 597,             // 鉱山の砂利
+        ONZ_OF_MYTHRIL_SAND = 599,              // ミスリルの砂粒
         PIECE_OF_ANCIENT_PAPYRUS = 1088,        // 古代魔法のパピルス
         CLUMP_OF_EXORAY_MOLD = 1089,            // エクソレイの粘菌
         CHUNK_OF_BOMB_COAL = 1090,              // ボムの炭
+        ORCISH_MAIL_SCALES = 1112,              // オークの鎧の小札
         UGGALEPIH_KEY = 1136,                   // ウガレピのカギ
         UNLIT_LANTERN = 1138,                   // 消えたランタン
         RANCOR_FLAME = 1139,                    // 怨みの炎
@@ -37,6 +43,7 @@
         PLUME_DOR = 2528,                       // 金の羽根
         TREMORSTONE = 2796,                     // 震動石
         SLICE_OF_COEURL_MEAT = 4377,            // クァールの肉
+        CRYSTAL_BASS = 4528,                    // クリスタルバス
         BOTTLE_OF_HYSTEROANIMA = 5262,          // 迷のアニマ
         CHUNK_OF_SHUMEYO_SALT = 5267,           // シュ・メーヨ海の塩
         MISTMELT = 5265,                        // 雲消霧散石
@@ -44,6 +51,8 @@
         ONE_HUNDRED_EIGHT_KNOT_QUIPU = 2562,    // 百八結節のキープス
         ROLANBERRY = 4365,                      // ロランベリー
         CIPHER_OF_SEMIHS_ALTER_EGO = 10157,     // 盟-セミ
+        CIPHER_OF_HALVERS_ALTER_EGO = 10158,    // 盟-ハルヴァー
+        ORCISH_AXE = 16656,                     // オーキシュアクス
         CURSE_WAND = 17437,                     // 呪術の杖
     }
 

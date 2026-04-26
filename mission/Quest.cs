@@ -16,79 +16,171 @@ namespace LsbDatabaseApi.mission
         /// <returns></returns>
         public static bool GetSupportJobMessage(DatabaseApi database, CharaInfo charaInfo, ref MessageParam message)
         {
-            var isSupport = database.HasQuestComplete(charaInfo.CharaId, QuestId.OTHER_AREAS, (int)OtherAreas.THE_OLD_LADY);
-            if (!isSupport)
+            var isMhaura= database.HasQuestComplete(charaInfo.CharaId, QuestId.OTHER_AREAS, (int)OtherAreas.THE_OLD_LADY);
+            var isSelbina = database.HasQuestComplete(charaInfo.CharaId, QuestId.OTHER_AREAS, (int)OtherAreas.ELDER_MEMORIES);
+            if (!isMhaura && !isSelbina)
             {
+                var value = 0;
+                switch (database.GetNation(charaInfo.CharaId))
+                {
+                    case NationId.SANDORIA:
+                    case NationId.BASTOK:
+                        message.missionType = ZoneId.SELBINA.ToString();
+                        value = database.GetVarNum(charaInfo.CharaId, "IsacioElderMemVar");
+                        break;
+                    case NationId.WINDURST:
+                        message.missionType = ZoneId.MHAURA.ToString();
+                        value = database.GetVarNum(charaInfo.CharaId, "VeraOldLadyVar");
+                        break;
+                    default:
+                        break;
+                }
+
                 // レベル18以上か
                 var stats = database.GetStatus(charaInfo.CharaId);
                 var job = database.GetJob(charaInfo.CharaId);
                 if (job.level[stats.mjob - 1] < 18)
                 {
                     message.missionKind = MissionKind.Support;
-                    message.missionType = "Mhaura";
                     message.missionPhase = "1";
                     return true;
                 }
-                var value = database.GetVarNum(charaInfo.CharaId, "VeraOldLadyVar");
                 switch (value)
                 {
                     case 0:
-                        switch (charaInfo.ZoneId)
+                        switch (database.GetNation(charaInfo.CharaId))
                         {
-                            case ZoneId.MHAURA:
+                            case NationId.SANDORIA:
+                            case NationId.BASTOK:
+                                switch (charaInfo.ZoneId)
+                                {
+                                    case ZoneId.SELBINA:
+                                        break;
+                                    case ZoneId.VALKURM_DUNES:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.SELBINA.ToString();
+                                        message.missionPhase = ZoneId.VALKURM_DUNES.ToString();
+                                        return true;
+                                    default:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.VALKURM_DUNES.ToString();
+                                        message.missionPhase = ZoneId.LA_THEINE_PLATEAU.ToString();
+                                        return true;
+                                }
                                 break;
-                            case ZoneId.BUBURIMU_PENINSULA:
-                                message.missionKind = MissionKind.Area;
-                                message.missionType = ZoneId.MHAURA.ToString();
-                                message.missionPhase = ZoneId.BUBURIMU_PENINSULA.ToString();
-                                return true;
+                            case NationId.WINDURST:
+                                switch (charaInfo.ZoneId)
+                                {
+                                    case ZoneId.MHAURA:
+                                        break;
+                                    case ZoneId.BUBURIMU_PENINSULA:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.MHAURA.ToString();
+                                        message.missionPhase = ZoneId.BUBURIMU_PENINSULA.ToString();
+                                        return true;
+                                    default:
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.BUBURIMU_PENINSULA.ToString();
+                                        message.missionPhase = ZoneId.TAHRONGI_CANYON.ToString();
+                                        return true;
+                                }
+                                break;
                             default:
-                                message.missionKind = MissionKind.Area;
-                                message.missionType = ZoneId.BUBURIMU_PENINSULA.ToString();
-                                message.missionPhase = ZoneId.TAHRONGI_CANYON.ToString();
-                                return true;
+                                break;
                         }
-
                         message.missionKind = MissionKind.Support;
-                        message.missionType = "Mhaura";
                         message.missionPhase = "2";
                         return true;
                     case 1:
-                        message.missionKind = MissionKind.Support;
-                        message.missionType = "Mhaura";
-                        if (database.HasItem(charaInfo.CharaId, ItemId.WILD_RABBIT_TAIL))
+                        switch (database.GetNation(charaInfo.CharaId))
                         {
-                            message.missionPhase = "4";
+                            case NationId.SANDORIA:
+                            case NationId.BASTOK:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.MAGICKED_SKULL))
+                                {
+                                    message.missionPhase = "4";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "3";
+                                }
+                                return true;
+                            case NationId.WINDURST:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.WILD_RABBIT_TAIL))
+                                {
+                                    message.missionPhase = "4";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "3";
+                                }
+                                return true;
+                            default:
+                                break;
                         }
-                        else
-                        {
-                            message.missionPhase = "3";
-                        }
-                        return true;
+                        break;
                     case 2:
-                        message.missionKind = MissionKind.Support;
-                        message.missionType = "Mhaura";
-                        if (database.HasItem(charaInfo.CharaId, ItemId.CUP_OF_DHALMEL_SALIVA))
+                        switch (database.GetNation(charaInfo.CharaId))
                         {
-                            message.missionPhase = "6";
+                            case NationId.SANDORIA:
+                            case NationId.BASTOK:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.DAMSELFLY_WORM))
+                                {
+                                    message.missionPhase = "6";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "5";
+                                }
+                                return true;
+                            case NationId.WINDURST:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.CUP_OF_DHALMEL_SALIVA))
+                                {
+                                    message.missionPhase = "6";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "5";
+                                }
+                                return true;
+                            default:
+                                break;
                         }
-                        else
-                        {
-                            message.missionPhase = "5";
-                        }
-                        return true;
+                        break;
                     case 3:
-                        message.missionKind = MissionKind.Support;
-                        message.missionType = "Mhaura";
-                        if (database.HasItem(charaInfo.CharaId, ItemId.BLOODY_ROBE))
+                        switch (database.GetNation(charaInfo.CharaId))
                         {
-                            message.missionPhase = "8";
+                            case NationId.SANDORIA:
+                            case NationId.BASTOK:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.CRAB_APRON))
+                                {
+                                    message.missionPhase = "8";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "7";
+                                }
+                                return true;
+                            case NationId.WINDURST:
+                                message.missionKind = MissionKind.Support;
+                                if (database.HasItem(charaInfo.CharaId, ItemId.BLOODY_ROBE))
+                                {
+                                    message.missionPhase = "8";
+                                }
+                                else
+                                {
+                                    message.missionPhase = "7";
+                                }
+                                return true;
+                            default:
+                                break;
                         }
-                        else
-                        {
-                            message.missionPhase = "7";
-                        }
-                        return true;
+                        break;
                     default:
                         break;
                 }
@@ -171,10 +263,74 @@ namespace LsbDatabaseApi.mission
                     {
                         case ZoneId.METALWORKS:
                             break;
+                        case ZoneId.BASTOK_MARKETS:
+                            message.missionKind = MissionKind.Area;
+                            message.missionType = ZoneId.METALWORKS.ToString();
+                            message.missionPhase = ZoneId.BASTOK_MARKETS.ToString();
+                            return true;
+                        case ZoneId.PORT_BASTOK:
+                            message.missionKind = MissionKind.Area;
+                            message.missionType = ZoneId.BASTOK_MARKETS.ToString();
+                            message.missionPhase = ZoneId.PORT_BASTOK.ToString();
+                            return true;
                         default:
                             message.missionKind = MissionKind.Area;
                             message.missionType = ZoneId.METALWORKS.ToString();
                             message.missionPhase = ZoneId.BASTOK_MARKETS.ToString();
+                            return true;
+                    }
+                    message.missionPhase = "3";
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// ウィンダスフェイスクエストメッセージ取得
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="charaInfo"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static bool GetTrustWindurstMessage(DatabaseApi database, CharaInfo charaInfo, ref MessageParam message)
+        {
+            if (!database.HasQuestComplete(charaInfo.CharaId, QuestId.WINDURST, (int)QuestWindurst.TRUST_WINDURST))
+            {
+                message.missionKind = MissionKind.Trust;
+                message.missionType = "WINDURST";
+                if (!database.HasKeyItem(charaInfo.CharaId, KeyItemId.GREEN_INSTITUTE_CARD))
+                {
+                    switch (charaInfo.ZoneId)
+                    {
+                        case ZoneId.WINDURST_WOODS:
+                            break;
+                        default:
+                            message.missionKind = MissionKind.Area;
+                            message.missionType = ZoneId.EAST_SARUTABARUTA.ToString();
+                            message.missionPhase = ZoneId.WINDURST_WOODS.ToString();
+                            return true;
+                    }
+                    message.missionPhase = "2";
+                    return true;
+                }
+                var magic = database.GetCharaMagic(charaInfo.CharaId);
+                if (!magic.IsMagic((int)MagicId.KUPIPI))
+                {
+                    switch (charaInfo.ZoneId)
+                    {
+                        case ZoneId.HEAVENS_TOWER:
+                            break;
+                        case ZoneId.WINDURST_WALLS:
+                            message.missionKind = MissionKind.Area;
+                            message.missionType = ZoneId.HEAVENS_TOWER.ToString();
+                            message.missionPhase = ZoneId.WINDURST_WALLS.ToString();
+                            return true;
+                        default:
+                            message.missionKind = MissionKind.Area;
+                            message.missionType = ZoneId.WINDURST_WALLS.ToString();
+                            message.missionPhase = ZoneId.WINDURST_WOODS.ToString();
                             return true;
                     }
                     message.missionPhase = "3";
@@ -208,30 +364,83 @@ namespace LsbDatabaseApi.mission
                 }
                 if (!database.HasQuestCurrent(charaInfo.CharaId, QuestId.JEUNO, (int)QuestJeuno.CHOCOBOS_WOUNDS))
                 {
-                    switch (charaInfo.ZoneId)
+                    switch (database.GetNation(charaInfo.CharaId))
                     {
-                        case ZoneId.UPPER_JEUNO:
+                        case NationId.SANDORIA:
+                            switch (charaInfo.ZoneId)
+                            {
+                                case ZoneId.UPPER_JEUNO:
+                                    break;
+                                case ZoneId.BATALLIA_DOWNS:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.UPPER_JEUNO.ToString();
+                                    message.missionPhase = ZoneId.BATALLIA_DOWNS.ToString();
+                                    return true;
+                                case ZoneId.JUGNER_FOREST:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.BATALLIA_DOWNS.ToString();
+                                    message.missionPhase = ZoneId.JUGNER_FOREST.ToString();
+                                    return true;
+                                case ZoneId.LA_THEINE_PLATEAU:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.JUGNER_FOREST.ToString();
+                                    message.missionPhase = ZoneId.LA_THEINE_PLATEAU.ToString();
+                                    return true;
+                                case ZoneId.WEST_RONFAURE:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.LA_THEINE_PLATEAU.ToString();
+                                    message.missionPhase = ZoneId.WEST_RONFAURE.ToString();
+                                    return true;
+                                case ZoneId.SOUTHERN_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                    message.missionPhase = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                    return true;
+                                case ZoneId.NORTHERN_SAN_DORIA:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                    message.missionPhase = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                    return true;
+                                case ZoneId.CHATEAU_DORAGUILLE:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.NORTHERN_SAN_DORIA.ToString();
+                                    message.missionPhase = ZoneId.CHATEAU_DORAGUILLE.ToString();
+                                    return true;
+                                default:
+                                    break;
+                            }
                             break;
-                        case ZoneId.LOWER_JEUNO:
-                            message.missionKind = MissionKind.Area;
-                            message.missionType = ZoneId.UPPER_JEUNO.ToString();
-                            message.missionPhase = ZoneId.LOWER_JEUNO.ToString();
-                            return true;
-                        case ZoneId.PORT_JEUNO:
-                            message.missionKind = MissionKind.Area;
-                            message.missionType = ZoneId.LOWER_JEUNO.ToString();
-                            message.missionPhase = ZoneId.PORT_JEUNO.ToString();
-                            return true;
-                        case ZoneId.SAUROMUGUE_CHAMPAIGN:
-                            message.missionKind = MissionKind.Area;
-                            message.missionType = ZoneId.PORT_JEUNO.ToString();
-                            message.missionPhase = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
-                            return true;
+                        case NationId.BASTOK:
+                            break;
+                        case NationId.WINDURST:
+                            switch (charaInfo.ZoneId)
+                            {
+                                case ZoneId.UPPER_JEUNO:
+                                    break;
+                                case ZoneId.LOWER_JEUNO:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.UPPER_JEUNO.ToString();
+                                    message.missionPhase = ZoneId.LOWER_JEUNO.ToString();
+                                    return true;
+                                case ZoneId.PORT_JEUNO:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.LOWER_JEUNO.ToString();
+                                    message.missionPhase = ZoneId.PORT_JEUNO.ToString();
+                                    return true;
+                                case ZoneId.SAUROMUGUE_CHAMPAIGN:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.PORT_JEUNO.ToString();
+                                    message.missionPhase = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
+                                    return true;
+                                default:
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
+                                    message.missionPhase = ZoneId.MERIPHATAUD_MOUNTAINS.ToString();
+                                    return true;
+                            }
+                            break;
                         default:
-                            message.missionKind = MissionKind.Area;
-                            message.missionType = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
-                            message.missionPhase = ZoneId.MERIPHATAUD_MOUNTAINS.ToString();
-                            return true;
+                            break;
                     }
                     message.missionPhase = "0";
                     return true;
@@ -244,6 +453,33 @@ namespace LsbDatabaseApi.mission
                     var num = database.GetItemCount(charaInfo.CharaId, ItemId.CLUMP_OF_GAUSEBIT_WILDGRASS);
                     if (num < 4)
                     {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.MERIPHATAUD_MOUNTAINS:
+                                break;
+                            case ZoneId.SAUROMUGUE_CHAMPAIGN:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.MERIPHATAUD_MOUNTAINS.ToString();
+                                message.missionPhase = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
+                                return true;
+                            case ZoneId.PORT_JEUNO:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.SAUROMUGUE_CHAMPAIGN.ToString();
+                                message.missionPhase = ZoneId.PORT_JEUNO.ToString();
+                                return true;
+                            case ZoneId.LOWER_JEUNO:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.PORT_JEUNO.ToString();
+                                message.missionPhase = ZoneId.LOWER_JEUNO.ToString();
+                                return true;
+                            case ZoneId.UPPER_JEUNO:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.LOWER_JEUNO.ToString();
+                                message.missionPhase = ZoneId.UPPER_JEUNO.ToString();
+                                return true;
+                            default:
+                                break;
+                        }
                         message.missionPhase = "0_CLUMP_OF_GAUSEBIT_WILDGRASS";
                     }
                     return true;

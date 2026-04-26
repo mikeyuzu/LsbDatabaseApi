@@ -62,6 +62,7 @@
     public enum OtherAreas
     {
         THE_OLD_LADY = 10,          // ごうつくばあさん
+        ELDER_MEMORIES = 24,        // ある老人の回想
         A_HARD_DAYS_KNIGHT = 64,    // タブナジア侯国騎士団
         FLY_HIGH = 71,              // その翼、空高く
         BOMBS_AWAY = 96,            // スノールと狩人
