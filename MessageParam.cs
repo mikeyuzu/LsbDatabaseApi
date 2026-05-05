@@ -214,14 +214,14 @@ namespace LsbDatabaseApi
                 switch (database.GetNation(charaInfo.CharaId))
                 {
                     case NationId.SANDORIA:
-                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_RUINS_OF_FEI_YIN))
+                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_SHADOW_LORD))
                         {
                             SetMessageParam(SandoriaMission.GetMessageSandoria(database, charaInfo));
                             return GetMessage();
                         }
                         break;
                     case NationId.BASTOK:
-                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.DARKNESS_RISING))
+                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.XARCABARD_LAND_OF_TRUTHS))
                         {
                             //TODO SetMessageParam(BastokMission.GetMessageWindurst(database, charaInfo));
                             return GetMessage();

@@ -77,24 +77,6 @@ namespace LsbDatabaseApi.@struct
         INVALID = 255       // 最大値
     }
 
-    /// <summary>
-    /// 競売所の大カテゴリ
-    /// </summary>
-    public enum AuctionHouseKind
-    {
-        WEAPON = 0,     // 武器
-        DEFENSE,        // 防具
-        MAGIC,          // 魔法スクロール
-        MEDICINES,      // 薬品
-        FURNISHINGS,    // 調度品
-        MATERIALS,      // 素材
-        FOOD,           // 食品
-        CRYSTAL,        // クリスタル
-        OTHER,          // その他
-
-        MAX
-    }
-
     public enum AuctionHouseItem
     {
         ITEM = 0,   // 項目
@@ -118,8 +100,8 @@ namespace LsbDatabaseApi.@struct
         /// <summary>
         /// 武器のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemWeapon = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemWeapon =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.H2H },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.DAGGER },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.SWORD },
@@ -134,14 +116,14 @@ namespace LsbDatabaseApi.@struct
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.STAFF },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.BOW },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.INSTRUMENTS },
-            new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.LIST, List = new List<AuctionHouseId> { AuctionHouseId.AMMUNITION, AuctionHouseId.FISHING_GEAR, AuctionHouseId.PET_ITEMS, AuctionHouseId.GRIPS, } },
-        };
+            new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.LIST, List = [AuctionHouseId.AMMUNITION, AuctionHouseId.FISHING_GEAR, AuctionHouseId.PET_ITEMS, AuctionHouseId.GRIPS,] },
+        ];
 
         /// <summary>
         /// 防具のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemDefense = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemDefense =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.SHIELD },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.NECK },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.HEAD },
@@ -153,13 +135,13 @@ namespace LsbDatabaseApi.@struct
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.BACK },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.EARRINGS },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.RINGS },
-        };
+        ];
 
         /// <summary>
         /// 魔法のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemMagic = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemMagic =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.WHITE_MAGIC },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.BLACK_MAGIC },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.SONGS },
@@ -167,29 +149,29 @@ namespace LsbDatabaseApi.@struct
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.SUMMONING },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.DICE },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.GEOMANCER },
-        };
+        ];
 
         /// <summary>
         /// 薬品のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemMedicines = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemMedicines =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.MEDICINES },
-        };
+        ];
 
         /// <summary>
         /// 調度品のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemFurnishings = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemFurnishings =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.FURNISHINGS },
-        };
+        ];
 
         /// <summary>
         /// 素材のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemMaterials = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemMaterials =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.SMITHING },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.GOLDSMITHING },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.CLOTHCRAFT },
@@ -198,15 +180,15 @@ namespace LsbDatabaseApi.@struct
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.WOODWORKING },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.ALCHEMY },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.ALCHEMY_2 },
-        };
+        ];
 
         /// <summary>
         /// 食品のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemFood = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemFood =
+        [
             // 料理
-            new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.LIST, List = new List<AuctionHouseId> {
+            new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.LIST, List = [
                 AuctionHouseId.MEAT_EGGS,
                 AuctionHouseId.SEAFOOD,
                 AuctionHouseId.VEGETABLES,
@@ -214,24 +196,24 @@ namespace LsbDatabaseApi.@struct
                 AuctionHouseId.BREADS_RICE,
                 AuctionHouseId.SWEETS,
                 AuctionHouseId.DRINKS,
-            } },
+            ] },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.INGREDIENTS},
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.FISH },
-        };
+        ];
 
         /// <summary>
         /// クリスタルのカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemCrystal = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemCrystal =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.CRYSTALS },
-        };
+        ];
 
         /// <summary>
         /// その他のカテゴリ
         /// </summary>
-        public static List<AuctionHouseSubcategoryItem> AuctionHouseItemOther = new List<AuctionHouseSubcategoryItem>()
-        {
+        public static readonly IReadOnlyList<AuctionHouseSubcategoryItem> AuctionHouseItemOther =
+        [
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.MISC },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.MISC_2 },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.MISC_3 },
@@ -240,22 +222,22 @@ namespace LsbDatabaseApi.@struct
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.NINJA_TOOLS },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.CURSED_ITEMS },
             new AuctionHouseSubcategoryItem { Item = AuctionHouseItem.ITEM, Id = AuctionHouseId.AUTOMATON },
-        };
+        ];
 
         /// <summary>
         /// 競売所のリスト
         /// </summary>
-        public static List<List<AuctionHouseSubcategoryItem>> AuctionHouseList = new List<List<AuctionHouseSubcategoryItem>>()
-        {
-            AuctionHouseItemWeapon,
-            AuctionHouseItemDefense,
-            AuctionHouseItemMagic,
-            AuctionHouseItemMedicines,
-            AuctionHouseItemFurnishings,
-            AuctionHouseItemMaterials,
-            AuctionHouseItemFood,
-            AuctionHouseItemCrystal,
-            AuctionHouseItemOther,
-        };
+        public static readonly List<List<AuctionHouseSubcategoryItem>> AuctionHouseList =
+        [
+            [.. AuctionHouseItemWeapon],
+            [.. AuctionHouseItemDefense],
+            [.. AuctionHouseItemMagic],
+            [.. AuctionHouseItemMedicines],
+            [.. AuctionHouseItemFurnishings],
+            [.. AuctionHouseItemMaterials],
+            [.. AuctionHouseItemFood],
+            [.. AuctionHouseItemCrystal],
+            [.. AuctionHouseItemOther],
+        ];
     }
 }

@@ -1851,4 +1851,258 @@
         EFFECT_TOMAHAWK = 805, // Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
         EFFECT_NUKE_WALL = 806, // Custom effect for NM type mobs only. Applied by elemental magic damage sources
     }
+
+    /// <summary>
+    /// 装備詳細情報
+    /// </summary>
+    public struct EquipmentDetailInfo
+    {
+        public int Id { get; set; }         // アイテムID
+        public int Level { get; set; }      // 装備可能レベル
+        public int ItemLevel { get; set; }  // アイテムレベル
+        public int Flag { get; set; }       // 所持フラグ
+
+        public EquipmentDetailInfo()
+        {
+            Id = 0;
+            Level = 0;
+            ItemLevel = 0;
+            Flag = 0;
+        }
+    }
+
+    /// <summary>
+    /// 魔法詳細情報
+    /// </summary>
+    public struct MagicDetailInfo
+    {
+        public int Id { get; set; }         // アイテムID
+        public int[] Jobs { get; set; }     // 使用可能なジョブレベル
+        public int MinLevel { get; set; }   // 使用可能な最小レベル（ソート用）
+        public int Flag { get; set; }       // 所持フラグ
+
+        public MagicDetailInfo()
+        {
+            Id = 0;
+            Jobs = new int[(int)JobId.MAX];
+            MinLevel = 0;
+            Flag = 0;
+        }
+    }
+
+    /// <summary>
+    /// アイテム詳細情報
+    /// </summary>
+    public struct ItemDetailInfo
+    {
+        public int Id { get; set; }         // アイテムID
+        public int Flag { get; set; }       // 所持フラグ
+
+        public ItemDetailInfo()
+        {
+            Id = 0;
+            Flag = 0;
+        }
+    }
+
+    /// <summary>
+    /// アイテム図鑑の大カテゴリ
+    /// </summary>
+    public enum ItemBookCategory
+    {
+        WEAPON = 0,         // 武器
+        DEFENSE,            // 防具
+        OTHER_EQUIPMENT,    // その他装備
+        MAGIC,              // 魔法スクロール
+        MEDICINES,          // 薬品
+        FURNISHINGS,        // 調度品
+        MATERIALS,          // 素材
+        FOOD,               // 食品
+        CRYSTAL,            // クリスタル
+        OTHER,              // その他
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑の武器リスト
+    /// </summary>
+    public enum ItemBookWeaponList
+    {
+        H2H = 0,                // 格闘
+        DAGGER,                 // 短剣
+        SWORD,                  // 片手剣
+        GREATSWORD,             // 両手剣
+        AXE,                    // 片手斧
+        GREATAXE,               // 両手斧
+        SCYTHE,                 // 両手鎌
+        POLEARM,                // 両手槍
+        KATANA,                 // 片手刀
+        GREATKATANA,            // 両手刀
+        CLUB,                   // 片手棍
+        STAFF,                  // 両手棍
+        ARCHERY,                // 弓術
+        MARKSMANSHIP,           // 射撃
+        THROWING,               // 投擲
+        STRINGED_INSTRUMENTS,   // 弦楽器
+        WIND_INSTRUMENT,        // 管楽器
+        GEOMANTIC_HANDBELL,     // 風水鈴
+        AMMUNITION,             // 矢
+        BULLETS,                // 弾
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑の防具リスト
+    /// </summary>
+    public enum ItemBookDefenseList
+    {
+        SHIELD = 0,     // 盾
+        HEAD,           // 頭
+        BODY,           // 胴
+        HANDS,          // 両手
+        LEGS,           // 両脚
+        FEET,           // 両足
+        NECKLACE,       // 首
+        WAIST,          // 腰
+        BACK,           // 背
+        EARRINGS,       // 耳
+        RING,           // 指
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑のその他装備リスト
+    /// </summary>
+    public enum ItemBookOtherEquipmentList
+    {
+        ANIMATOR = 0,           // ストリンガー
+        GRIPS,                  // グリップ
+        SUPPORT_EQUIPMENT,      // 補助装備
+        FISHING_ROD,            // 釣り竿
+        FISHING_BAIT,           // 釣り餌
+        PET_ITEMS,              // 獣呼び出しアイテム
+        PET_FOOD,               // ペットフード
+        OTHER_PET_FOOD,         // その他獣の餌
+        AUTOMATON,              // からくり回復アイテム
+        CAMERA,                 // 撮影機
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑の魔法リスト
+    /// </summary>
+    public enum ItemBookMagicList
+    {
+        WHITE = 0,          // 白魔法
+        BLACK,              // 黒魔法
+        SONG,               // 歌
+        NINJUTSU,           // 忍術
+        SUMMONING,          // 召喚魔法
+        DIE,                // ダイス
+        GEOMANCY,           // 風水魔法
+        TRUST,              // フェイス
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑の素材リスト
+    /// </summary>
+    public enum ItemBookMaterialList
+    {
+        SMITHING = 0,   // 金属材
+        GOLDSMITHING,   // 貴金属材
+        CLOTHCRAFT,     // 布材
+        LEATHERCRAFT,   // 皮革材
+        BONECRAFT,      // 骨材
+        WOODWORKING,    // 木材
+        ALCHEMY,        // 錬金術材
+        ALCHEMY2,       // 錬金術材2
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑の食品リスト
+    /// </summary>
+    public enum ItemBookFoodList
+    {
+        MEAT_EGGS = 0,  // 肉・卵料理
+        SEAFOOD,        // 魚介料理
+        VEGETABLES,     // 野菜料理
+        SOUPS,          // スープ類
+        BREADS_RICE,    // 穀物料理
+        SWEETS,         // スィーツ
+        DRINKS,         // ドリンク
+        INGREDIENTS,    // 食材
+        FISH,           // 水産物
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑のその他リスト
+    /// </summary>
+    public enum ItemBookOtherList
+    {
+        MISC = 0,           // 雑貨1
+        MISC_2,             // 雑貨2
+        MISC_3,             // 雑貨3
+        MISC_4,             // 雑貨4
+        AMMUNITION,         // 矢・弾
+        BEAST_MADE,         // 獣人製品
+        CARDS,              // カード
+        NINJUTSU_TOOLS,     // 忍具
+        CURSED_ITEMS,       // 呪物
+        AUTOMATON,          // からくり部品
+        CHOCOBO_FOOD,       // チョコボの餌
+        POWER_ITEM,         // 強化アイテム
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑のレベル帯リスト
+    /// </summary>
+    public enum ItemBookLevelList99
+    {
+        LEVEL_1_10 = 0,     // レベル1-10
+        LEVEL_11_20,        // レベル11-20
+        LEVEL_21_30,        // レベル21-30
+        LEVEL_31_40,        // レベル31-40
+        LEVEL_41_50,        // レベル41-50
+        LEVEL_51_60,        // レベル51-60
+        LEVEL_61_70,        // レベル61-70
+        LEVEL_71_80,        // レベル71-80
+        LEVEL_81_90,        // レベル81-90
+        LEVEL_91_99,        // レベル91-99
+
+        MAX
+    }
+
+    /// <summary>
+    /// アイテム図鑑のレベル帯リスト
+    /// </summary>
+    public enum ItemBookLevelList119
+    {
+        LEVEL_1_10 = 0,     // レベル1-10
+        LEVEL_11_20,        // レベル11-20
+        LEVEL_21_30,        // レベル21-30
+        LEVEL_31_40,        // レベル31-40
+        LEVEL_41_50,        // レベル41-50
+        LEVEL_51_60,        // レベル51-60
+        LEVEL_61_70,        // レベル61-70
+        LEVEL_71_80,        // レベル71-80
+        LEVEL_81_90,        // レベル81-90
+        LEVEL_91_100,       // レベル91-100
+        LEVEL_101_110,      // レベル101-110
+        LEVEL_111_118,      // レベル111-118
+        LEVEL_119,          // レベル119
+
+        MAX
+    }
 }

@@ -1143,6 +1143,99 @@ namespace LsbDatabaseApi.mission
                     break;
                 // 闇の王を討て！
                 case MissionSandoria.THE_SHADOW_LORD:
+                    if (QuestMission.GetLevelCapMessage(database, charaInfo, 60, ref message))
+                    {
+                        return message;
+                    }
+                    if (sandoriaMission.StatusLower == 2)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.THRONE_ROOM:
+                                break;
+                            case ZoneId.CASTLE_ZVAHL_KEEP:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.CASTLE_ZVAHL_KEEP.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_KEEP.ToString() + "_1_2";
+                                }
+                                else if (charaInfo.MapId == 2)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.CASTLE_ZVAHL_KEEP.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_KEEP.ToString() + "_2_3";
+                                }
+                                else if (charaInfo.MapId == 3)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.CASTLE_ZVAHL_KEEP.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_KEEP.ToString() + "_3_4";
+                                }
+                                else if (charaInfo.MapId == 4)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.THRONE_ROOM.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_KEEP.ToString();
+                                }
+                                return message;
+                            case ZoneId.CASTLE_ZVAHL_BAILEYS:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString() + "_1_2";
+                                }
+                                else if (charaInfo.MapId == 2)
+                                {
+                                    if (charaInfo.PreMapId == 1)
+                                    {
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString();
+                                        message.missionPhase = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString() + "_2_3";
+                                    }
+                                    else
+                                    {
+                                        message.missionKind = MissionKind.Area;
+                                        message.missionType = ZoneId.CASTLE_ZVAHL_KEEP.ToString();
+                                        message.missionPhase = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString();
+                                    }
+                                }
+                                else if (charaInfo.MapId == 15)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString();
+                                    message.missionPhase = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString() + "_3_2";
+                                }
+                                return message;
+                            case ZoneId.XARCABARD:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.CASTLE_ZVAHL_BAILEYS.ToString();
+                                message.missionPhase = ZoneId.XARCABARD.ToString();
+                                return message;
+                            case ZoneId.BEAUCEDINE_GLACIER:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.XARCABARD.ToString();
+                                message.missionPhase = ZoneId.BEAUCEDINE_GLACIER.ToString();
+                                return message;
+                            case ZoneId.RANGUEMONT_PASS:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.BEAUCEDINE_GLACIER.ToString();
+                                message.missionPhase = ZoneId.RANGUEMONT_PASS.ToString();
+                                return message;
+                            case ZoneId.EAST_RONFAURE:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.RANGUEMONT_PASS.ToString();
+                                message.missionPhase = ZoneId.EAST_RONFAURE.ToString();
+                                return message;
+                            case ZoneId.SOUTHERN_SAN_DORIA:
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.EAST_RONFAURE.ToString();
+                                message.missionPhase = ZoneId.SOUTHERN_SAN_DORIA.ToString();
+                                return message;
+                        }
+                    }
                     break;
                 // ローテ王妃の遺言
                 case MissionSandoria.LEAUTES_LAST_WISHES:

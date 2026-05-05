@@ -3,6 +3,7 @@ using LsbDatabaseApi.Controllers;
 using LsbDatabaseApi.mission;
 using LsbDatabaseApi.@struct;
 using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using static LsbDatabaseApi.DatabaseApi;
@@ -1118,10 +1120,10 @@ namespace LsbDatabaseApi
                 }
             }
 
-            string query = "UPDATE chars SET keyitems = @keyItems WHERE charid = @charaId";
+            string query = "UPDATE chars SET keyitems = @keyItems WHERE charid = @CharaId";
             using MySqlCommand command = new(query, _connection);
             command.Parameters.AddWithValue("@keyItems", data);
-            command.Parameters.AddWithValue("@charaId", charaId);
+            command.Parameters.AddWithValue("@CharaId", charaId);
             command.ExecuteNonQuery();
         }
 
@@ -1289,7 +1291,7 @@ namespace LsbDatabaseApi
             string query = "SELECT effectid FROM char_effects WHERE charid = @CharaId";
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1336,7 +1338,7 @@ namespace LsbDatabaseApi
             string query = "SELECT skillid, value FROM char_skills WHERE charid = @CharaId";
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1384,7 +1386,7 @@ namespace LsbDatabaseApi
             string query = "SELECT mjob, sjob FROM char_stats WHERE charid = @CharaId";
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1429,7 +1431,7 @@ namespace LsbDatabaseApi
             string query = "SELECT war, mnk, whm, blm, rdm, thf, pld, drk, bst, brd, rng, sam, nin, drg, smn, blu, cor, pup, dnc, sch, geo, run FROM char_jobs WHERE charid = @CharaId";
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1512,7 +1514,7 @@ namespace LsbDatabaseApi
             string query = "SELECT spellid FROM char_spells WHERE charid = @CharaId";
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 using MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1702,14 +1704,14 @@ namespace LsbDatabaseApi
             string query = @"
                 DELETE FROM custom_inventory 
                 WHERE charid = @characterId 
-                AND itemId = @itemId 
-                AND quantity - @amount <= 0;
+                    AND itemId = @itemId 
+                    AND quantity - @amount <= 0;
         
                 UPDATE custom_inventory 
                 SET quantity = quantity - @amount 
                 WHERE charid = @characterId 
-                AND itemId = @itemId 
-                AND quantity - @amount > 0";
+                    AND itemId = @itemId 
+                    AND quantity - @amount > 0";
 
             using MySqlCommand command = new(query, _connection);
             command.Parameters.AddWithValue("@characterId", charaId);
@@ -2186,7 +2188,7 @@ namespace LsbDatabaseApi
 
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 command.Parameters.AddWithValue("@rankMin", minRank);
                 command.Parameters.AddWithValue("@rankMax", maxRank);
                 using var reader = command.ExecuteReader();
@@ -2226,7 +2228,7 @@ namespace LsbDatabaseApi
 
             using (MySqlCommand command = new(query, _connection))
             {
-                command.Parameters.AddWithValue("@charaId", charaId);
+                command.Parameters.AddWithValue("@CharaId", charaId);
                 command.Parameters.AddWithValue("@ahId", ahId);
                 command.Parameters.AddWithValue("@level", level);
                 using var reader = command.ExecuteReader();
@@ -2285,9 +2287,9 @@ namespace LsbDatabaseApi
                  /// <param name="id"></param>
         public void InsertOpenRecipe(int charaId, int id)
         {
-            string query = "INSERT INTO custom_open_recipes (charid, ID) VALUES (@charaId, @id);";
+            string query = "INSERT INTO custom_open_recipes (charid, ID) VALUES (@CharaId, @id);";
             using MySqlCommand command = new(query, _connection);
-            command.Parameters.AddWithValue("@charaId", charaId);
+            command.Parameters.AddWithValue("@CharaId", charaId);
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
         }
@@ -2348,6 +2350,36 @@ namespace LsbDatabaseApi
                 list.Add(0);
             }
 
+            // アイテム図鑑の達成率を取得する
+            try
+            {
+                string query = @"
+                    SELECT
+                        COUNT(*) AS total_count,
+                        SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                    FROM item_basic AS ib
+                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                    WHERE ib.type NOT IN (2, 8) AND ib.itemid NOT IN (4204, 4206, 4208);
+                ";
+                using var command = new MySqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@CharaId", charaId);
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    var total_count = Convert.ToInt32(reader["total_count"]);
+                    var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                    if (total_count > 0)
+                    {
+                        var percentage = (int)((double)flag_sum / total_count * 10000);
+                        list[(int)CompendiumType.Item] = percentage;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
             // 魔法図鑑の達成率を取得する
             try
             {
@@ -2367,6 +2399,3262 @@ namespace LsbDatabaseApi
                         list[(int)CompendiumType.Magic] = percentage;
                     }
                 }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテム図鑑のリスト取得
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="id"></param>
+        public List<int> GetItemCollectionList(int charaId)
+        {
+            // ItemDispIdの数のリストにする
+            var list = new List<int>();
+            for (int i = 0; i < (int)ItemBookCategory.MAX; i++)
+            {
+                list.Add(0);
+            }
+
+            // アイテム図鑑の達成率を取得する
+            try
+            {
+                string[] query_list = [
+                    // 武器
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ib.type = 7 AND ie.slot IN (1, 3)
+
+                            UNION ALL
+
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ie.slot = 4 AND iw.skill IN (25, 26, 27, 41, 42, 45)
+
+                            UNION ALL
+
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48 AND iw.dmg = 0 AND ie.level > 1 AND iw.delay = 999
+
+                            UNION ALL
+
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ie.slot = 8 AND iw.skill = 0 AND stackSize = 1
+
+                            UNION ALL
+
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ie.slot = 8 AND iw.skill IN (25, 26, 27)
+                        ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // 防具
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM
+                            item_basic AS ib
+                        INNER JOIN
+                            item_equipment AS ie ON ie.itemid = ib.itemid
+                        LEFT JOIN
+                            custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                        WHERE
+                            ib.type = 6 AND ie.slot IN (2,16, 32, 64, 128, 256, 512, 1024, 6144, 24576, 32768)
+                    ",
+                    // その他装備
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid FROM item_basic AS ib
+                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE
+                                  (ie.slot IN (4, 8) AND iw.skill = 48)
+                                  OR (ie.slot = 4 AND iw.skill = 0)
+                                  OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 256)
+                                  OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 131072)
+                                  OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH = 48)
+                                  OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48
+                                      AND (iw.dmg > 0 OR ie.level = 1 OR (iw.dmg = 0 AND ie.level > 1 AND iw.delay < 999)))
+
+                            UNION ALL
+
+                            SELECT ib.itemid FROM item_basic AS ib
+                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                            WHERE ie.slot = 2
+
+                            UNION ALL
+
+                            SELECT ib.itemid FROM item_basic AS ib
+                            WHERE ib.type = 1 AND ib.ah IN (47, 48)
+                        ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // 魔法スクロール
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            WHERE ib.type = 5 AND ib.ah IN (28, 29, 30, 31, 32, 45, 60)
+                            UNION ALL
+                            SELECT itemid
+                            FROM item_basic
+                            WHERE subid > 0 AND flags = 61504
+                        ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // 薬品
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid FROM item_basic AS ib
+                            WHERE ib.type IN (1, 5) AND ib.ah = 33
+
+                            UNION ALL
+
+                            SELECT ib.itemid FROM item_basic AS ib
+                            WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4146, 4147, 4200, 4202, 4210, 4212, 4214, 4254, 4255, 5241, 5242, 5243, 5244, 5245, 5246, 5247, 5248, 5249, 5250, 5251, 5252, 5385, 5386, 5387, 5388, 5389, 5390, 5391, 5392, 5393, 5394, 5395, 5396, 5397, 5434, 5435, 5439, 5440)
+                        ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // 調度品
+                    @"
+                        SELECT COUNT(*) AS total_count, SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM item_basic AS ib
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                        WHERE ib.type = 3
+                    ",
+                    // 素材
+                    @"
+                        SELECT COUNT(*) AS total_count, SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM item_basic AS ib
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                        WHERE ib.type IN (1, 5) AND ib.ah IN (38, 39, 40, 41, 42, 43, 44, 63)
+                    ",
+                    // 食品
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            WHERE
+                                ib.type = 5
+                                AND (
+                                    ib.ah IN (51, 52, 53, 54, 55, 56, 57, 58, 59)
+                                    OR (ib.ah = 0 AND ib.itemid IN (
+                                        4501, 4562,
+                                        5226,
+                                        5227,
+                                        4511, 4569, 5210, 5222,
+                                        5224, 5228, 5229,
+                                        5223,
+                                        4513, 5221,
+                                        4508, 4526, 4600, 5154, 5208, 5209, 5225
+                                    ))
+                                )
+
+                            UNION ALL
+
+                            SELECT
+                                ib.itemid
+                            FROM item_basic AS ib
+                            WHERE ib.type = 1 AND ib.ah IN (51, 59)
+                       ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // クリスタル
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            WHERE
+                                ib.type = 5
+                                AND (
+                                    ib.ah = 35
+                                    OR (ib.ah = 0 AND ib.itemid IN (
+                                        4238, 4239, 4240, 4241, 4242, 4243, 4244, 4245, 6506, 6507, 6508, 6509, 6510, 6511, 6512, 6513
+                                    ))
+                                )
+                       ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                    // その他
+                    @"
+                        SELECT
+                            COUNT(*) AS total_count,
+                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                        FROM (
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            WHERE ib.type = 5
+                                AND (
+                                    ib.ah IN (46, 64, 15, 36, 49, 37, 48)
+                                    OR (ib.ah = 0 AND ib.itemid IN (
+                                        4176, 4177, 4178, 4179, 4180,
+                                        4230, 4231, 4232, 4233, 4236, 4237,
+                                        4351, 4368, 4369,
+                                        5109, 5110, 5111, 5112, 5113, 5114, 5115, 5116, 5117, 5118, 5119,
+                                        5203, 5204, 5205, 5206,
+                                        5256, 5257, 5258, 5259, 5260,
+                                        5269, 5270, 5271, 5272, 5273, 5274, 5275, 5276, 5277, 5278, 5279,
+                                        5280, 5281, 5282, 5283, 5284, 5285,
+                                        5294, 5295, 5296, 5297,
+                                        5300, 5301, 5302, 5303,
+
+                                        4181, 4182, 4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195,
+                                        4198, 4247, 4248, 4249,
+                                        4258, 4259, 4260, 4261, 4262, 4263, 4264, 4265,
+                                        5428, 5988, 5989, 5990
+                                    ))
+                                )
+
+                            UNION ALL
+
+                            SELECT ib.itemid
+                            FROM item_basic AS ib
+                            WHERE ib.type = 1
+                                AND (
+                                    ib.ah IN (46, 64, 65, 50, 36, 49, 37)
+                                    OR ib.ah = 0
+                                )
+                        ) AS list
+                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
+                    ",
+                ];
+                for (int i = 0; i < query_list.Length; i++)
+                {
+                    using var command = new MySqlCommand(query_list[i], _connection);
+                    command.Parameters.AddWithValue("@CharaId", charaId);
+
+                    using var reader0 = command.ExecuteReader();
+                    while (reader0.Read())
+                    {
+                        var total_count = Convert.ToInt32(reader0["total_count"]);
+                        var flag_sum = Convert.ToInt32(reader0["flag_sum"]);
+
+                        if (total_count > 0)
+                        {
+                            var percentage = (int)((double)flag_sum / total_count * 10000);
+                            list[i] = percentage;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテムグループ別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public List<int> GetItemGroupCollectionList(int charaId, ItemBookCategory groupId)
+        {
+            var list = new List<int>();
+            try
+            {
+                switch (groupId)
+                {
+                    // 武器
+                    case ItemBookCategory.WEAPON:
+                        for (int i = 0; i < (int)ItemBookWeaponList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    iw.skill AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 7 AND ie.slot IN (1, 3)
+                                GROUP BY iw.skill
+
+                                UNION ALL
+
+                                SELECT
+                                    iw.skill - 12 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 4 AND iw.skill IN (25, 26)
+                                GROUP BY iw.skill
+
+                                UNION ALL
+
+                                SELECT
+                                    14 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 4 AND iw.skill = 27
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 8 AND iw.skill = 27
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1
+                                      AND ie.jobs <> 256 AND ie.jobs <> 131072
+                                      AND ib.aH <> 48 AND iw.dmg = 0 AND ie.level > 1 AND iw.delay = 999
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize = 1
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    iw.skill - 26 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 4 AND iw.skill IN (41, 42)
+                                GROUP BY iw.skill
+
+                                UNION ALL
+
+                                SELECT
+                                    17 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 4 AND iw.skill = 45
+                                GROUP BY iw.skill
+
+                                UNION ALL
+
+                                SELECT
+                                    iw.skill - 7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 8 AND iw.skill IN (25, 26)
+                                GROUP BY iw.skill;
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // 防具
+                    case ItemBookCategory.DEFENSE:
+                        for (int i = 0; i < (int)ItemBookDefenseList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 2
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 16
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 32
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 64
+
+                                UNION ALL
+
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 128
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 256
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 512
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 1024
+
+                                UNION ALL
+
+                                SELECT
+                                    8 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 32768
+
+                                UNION ALL
+
+                                SELECT
+                                    9 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 6144
+
+                                UNION ALL
+
+                                SELECT
+                                    10 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 6 AND ie.slot = 24576;
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // その他装備
+                    case ItemBookCategory.OTHER_EQUIPMENT:
+                        for (int i = 0; i < (int)ItemBookOtherEquipmentList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 4 AND iw.skill = 0 AND iw.subskill > 0
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 2
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48 AND iw.dmg > 0
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48 AND iw.dmg = 0 AND ie.level > 1 AND iw.delay < 999
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    WHERE ie.slot = 4 AND iw.skill = 48
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    WHERE ib.type = 1 AND ib.ah = 47
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 8 AND iw.skill = 48
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 256
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ib.aH = 48
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 1 AND ib.ah = 48
+
+                                UNION ALL
+
+                                SELECT
+                                    8 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 131072
+
+                                UNION ALL
+
+                                SELECT
+                                    9 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ie.slot = 4 AND iw.skill = 0 AND iw.subskill = 0
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                    INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48 AND iw.dmg = 0 AND ie.level = 1
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // 魔法スクロール
+                    case ItemBookCategory.MAGIC:
+                        for (int i = 0; i < (int)ItemBookMagicList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 28
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 29
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 32
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 31
+
+                                UNION ALL
+
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 30
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 60
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 45
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    subid > 0 AND flags = 61504
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // 薬品
+                    case ItemBookCategory.MEDICINES:
+                        // サブカテゴリなし
+                        break;
+                    // 調度品
+                    case ItemBookCategory.FURNISHINGS:
+                        // サブカテゴリなし
+                        break;
+                    // 素材
+                    case ItemBookCategory.MATERIALS:
+                        for (int i = 0; i < (int)ItemBookMaterialList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 1 AND ib.ah = 38
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 39
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 1 AND ib.ah = 39
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 40
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 41
+
+                                UNION ALL
+
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 42
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 43
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 44
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 63
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // 食品
+                    case ItemBookCategory.FOOD:
+                        for (int i = 0; i < (int)ItemBookFoodList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 52
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5226)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 53
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 54
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5227)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 55
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4511, 4569, 5210, 5222)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 56
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5224, 5228, 5229)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 57
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5223)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 58
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4513, 5221)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 59
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4508, 4526, 4600, 5154, 5208, 5209, 5225)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    8 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 1 AND ib.ah = 59
+
+                                UNION ALL
+
+                                SELECT
+                                    9 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 51
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4501, 4562)
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 1 AND ib.ah = 51
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    // クリスタル
+                    case ItemBookCategory.CRYSTAL:
+                        // サブカテゴリなし
+                        break;
+                    // その他
+                    case ItemBookCategory.OTHER:
+                        for (int i = 0; i < (int)ItemBookOtherList.MAX; i++)
+                        {
+                            list.Add(0);
+                        }
+                        {
+                            string query = @"
+                                SELECT
+                                    0 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 46
+
+                                UNION ALL
+
+                                SELECT
+                                    1 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 64
+
+                                UNION ALL
+
+                                SELECT
+                                    2 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 65
+
+                                UNION ALL
+
+                                SELECT
+                                    3 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 1 AND ib.ah IN (0, 47)
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4176, 4177, 4178, 4179, 4180, 4230, 4231, 4232, 4233, 4236, 4237, 4351, 4368, 4369, 5109, 5110, 5111, 5112, 5113, 5114, 5115, 5116, 5117, 5118, 5119, 5203, 5204, 5205, 5206, 5206, 5256, 5257, 5258, 5259, 5260, 5269, 5270, 5271, 5272, 5273, 5274, 5275, 5276, 5277, 5278, 5279, 5280, 5281, 5282, 5283, 5284, 5285, 5284, 5285, 5294, 5295, 5296, 5297, 5300, 5301, 5302, 5303)
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    4 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 15
+
+                                UNION ALL
+
+                                SELECT
+                                    5 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 50
+
+                                UNION ALL
+
+                                SELECT
+                                    6 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 36
+
+                                UNION ALL
+
+                                SELECT
+                                    7 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 49
+
+                                UNION ALL
+
+                                SELECT
+                                    8 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type IN (1, 5) AND ib.ah = 37
+
+                                UNION ALL
+
+                                SELECT
+                                    9 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM (
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 4
+
+                                    UNION ALL
+
+                                    SELECT ib.itemid FROM item_basic AS ib
+                                    LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                    WHERE ib.type = 1 AND ib.ah = 61
+                                ) AS list
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+
+                                UNION ALL
+
+                                SELECT
+                                    10 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 48
+
+                                UNION ALL
+
+                                SELECT
+                                    11 AS skill,
+                                    COUNT(*) AS total_count,
+                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                FROM
+                                    item_basic AS ib
+                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                WHERE
+                                    ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4181, 4182, 4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195, 4198, 4247, 4248, 4249, 4258, 4259, 4260, 4261, 4262, 4263, 4264, 4265, 5428, 5988, 5989, 5990)
+                            ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+
+                            using var reader_0_11 = command.ExecuteReader();
+                            while (reader_0_11.Read())
+                            {
+                                var skillid = Convert.ToInt32(reader_0_11["skill"]);
+                                var total_count = Convert.ToInt32(reader_0_11["total_count"]);
+                                var flag_sum = Convert.ToInt32(reader_0_11["flag_sum"]);
+                                if (total_count > 0)
+                                {
+                                    var percentage = (int)((double)flag_sum / total_count * 10000);
+                                    list[skillid] = percentage;
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテムレベル別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <returns></returns>
+        public List<int> GetItemLevelCollectionList(int charaId, ItemBookCategory groupId, int subGroupId)
+        {
+            int[] minLevelList99 = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91];
+            int[] maxLevelList99 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 99];
+            int[] minLevelList119 = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 119];
+            int[] maxLevelList119 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 118, 119];
+            var list = new List<int>();
+            try
+            {
+                switch (groupId)
+                {
+                    // 武器
+                    case ItemBookCategory.WEAPON:
+                        switch ((ItemBookWeaponList)subGroupId)
+                        {
+                            case ItemBookWeaponList.H2H:
+                            case ItemBookWeaponList.DAGGER:
+                            case ItemBookWeaponList.SWORD:
+                            case ItemBookWeaponList.GREATSWORD:
+                            case ItemBookWeaponList.AXE:
+                            case ItemBookWeaponList.GREATAXE:
+                            case ItemBookWeaponList.SCYTHE:
+                            case ItemBookWeaponList.POLEARM:
+                            case ItemBookWeaponList.KATANA:
+                            case ItemBookWeaponList.GREATKATANA:
+                            case ItemBookWeaponList.CLUB:
+                            case ItemBookWeaponList.STAFF:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList119.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList119.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            WHERE ib.type = 7 AND ie.slot IN (1, 3) AND iw.skill = @SubGroupId + 1
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.ARCHERY:
+                            case ItemBookWeaponList.MARKSMANSHIP:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList119.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList119.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            WHERE ie.slot = 4 AND iw.skill = @SubGroupId + 13
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.THROWING:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList119.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList119.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            WHERE ie.slot IN (4, 8) AND iw.skill = 27
+
+                                            UNION ALL
+
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ie.jobs <> 131072 AND ib.aH <> 48 AND iw.dmg = 0 AND ie.level > 1 AND iw.delay = 999
+
+                                            UNION ALL
+
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            WHERE ie.slot = 8 AND iw.skill = 0 AND ib.stackSize = 1
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level;
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.STRINGED_INSTRUMENTS:
+                            case ItemBookWeaponList.WIND_INSTRUMENT:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList99.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList99.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            WHERE ie.slot = 4 AND iw.skill = @SubGroupId + 26
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList99[i] && level <= maxLevelList99[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.GEOMANTIC_HANDBELL:
+                                // レベル別なし
+                                break;
+                            case ItemBookWeaponList.AMMUNITION:
+                            case ItemBookWeaponList.BULLETS:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList119.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList119.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT iw.skill, ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                            WHERE ie.slot = 4 AND iw.skill = @SubGroupId + 7
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    // 防具
+                    case ItemBookCategory.DEFENSE:
+                        int[] defenseSlotList = [2, 16, 32, 64, 128, 256, 512, 1024, 32768, 6144, 24576];
+                        switch ((ItemBookDefenseList)subGroupId)
+                        {
+                            case ItemBookDefenseList.SHIELD:
+                            case ItemBookDefenseList.HEAD:
+                            case ItemBookDefenseList.BODY:
+                            case ItemBookDefenseList.HANDS:
+                            case ItemBookDefenseList.LEGS:
+                            case ItemBookDefenseList.FEET:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList119.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList119.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            WHERE ib.type = 6 AND ie.slot= @SlotId
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SlotId", defenseSlotList[subGroupId]);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList119.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case ItemBookDefenseList.NECKLACE:
+                            case ItemBookDefenseList.WAIST:
+                            case ItemBookDefenseList.BACK:
+                            case ItemBookDefenseList.EARRINGS:
+                            case ItemBookDefenseList.RING:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList99.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList99.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            list.level,
+                                            COUNT(*) AS total_count,
+                                            SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
+                                        FROM (
+                                            SELECT ie.itemid, CASE WHEN ie.level > ie.ilevel THEN ie.level ELSE ie.ilevel END AS level
+                                            FROM item_basic AS ib
+                                            INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                            WHERE ib.type = 6 AND ie.slot= @SlotId
+                                        ) AS list
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
+                                        GROUP BY list.level
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SlotId", defenseSlotList[subGroupId]);
+                                    using var reader = command.ExecuteReader();
+                                    if (reader.Read())
+                                    {
+                                        var level = Convert.ToInt32(reader["level"]);
+                                        var total_count = Convert.ToInt32(reader["total_count"]);
+                                        var flag_sum = Convert.ToInt32(reader["flag_sum"]);
+                                        for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                        {
+                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            {
+                                                total_count_level[i] += total_count;
+                                                flag_sum_level[i] += flag_sum;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    // その他装備
+                    case ItemBookCategory.OTHER_EQUIPMENT:
+                        // レベル別なし
+                        break;
+                    // 魔法スクロール
+                    case ItemBookCategory.MAGIC:
+                        // レベル別なし
+                        break;
+                    // 薬品
+                    case ItemBookCategory.MEDICINES:
+                        // レベル別なし
+                        break;
+                    // 調度品
+                    case ItemBookCategory.FURNISHINGS:
+                        // レベル別なし
+                        break;
+                    // 素材
+                    case ItemBookCategory.MATERIALS:
+                        // レベル別なし
+                        break;
+                    // 食品
+                    case ItemBookCategory.FOOD:
+                        // レベル別なし
+                        break;
+                    // クリスタル
+                    case ItemBookCategory.CRYSTAL:
+                        // レベル別なし
+                        break;
+                    // その他
+                    case ItemBookCategory.OTHER:
+                        // レベル別なし
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテム図鑑の装備詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="maxLevel"></param>
+        /// <returns></returns>
+        public List<EquipmentDetailInfo> GetItemEquipmentCollectionListDetail(int charaId, ItemBookCategory groupId, int subGroupId, int minLevel, int maxLevel)
+        {
+            var list = new List<EquipmentDetailInfo>();
+            try
+            {
+                switch (groupId)
+                {
+                    // 武器
+                    case ItemBookCategory.WEAPON:
+                        switch ((ItemBookWeaponList)subGroupId)
+                        {
+                            case ItemBookWeaponList.H2H:
+                            case ItemBookWeaponList.DAGGER:
+                            case ItemBookWeaponList.SWORD:
+                            case ItemBookWeaponList.GREATSWORD:
+                            case ItemBookWeaponList.AXE:
+                            case ItemBookWeaponList.GREATAXE:
+                            case ItemBookWeaponList.SCYTHE:
+                            case ItemBookWeaponList.POLEARM:
+                            case ItemBookWeaponList.KATANA:
+                            case ItemBookWeaponList.GREATKATANA:
+                            case ItemBookWeaponList.CLUB:
+                            case ItemBookWeaponList.STAFF:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ib.type = 7
+                                            AND ie.slot IN (1, 3)
+                                            AND iw.skill = @SubGroupId + 1
+                                            AND (
+                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
+                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    command.Parameters.AddWithValue("@MinLevel", minLevel);
+                                    command.Parameters.AddWithValue("@MaxLevel", maxLevel);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.ARCHERY:
+                            case ItemBookWeaponList.MARKSMANSHIP:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4
+                                            AND iw.skill = @SubGroupId + 13
+                                            AND (
+                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
+                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    command.Parameters.AddWithValue("@MinLevel", minLevel);
+                                    command.Parameters.AddWithValue("@MaxLevel", maxLevel);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.THROWING:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flug
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            (
+                                                (ie.slot IN (4, 8) AND iw.skill = @SubGroupId + 13)
+                                                OR (
+                                                    ie.slot = 8
+                                                    AND iw.skill = 0
+                                                    AND ib.stackSize > 1
+                                                    AND ie.jobs <> 256
+                                                    AND ie.jobs <> 131072
+                                                    AND ib.aH <> 48
+                                                    AND iw.dmg = 0
+                                                    AND ie.level > 1
+                                                    AND iw.delay = 999
+                                                )
+                                                OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize = 1)
+                                            )
+                                            AND (
+                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
+                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    command.Parameters.AddWithValue("@MinLevel", minLevel);
+                                    command.Parameters.AddWithValue("@MaxLevel", maxLevel);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.STRINGED_INSTRUMENTS:
+                            case ItemBookWeaponList.WIND_INSTRUMENT:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4
+                                            AND iw.skill = @SubGroupId + 26
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.GEOMANTIC_HANDBELL:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4
+                                            AND iw.skill = 45
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            case ItemBookWeaponList.AMMUNITION:
+                            case ItemBookWeaponList.BULLETS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4
+                                            AND iw.skill = @SubGroupId + 7
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    // 防具
+                    case ItemBookCategory.DEFENSE:
+                        if (subGroupId < 0 || subGroupId > (int)ItemBookDefenseList.MAX)
+                        {
+                            break;
+                        }
+                        {
+                            int[] defenseSlotList = [2, 16, 32, 64, 128, 256, 512, 1024, 32768, 6144, 24576];
+                            string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ib.type = 6
+                                            AND ie.slot = @SlotId
+                                            AND (
+                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
+                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            command.Parameters.AddWithValue("@SlotId", defenseSlotList[subGroupId]);
+                            command.Parameters.AddWithValue("@MinLevel", minLevel);
+                            command.Parameters.AddWithValue("@MaxLevel", maxLevel);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                EquipmentDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Level = Convert.ToInt32(reader["level"]),
+                                    ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // その他装備
+                    case ItemBookCategory.OTHER_EQUIPMENT:
+                        switch ((ItemBookOtherEquipmentList)subGroupId)
+                        {
+                            // ストリンガー
+                            case ItemBookOtherEquipmentList.ANIMATOR:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4
+                                            AND iw.skill = 0
+                                            AND iw.subskill > 0
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // グリップ
+                            case ItemBookOtherEquipmentList.GRIPS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 2
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 補助装備
+                            case ItemBookOtherEquipmentList.SUPPORT_EQUIPMENT:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 8
+                                            AND iw.skill = 0
+                                            AND ib.stackSize > 1
+                                            AND ie.jobs <> 256
+                                            AND ie.jobs <> 131072
+                                            AND ib.aH <> 48
+                                            AND (
+                                                iw.dmg > 0
+                                                OR (iw.dmg = 0 AND ie.level > 1 AND iw.delay < 999)
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 釣り竿
+                            case ItemBookOtherEquipmentList.FISHING_ROD:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 4 AND iw.skill = 48
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 釣り餌
+                            case ItemBookOtherEquipmentList.FISHING_BAIT:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 8 AND iw.skill = 48
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 獣呼び出しアイテム
+                            case ItemBookOtherEquipmentList.PET_ITEMS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 256
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // ペットフード
+                            case ItemBookOtherEquipmentList.PET_FOOD:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ib.aH = 48
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // その他獣の餌
+                            case ItemBookOtherEquipmentList.OTHER_PET_FOOD:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ib.type = 1 AND ib.ah = 48
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // からくり回復アイテム
+                            case ItemBookOtherEquipmentList.AUTOMATON:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs = 131072
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 撮影機
+                            case ItemBookOtherEquipmentList.CAMERA:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ie.itemid,
+                                            ie.level,
+                                            ie.ilevel,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
+                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            iw.skill = 0
+                                            AND (
+                                                (ie.slot = 4 AND iw.subskill = 0)
+                                                OR (
+                                                    ie.slot = 8
+                                                    AND ib.stackSize > 1
+                                                    AND ie.jobs <> 256
+                                                    AND ie.jobs <> 131072
+                                                    AND ib.aH <> 48
+                                                    AND iw.dmg = 0
+                                                    AND ie.level = 1
+                                                )
+                                            )
+                                        ORDER BY ie.ilevel, ie.level, ib.itemid
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        EquipmentDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Level = Convert.ToInt32(reader["level"]),
+                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテム図鑑の魔法詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="maxLevel"></param>
+        /// <returns></returns>
+        public List<MagicDetailInfo> GetItemMagicCollectionListDetail(int charaId, ItemBookCategory groupId, int subGroupId, int minLevel, int maxLevel)
+        {
+            var list = new List<MagicDetailInfo>();
+            try
+            {
+                switch (groupId)
+                {
+                    // 魔法スクロール
+                    case ItemBookCategory.MAGIC:
+                        int[] MagicAhList = [28, 29, 32, 31, 30, 60, 45];
+                        switch ((ItemBookMagicList)subGroupId)
+                        {
+                            case ItemBookMagicList.WHITE:
+                            case ItemBookMagicList.BLACK:
+                            case ItemBookMagicList.SONG:
+                            case ItemBookMagicList.NINJUTSU:
+                            case ItemBookMagicList.SUMMONING:
+                            case ItemBookMagicList.DIE:
+                            case ItemBookMagicList.GEOMANCY:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            sl.jobs,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN spell_list AS sl ON sl.spellid = ib.subid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type = 5 AND ib.ah = @MagicAh
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@MagicAh", MagicAhList[(int)subGroupId]);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        MagicDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+
+                                        var jobs = (reader["jobs"] as byte[]) ?? new byte[(int)JobId.MAX];
+                                        if (jobs.All(b => b == 0))
+                                        {
+                                            // jobsが全て0の場合はリストに入れない
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            info.Jobs = [.. jobs.Select(b => (int)b)];
+                                            info.MinLevel = jobs.Where(b => b > 0).Min();
+
+                                            if (info.MinLevel > maxLevel || info.MinLevel < minLevel)
+                                            {
+                                                // レベル条件に合わない場合はリストに入れない
+                                            continue;
+                                            }
+                                            list.Add(info);
+                                        }
+                                    }
+                                    // MinLevelでソートする
+                                    list = list.OrderBy(info => info.MinLevel).ThenBy(info => info.Id).ToList();
+                                }
+                                break;
+                            // フェイス
+                            case ItemBookMagicList.TRUST:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN spell_list AS sl ON sl.spellid = ib.subid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.subid > 0 AND ib.flags = 61504
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        MagicDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// アイテム図鑑の詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <returns></returns>
+        public List<ItemDetailInfo> GetItemCollectionListDetail(int charaId, ItemBookCategory groupId, int subGroupId)
+        {
+            var list = new List<ItemDetailInfo>();
+            try
+            {
+                switch (groupId)
+                {
+                    // 薬品
+                    case ItemBookCategory.MEDICINES:
+                        {
+                            string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            (ib.type IN (1, 5) AND ib.ah = 33)
+                                            OR (
+                                                ib.type = 5
+                                                AND ib.ah = 0
+                                                AND ib.itemid IN (
+                                                    4146, 4147, 4200, 4202, 4210, 4212, 4214, 4254, 4255,
+                                                    5241, 5242, 5243, 5244, 5245, 5246, 5247, 5248, 5249,
+                                                    5250, 5251, 5252, 5385, 5386, 5387, 5388, 5389, 5390,
+                                                    5391, 5392, 5393, 5394, 5395, 5396, 5397, 5434, 5435,
+                                                    5439, 5440
+                                                )
+                                            );
+                                    ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                ItemDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // 調度品
+                    case ItemBookCategory.FURNISHINGS:
+                        {
+                            string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type  = 3
+                                    ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                ItemDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // 素材
+                    case ItemBookCategory.MATERIALS:
+                        {
+                            int[] MaterialList = [38, 39, 40, 41, 42, 43, 44, 63];
+                            string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = @MaterialId
+                                    ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            command.Parameters.AddWithValue("@MaterialId", MaterialList[(int)subGroupId]);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                ItemDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // 食品
+                    case ItemBookCategory.FOOD:
+                        {
+                            int[] FoodList = [52, 53, 54, 55, 56, 57, 58, 59, 51];
+                            string[] FoodAddList = [
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5226))",
+                                "",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5227))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4511, 4569, 5210, 5222))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5224, 5228, 5229))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (5223))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4513, 5221))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4508, 4526, 4600, 5154, 5208, 5209, 5225))",
+                                " OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4501, 4562))"
+                            ];
+                            string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE (ib.type IN (1, 5) AND ib.ah = @FoodId)
+                                    " + FoodAddList[(int)subGroupId];
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            command.Parameters.AddWithValue("@FoodId", FoodList[(int)subGroupId]);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                ItemDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // クリスタル
+                    case ItemBookCategory.CRYSTAL:
+                        {
+                            string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE (ib.type = 5 AND ib.ah = 35)
+                                            OR (ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4238, 4239, 4240, 4241, 4242, 4243, 4244, 4245, 6506, 6507, 6508, 6509, 6510, 6511, 6512, 6513))
+                                    ";
+                            using var command = new MySqlCommand(query, _connection);
+                            command.Parameters.AddWithValue("@CharaId", charaId);
+                            using var reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                ItemDetailInfo info = new()
+                                {
+                                    Id = Convert.ToInt32(reader["itemid"]),
+                                    Flag = Convert.ToInt32(reader["flag"])
+                                };
+                                list.Add(info);
+                            }
+                        }
+                        break;
+                    // その他
+                    case ItemBookCategory.OTHER:
+                        switch ((ItemBookOtherList)subGroupId)
+                        {
+                            // 雑貨1
+                            case ItemBookOtherList.MISC:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 46
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 雑貨2
+                            case ItemBookOtherList.MISC_2:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 64
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 雑貨3
+                            case ItemBookOtherList.MISC_3:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 65
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 雑貨4
+                            case ItemBookOtherList.MISC_4:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE
+                                            (ib.type = 1 AND ib.ah IN (0, 47))
+                                            OR (
+                                                ib.type = 5
+                                                AND ib.ah = 0
+                                                AND ib.itemid IN (
+                                                    4176, 4177, 4178, 4179, 4180, 4230, 4231, 4232, 4233,
+                                                    4236, 4237, 4351, 4368, 4369, 5109, 5110, 5111, 5112,
+                                                    5113, 5114, 5115, 5116, 5117, 5118, 5119, 5203, 5204,
+                                                    5205, 5206, 5256, 5257, 5258, 5259, 5260, 5269, 5270,
+                                                    5271, 5272, 5273, 5274, 5275, 5276, 5277, 5278, 5279,
+                                                    5280, 5281, 5282, 5283, 5284, 5285, 5294, 5295, 5296,
+                                                    5297, 5300, 5301, 5302, 5303
+                                                )
+                                            );
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 矢・弾
+                            case ItemBookOtherList.AMMUNITION:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 15
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 獣人製品
+                            case ItemBookOtherList.BEAST_MADE:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 50
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // カード
+                            case ItemBookOtherList.CARDS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 36
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 忍具
+                            case ItemBookOtherList.NINJUTSU_TOOLS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 49
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 呪物
+                            case ItemBookOtherList.CURSED_ITEMS:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 37
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // からくり部品
+                            case ItemBookOtherList.AUTOMATON:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE (ib.type = 4) OR (ib.type = 1 AND ib.ah = 61)
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // チョコボの餌
+                            case ItemBookOtherList.CHOCOBO_FOOD:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type IN (1, 5) AND ib.ah = 48
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            // 強化アイテム
+                            case ItemBookOtherList.POWER_ITEM:
+                                {
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type = 5 AND ib.ah = 0 AND ib.itemid IN (4181, 4182, 4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195, 4198, 4247, 4248, 4249, 4258, 4259, 4260, 4261, 4262, 4263, 4264, 4265, 5428, 5988, 5989, 5990)
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        ItemDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+                                        list.Add(info);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
             }
             catch (Exception)
             {
@@ -2436,7 +5724,15 @@ namespace LsbDatabaseApi
             var list = new List<MagicGroupInfo>();
             try
             {
-                string query = "SELECT sl.spellid, sl.jobs, CASE WHEN cs.spellid IS NULL THEN 0 ELSE 1 END AS flag FROM spell_list AS sl LEFT JOIN char_spells AS cs ON cs.spellid = sl.spellid AND cs.charid = @CharaId WHERE sl.group = @GroupId";
+                string query = @"
+                    SELECT
+                        sl.spellid,
+                        sl.jobs,
+                        CASE WHEN cs.spellid IS NULL THEN 0 ELSE 1 END AS flag
+                    FROM spell_list AS sl
+                    LEFT JOIN char_spells AS cs ON cs.spellid = sl.spellid AND cs.charid = @CharaId
+                    WHERE sl.group = @GroupId
+                ";
                 using var command = new MySqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@CharaId", charaId);
                 command.Parameters.AddWithValue("@GroupId", groupId);

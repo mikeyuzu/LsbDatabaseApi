@@ -268,6 +268,120 @@ namespace LsbDatabaseApi.Controllers
         }
 
         /// <summary>
+        /// アイテム図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemCollectionList")]
+        public ActionResult<List<int>> GetItemCollectionList(int charaId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemCollectionList(charaId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// アイテムグループ別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemGroupCollectionList")]
+        public ActionResult<List<int>> GetItemGroupCollectionList(int charaId, int groupId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemGroupCollectionList(charaId, (ItemBookCategory)groupId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// アイテムレベル別図鑑のリスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemLevelCollectionList")]
+        public ActionResult<List<int>> GetItemLevelCollectionList(int charaId, int groupId, int subGroupId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemLevelCollectionList(charaId, (ItemBookCategory)groupId, subGroupId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// アイテム図鑑の装備詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="maxLevel"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemEquipmentCollectionListDetail")]
+        public ActionResult<List<EquipmentDetailInfo>> GetItemEquipmentCollectionListDetail(int charaId, int groupId, int subGroupId, int minLevel, int maxLevel)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemEquipmentCollectionListDetail(charaId, (ItemBookCategory)groupId, subGroupId, minLevel, maxLevel);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// アイテム図鑑の魔法詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="maxLevel"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemMagicCollectionListDetail")]
+        public ActionResult<List<MagicDetailInfo>> GetItemMagicCollectionListDetail(int charaId, int groupId, int subGroupId, int minLevel, int maxLevel)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemMagicCollectionListDetail(charaId, (ItemBookCategory)groupId, subGroupId, minLevel, maxLevel);
+
+            return Ok(list);
+        }
+
+        /// <summary>
+        /// アイテム図鑑のアイテム詳細リスト取得
+        /// </summary>
+        /// <param name="charaId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="subGroupId"></param>
+        /// <returns></returns>
+        [HttpGet("GetItemCollectionListDetail")]
+        public ActionResult<List<ItemDetailInfo>> GetItemCollectionListDetail(int charaId, int groupId, int subGroupId)
+        {
+            string? connectionString = _configuration.GetConnectionString("LandSandBoat");
+            var database = new DatabaseApi();
+            database.DatabaseInitialize(connectionString);
+
+            var list = database.GetItemCollectionListDetail(charaId, (ItemBookCategory)groupId, subGroupId);
+
+            return Ok(list);
+        }
+
+        /// <summary>
         /// 魔法図鑑のリスト取得
         /// </summary>
         /// <param name="charaId"></param>
