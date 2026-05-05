@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using static LsbDatabaseApi.DatabaseApi;
 using static LsbDatabaseApi.MessageParam;
+using static Mysqlx.Notice.Warning.Types;
 
 namespace LsbDatabaseApi
 {
@@ -2508,11 +2509,6 @@ namespace LsbDatabaseApi
                             SELECT ib.itemid FROM item_basic AS ib
                             INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
                             WHERE ie.slot = 2
-
-                            UNION ALL
-
-                            SELECT ib.itemid FROM item_basic AS ib
-                            WHERE ib.type = 1 AND ib.ah IN (47, 48)
                         ) AS list
                         LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId;
                     ",
@@ -3064,11 +3060,6 @@ namespace LsbDatabaseApi
                                     INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
                                     INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
                                     WHERE ie.slot = 4 AND iw.skill = 48
-
-                                    UNION ALL
-
-                                    SELECT ib.itemid FROM item_basic AS ib
-                                    WHERE ib.type = 1 AND ib.ah = 47
                                 ) AS list
                                 LEFT JOIN custom_item_book AS cib ON cib.itemid = list.itemid AND cib.charid = @CharaId
 
@@ -3113,18 +3104,6 @@ namespace LsbDatabaseApi
                                 LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
                                 WHERE
                                     ie.slot = 8 AND iw.skill = 0 AND ib.stackSize > 1 AND ie.jobs <> 256 AND ib.aH = 48
-
-                                UNION ALL
-
-                                SELECT
-                                    7 AS skill,
-                                    COUNT(*) AS total_count,
-                                    SUM(CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END) AS flag_sum
-                                FROM
-                                    item_basic AS ib
-                                LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
-                                WHERE
-                                    ib.type = 1 AND ib.ah = 48
 
                                 UNION ALL
 
@@ -4283,7 +4262,7 @@ namespace LsbDatabaseApi
                                         var flag_sum = Convert.ToInt32(reader["flag_sum"]);
                                         for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
                                         {
-                                            if (level >= minLevelList119[i] && level <= maxLevelList119[i])
+                                            if (level >= minLevelList99[i] && level <= maxLevelList99[i])
                                             {
                                                 total_count_level[i] += total_count;
                                                 flag_sum_level[i] += flag_sum;
@@ -4314,7 +4293,89 @@ namespace LsbDatabaseApi
                         break;
                     // 魔法スクロール
                     case ItemBookCategory.MAGIC:
-                        // レベル別なし
+                        int[] MagicAhList = [28, 29, 32, 31, 30, 60, 45];
+                        switch ((ItemBookMagicList)subGroupId)
+                        {
+                            case ItemBookMagicList.WHITE:
+                            case ItemBookMagicList.BLACK:
+                            case ItemBookMagicList.SONG:
+                            case ItemBookMagicList.NINJUTSU:
+                            case ItemBookMagicList.SUMMONING:
+                            case ItemBookMagicList.DIE:
+                            case ItemBookMagicList.GEOMANCY:
+                                {
+                                    int[] total_count_level = new int[(int)ItemBookLevelList99.MAX];
+                                    int[] flag_sum_level = new int[(int)ItemBookLevelList99.MAX];
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        list.Add(0);
+                                        total_count_level[i] = 0;
+                                        flag_sum_level[i] = 0;
+                                    }
+                                    string query = @"
+                                        SELECT
+                                            ib.itemid,
+                                            sl.jobs,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
+                                        FROM item_basic AS ib
+                                        INNER JOIN spell_list AS sl ON sl.spellid = ib.subid
+                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
+                                        WHERE ib.type = 5 AND ib.ah = @MagicAh
+                                    ";
+                                    using var command = new MySqlCommand(query, _connection);
+                                    command.Parameters.AddWithValue("@CharaId", charaId);
+                                    command.Parameters.AddWithValue("@MagicAh", MagicAhList[(int)subGroupId]);
+                                    using var reader = command.ExecuteReader();
+                                    while (reader.Read())
+                                    {
+                                        MagicDetailInfo info = new()
+                                        {
+                                            Id = Convert.ToInt32(reader["itemid"]),
+                                            Flag = Convert.ToInt32(reader["flag"])
+                                        };
+
+                                        var jobs = (reader["jobs"] as byte[]) ?? new byte[(int)JobId.MAX];
+                                        if (jobs.All(b => b == 0))
+                                        {
+                                            // jobsが全て0の場合はリストに入れない
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            info.Jobs = [.. jobs.Select(b => (int)b)];
+                                            info.MinLevel = jobs.Where(b => b > 0).Min();
+
+                                            for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                            {
+                                                if (info.MinLevel >= minLevelList99[i] && info.MinLevel <= maxLevelList99[i])
+                                                {
+                                                    total_count_level[i]++;
+                                                    flag_sum_level[i] += info.Flag;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < (int)ItemBookLevelList99.MAX; i++)
+                                    {
+                                        if (total_count_level[i] > 0)
+                                        {
+                                            var percentage = (int)((double)flag_sum_level[i] / total_count_level[i] * 10000);
+                                            list[i] = percentage;
+                                        }
+                                        else
+                                        {
+                                            list[i] = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            // フェイス
+                            case ItemBookMagicList.TRUST:
+                                // レベル別なし
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     // 薬品
                     case ItemBookCategory.MEDICINES:
@@ -4391,6 +4452,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4401,8 +4463,8 @@ namespace LsbDatabaseApi
                                             AND ie.slot IN (1, 3)
                                             AND iw.skill = @SubGroupId + 1
                                             AND (
-                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
-                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                (ie.ilevel <> 0 AND ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                OR (ie.ilevel = 0 AND ie.level >= @MinLevel AND ie.level <= @MaxLevel)
                                             )
                                         ORDER BY ie.ilevel, ie.level, ib.itemid
                                     ";
@@ -4419,6 +4481,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4433,6 +4496,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4442,8 +4506,8 @@ namespace LsbDatabaseApi
                                             ie.slot = 4
                                             AND iw.skill = @SubGroupId + 13
                                             AND (
-                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
-                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                (ie.ilevel <> 0 AND ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                OR (ie.ilevel = 0 AND ie.level >= @MinLevel AND ie.level <= @MaxLevel)
                                             )
                                         ORDER BY ie.ilevel, ie.level, ib.itemid
                                     ";
@@ -4460,6 +4524,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4473,7 +4538,8 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
-                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flug
+                                            ie.jobs,
+                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
                                         INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
@@ -4495,8 +4561,8 @@ namespace LsbDatabaseApi
                                                 OR (ie.slot = 8 AND iw.skill = 0 AND ib.stackSize = 1)
                                             )
                                             AND (
-                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
-                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                (ie.ilevel <> 0 AND ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                OR (ie.ilevel = 0 AND ie.level >= @MinLevel AND ie.level <= @MaxLevel)
                                             )
                                         ORDER BY ie.ilevel, ie.level, ib.itemid
                                     ";
@@ -4513,6 +4579,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4527,6 +4594,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4548,6 +4616,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4561,6 +4630,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4581,6 +4651,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4595,6 +4666,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4603,11 +4675,17 @@ namespace LsbDatabaseApi
                                         WHERE
                                             ie.slot = 4
                                             AND iw.skill = @SubGroupId + 7
+                                            AND (
+                                                (ie.ilevel <> 0 AND ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                OR (ie.ilevel = 0 AND ie.level >= @MinLevel AND ie.level <= @MaxLevel)
+                                            )
                                         ORDER BY ie.ilevel, ie.level, ib.itemid
                                     ";
                                     using var command = new MySqlCommand(query, _connection);
                                     command.Parameters.AddWithValue("@CharaId", charaId);
                                     command.Parameters.AddWithValue("@SubGroupId", subGroupId);
+                                    command.Parameters.AddWithValue("@MinLevel", minLevel);
+                                    command.Parameters.AddWithValue("@MaxLevel", maxLevel);
                                     using var reader = command.ExecuteReader();
                                     while (reader.Read())
                                     {
@@ -4616,6 +4694,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4639,6 +4718,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4647,8 +4727,8 @@ namespace LsbDatabaseApi
                                             ib.type = 6
                                             AND ie.slot = @SlotId
                                             AND (
-                                                (ie.level >= @MinLevel AND ie.level <= @MaxLevel)
-                                                OR (ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                (ie.ilevel <> 0 AND ie.ilevel >= @MinLevel AND ie.ilevel <= @MaxLevel)
+                                                OR (ie.ilevel = 0 AND ie.level >= @MinLevel AND ie.level <= @MaxLevel)
                                             )
                                         ORDER BY ie.ilevel, ie.level, ib.itemid
                                     ";
@@ -4665,6 +4745,7 @@ namespace LsbDatabaseApi
                                     Id = Convert.ToInt32(reader["itemid"]),
                                     Level = Convert.ToInt32(reader["level"]),
                                     ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                    Jobs = Convert.ToInt32(reader["jobs"]),
                                     Flag = Convert.ToInt32(reader["flag"])
                                 };
                                 list.Add(info);
@@ -4683,6 +4764,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4704,6 +4786,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4718,6 +4801,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4737,6 +4821,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4751,6 +4836,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4779,6 +4865,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4793,6 +4880,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4812,6 +4900,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4826,6 +4915,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4845,6 +4935,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4859,6 +4950,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4878,6 +4970,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4892,6 +4985,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4911,39 +5005,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
-                                            Flag = Convert.ToInt32(reader["flag"])
-                                        };
-                                        list.Add(info);
-                                    }
-                                }
-                                break;
-                            // その他獣の餌
-                            case ItemBookOtherEquipmentList.OTHER_PET_FOOD:
-                                {
-                                    string query = @"
-                                        SELECT
-                                            ie.itemid,
-                                            ie.level,
-                                            ie.ilevel,
-                                            CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
-                                        FROM item_basic AS ib
-                                        INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
-                                        INNER JOIN item_weapon AS iw ON iw.itemid = ib.itemid
-                                        LEFT JOIN custom_item_book AS cib ON cib.itemid = ib.itemid AND cib.charid = @CharaId
-                                        WHERE
-                                            ib.type = 1 AND ib.ah = 48
-                                        ORDER BY ie.ilevel, ie.level, ib.itemid
-                                    ";
-                                    using var command = new MySqlCommand(query, _connection);
-                                    command.Parameters.AddWithValue("@CharaId", charaId);
-                                    using var reader = command.ExecuteReader();
-                                    while (reader.Read())
-                                    {
-                                        EquipmentDetailInfo info = new()
-                                        {
-                                            Id = Convert.ToInt32(reader["itemid"]),
-                                            Level = Convert.ToInt32(reader["level"]),
-                                            ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4958,6 +5020,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -4977,6 +5040,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);
@@ -4991,6 +5055,7 @@ namespace LsbDatabaseApi
                                             ie.itemid,
                                             ie.level,
                                             ie.ilevel,
+                                            ie.jobs,
                                             CASE WHEN cib.itemid IS NULL THEN 0 ELSE 1 END AS flag
                                         FROM item_basic AS ib
                                         INNER JOIN item_equipment AS ie ON ie.itemid = ib.itemid
@@ -5022,6 +5087,7 @@ namespace LsbDatabaseApi
                                             Id = Convert.ToInt32(reader["itemid"]),
                                             Level = Convert.ToInt32(reader["level"]),
                                             ItemLevel = Convert.ToInt32(reader["ilevel"]),
+                                            Jobs = Convert.ToInt32(reader["jobs"]),
                                             Flag = Convert.ToInt32(reader["flag"])
                                         };
                                         list.Add(info);

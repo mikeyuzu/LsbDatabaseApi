@@ -1860,6 +1860,7 @@
         public int Id { get; set; }         // アイテムID
         public int Level { get; set; }      // 装備可能レベル
         public int ItemLevel { get; set; }  // アイテムレベル
+        public int Jobs { get; set; }       // 装備可能なジョブ
         public int Flag { get; set; }       // 所持フラグ
 
         public EquipmentDetailInfo()
@@ -1867,6 +1868,7 @@
             Id = 0;
             Level = 0;
             ItemLevel = 0;
+            Jobs = 0;
             Flag = 0;
         }
     }
@@ -1985,7 +1987,6 @@
         FISHING_BAIT,           // 釣り餌
         PET_ITEMS,              // 獣呼び出しアイテム
         PET_FOOD,               // ペットフード
-        OTHER_PET_FOOD,         // その他獣の餌
         AUTOMATON,              // からくり回復アイテム
         CAMERA,                 // 撮影機
 
