@@ -487,7 +487,7 @@ namespace LsbDatabaseApi.mission
                 case MissionZilart.RETURN_TO_DELKFUTTS_TOWER:
                     if (zilartMission.StatusLower == 0)
                     {
-                        if (option == 3)
+                        if (option == 1 || option == 3)
                         {
                             switch (charaInfo.ZoneId)
                             {

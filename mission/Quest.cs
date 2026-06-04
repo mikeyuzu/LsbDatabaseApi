@@ -932,7 +932,7 @@ namespace LsbDatabaseApi.mission
                     }
                     var progString = $"Quest[{(int)QuestId.JEUNO}][{(int)QuestJeuno.SHATTERING_STARS}]Prog";
                     var prog = database.GetVarNum(charaInfo.CharaId, progString);
-                    if (prog == 2)
+                    if (prog >= 2)
                     {
                         message.missionPhase = "3";
                         return true;

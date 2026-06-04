@@ -16,11 +16,17 @@
         METEORITE = 582,                        // 隕石
         CHUNK_OF_MINE_GRAVEL = 597,             // 鉱山の砂利
         ONZ_OF_MYTHRIL_SAND = 599,              // ミスリルの砂粒
+        QUADAV_FETICH_HEAD = 606,               // クゥダフ人形の頭
+        QUADAV_FETICH_TORSO = 607,              // クゥダフ人形の胴
+        QUADAV_FETICH_ARMS = 608,               // クゥダフ人形の腕
+        QUADAV_FETICH_LEGS = 609,               // クゥダフ人形の足
+        FADED_CRYSTAL = 613,                    // 変色クリスタル
         PIECE_OF_ANCIENT_PAPYRUS = 1088,        // 古代魔法のパピルス
         CLUMP_OF_EXORAY_MOLD = 1089,            // エクソレイの粘菌
         CHUNK_OF_BOMB_COAL = 1090,              // ボムの炭
         ORCISH_MAIL_SCALES = 1112,              // オークの鎧の小札
         UGGALEPIH_KEY = 1136,                   // ウガレピのカギ
+        PRELATE_KEY = 1137,                     // 高僧のカギ
         UNLIT_LANTERN = 1138,                   // 消えたランタン
         RANCOR_FLAME = 1139,                    // 怨みの炎
         JUDGMENT_KEY = 1142,                    // 裁きのカギ
@@ -42,6 +48,7 @@
         GNOLE_CLAW = 2521,                      // ノールの爪
         PLUME_DOR = 2528,                       // 金の羽根
         TREMORSTONE = 2796,                     // 震動石
+        LIZARD_EGG = 4362,                      // トカゲの卵
         SLICE_OF_COEURL_MEAT = 4377,            // クァールの肉
         CRYSTAL_BASS = 4528,                    // クリスタルバス
         BOTTLE_OF_HYSTEROANIMA = 5262,          // 迷のアニマ
@@ -58,6 +65,8 @@
 
     public enum KeyItemId
     {
+        BLUE_ACIDITY_TESTER = 3,                // カラーテスター・青
+        RED_ACIDITY_TESTER = 4,                 // カラーテスター・赤
         AIRSHIP_PASS_FOR_KAZHAM = 9,            // カザム行き飛空艇パス
         MAGICITE_OPTISTONE = 14,                // 魔晶石・メノ石
         MAGICITE_AURASTONE = 15,                // 魔晶石・ミノ石
@@ -88,10 +97,15 @@
         ICE_FRAGMENT = 244,                     // 氷の祈り
         LIGHT_FRAGMENT = 245,                   // 光の祈り
         OPTISTERY_RING = 250,                   // 目の院の指輪	
+        ANCIENT_SAN_DORIAN_BOOK = 269,          // 古代サンドリア語の古文書
         PAINTBRUSH_OF_SOULS = 272,              // 魂の絵筆
         OLD_RUSTY_KEY = 273,                    // 古びた小さなカギ
         AURASTERY_RING = 276,                   // 耳の院の指輪
         RHINOSTERY_RING = 280,                  // 鼻の院の指輪
+        PIECE_OF_A_BROKEN_KEY1 = 285,           // カギのかけら
+        PIECE_OF_A_BROKEN_KEY2 = 286,           // カギのかけら
+        PIECE_OF_A_BROKEN_KEY3 = 287,           // カギのかけら
+        DROPS_OF_AMNIO = 288,                   // 落羊水
         ORCISH_CREST = 336,                     // オークの紋章
         QUADAV_CREST = 337,                     // クゥダフの紋章
         YAGUDO_CREST = 338,                     // ヤグードの紋章
@@ -156,6 +170,7 @@
         RED_INSTITUTE_CARD = 2500,              // 魔法学会の赤いカード
         SAN_DORIA_TRUST_PERMIT = 2501,          // サンドリアのフェイス使用許可証
         TEMPLE_KNIGHT_KEY = 2506,               // 侯国騎士団長のカギ
+        MAGICKED_ASTROLABE = 2578,              // 魔法の天文盤
         RHAPSODY_IN_WHITE = 2884,               // 星唄の煌めき【一奏】	
         RHAPSODY_IN_UMBER = 2885,               // 星唄の煌めき【二奏】
         RHAPSODY_IN_AZURE = 2886,               // 星唄の煌めき【三奏】

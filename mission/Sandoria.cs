@@ -1239,24 +1239,269 @@ namespace LsbDatabaseApi.mission
                     break;
                 // ローテ王妃の遺言
                 case MissionSandoria.LEAUTES_LAST_WISHES:
+                    if (sandoriaMission.StatusLower == 2)
+                    {
+                        var varProgString = $"Mission[{(int)MissionId.SANDORIA}][{sandoriaMission.Current}]Progress";
+                        var value = database.GetVarNum(charaInfo.CharaId, varProgString);
+                        if (value > 0)
+                        {
+                            message.missionPhase = $"{sandoriaMission.StatusLower}Progress";
+                        }
+                    }
                     break;
                 // 龍王の眠る場所
                 case MissionSandoria.RANPERRES_FINAL_REST:
+                    if (sandoriaMission.StatusLower == 3)
+                    {
+                        if (database.HasKeyItem(charaInfo.CharaId, KeyItemId.ANCIENT_SAN_DORIAN_BOOK))
+                        {
+                            message.missionPhase = KeyItemId.ANCIENT_SAN_DORIAN_BOOK.ToString();
+                        }
+
+                    }
                     break;
                 // 教皇の威信
                 case MissionSandoria.PRESTIGE_OF_THE_PAPSQUE:
+                    if (sandoriaMission.StatusLower == 1)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.WEST_RONFAURE:
+                                break;
+                            case ZoneId.BOSTAUNIEUX_OUBLIETTE:
+                                if (charaInfo.MapId == 15)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.BOSTAUNIEUX_OUBLIETTE.ToString();
+                                    message.missionPhase = ZoneId.BOSTAUNIEUX_OUBLIETTE.ToString() + "_1_2";
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.WEST_RONFAURE.ToString();
+                                message.missionPhase = ZoneId.BOSTAUNIEUX_OUBLIETTE.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.BOSTAUNIEUX_OUBLIETTE.ToString();
+                                message.missionPhase = ZoneId.CHATEAU_DORAGUILLE.ToString();
+                                return message;
+                        }
+                    }
                     break;
                 // 獣人兵器の秘密
                 case MissionSandoria.THE_SECRET_WEAPON:
+                    if (sandoriaMission.StatusLower == 2)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.HORLAIS_PEAK:
+                                break;
+                            case ZoneId.FORT_GHELSBA:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.YUGHOTT_GROTTO.ToString();
+                                message.missionPhase = ZoneId.FORT_GHELSBA.ToString();
+                                return message;
+                            case ZoneId.YUGHOTT_GROTTO:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.FORT_GHELSBA.ToString();
+                                    message.missionPhase = ZoneId.YUGHOTT_GROTTO.ToString();
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.HORLAIS_PEAK.ToString();
+                                message.missionPhase = ZoneId.YUGHOTT_GROTTO.ToString();
+                                return message;
+                            case ZoneId.GHELSBA_OUTPOST:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.YUGHOTT_GROTTO.ToString();
+                                message.missionPhase = ZoneId.GHELSBA_OUTPOST.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.GHELSBA_OUTPOST.ToString();
+                                message.missionPhase = ZoneId.WEST_RONFAURE.ToString();
+                                return message;
+                        }
+                    }
                     break;
                 // 成人の儀
                 case MissionSandoria.COMING_OF_AGE:
+                    if (sandoriaMission.StatusLower == 2)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.QUICKSAND_CAVES:
+                                break;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.QUICKSAND_CAVES.ToString();
+                                message.missionPhase = ZoneId.EASTERN_ALTEPA_DESERT.ToString() + "_2";
+                                return message;
+                        }
+                    }
+                    else if (sandoriaMission.StatusLower == 3)
+                    {
+                        if (database.HasKeyItem(charaInfo.CharaId, KeyItemId.DROPS_OF_AMNIO))
+                        {
+                            message.missionPhase = KeyItemId.DROPS_OF_AMNIO.ToString();
+                            return message;
+                        }
+                    }
                     break;
                 // 聖剣探索
                 case MissionSandoria.LIGHTBRINGER:
+                    if (sandoriaMission.StatusLower == 2)
+                    {
+                        if (!(ZoneId.TEMPLE_OF_UGGALEPIH == charaInfo.ZoneId
+                                && charaInfo.MapId == 4
+                            )
+                            && !(ZoneId.TEMPLE_OF_UGGALEPIH == charaInfo.ZoneId
+                                && charaInfo.MapId == 2
+                                && (charaInfo.Coordinates == "(I-10)" || charaInfo.Coordinates == "(J-10)" || charaInfo.Coordinates == "(K-10)")
+                            )
+                        )
+                        {
+                            if (!database.HasItem(charaInfo.CharaId, ItemId.PRELATE_KEY))
+                            {
+                                message.missionPhase = ItemId.PRELATE_KEY.ToString();
+                                return message;
+                            }
+                        }
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.TEMPLE_OF_UGGALEPIH:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.YHOATOR_JUNGLE.ToString();
+                                    message.missionPhase = ZoneId.TEMPLE_OF_UGGALEPIH.ToString();
+                                    return message;
+                                }
+                                if (charaInfo.MapId == 2)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.TEMPLE_OF_UGGALEPIH.ToString();
+                                    message.missionPhase = ZoneId.TEMPLE_OF_UGGALEPIH.ToString() + "_2_4";
+                                    return message;
+                                }
+                                return message;
+                            case ZoneId.YHOATOR_JUNGLE:
+                                if (charaInfo.PreZoneId == ZoneId.TEMPLE_OF_UGGALEPIH && charaInfo.PreCoordinates == "(F-5)")
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.TEMPLE_OF_UGGALEPIH.ToString();
+                                    message.missionPhase = ZoneId.YHOATOR_JUNGLE.ToString() + "_2";
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.TEMPLE_OF_UGGALEPIH.ToString();
+                                message.missionPhase = ZoneId.YHOATOR_JUNGLE.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.YHOATOR_JUNGLE.ToString();
+                                message.missionPhase = ZoneId.YUHTUNGA_JUNGLE.ToString();
+                                return message;
+                        }
+                    }
+                    else if (sandoriaMission.StatusLower == 5)
+                    {
+                        var varProgString = $"Mission[{(int)MissionId.SANDORIA}][{sandoriaMission.Current}]Prog";
+                        var value = database.GetVarNum(charaInfo.CharaId, varProgString);
+                        if (value > 0)
+                        {
+                            message.missionPhase = $"Prog1";
+                        }
+                    }
                     break;
                 // 厚き壁
                 case MissionSandoria.BREAKING_BARRIERS:
+                    if (sandoriaMission.StatusLower == 1)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.VALLEY_OF_SORROWS:
+                                break;
+                            case ZoneId.CAPE_TERIGGAN:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.VALLEY_OF_SORROWS.ToString();
+                                message.missionPhase = ZoneId.CAPE_TERIGGAN.ToString();
+                                break;
+                            case ZoneId.KUFTAL_TUNNEL:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.KUFTAL_TUNNEL.ToString();
+                                    message.missionPhase = ZoneId.KUFTAL_TUNNEL.ToString() + "_1_2";
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.CAPE_TERIGGAN.ToString();
+                                message.missionPhase = ZoneId.KUFTAL_TUNNEL.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.KUFTAL_TUNNEL.ToString();
+                                message.missionPhase = ZoneId.WESTERN_ALTEPA_DESERT.ToString();
+                                return message;
+                        }
+                    }
+                    else if (sandoriaMission.StatusLower == 3)
+                    {
+                        if (!database.HasKeyItem(charaInfo.CharaId, KeyItemId.MAGICKED_ASTROLABE))
+                        {
+                            message.missionKind = MissionKind.Quest;
+                            message.missionType = "KEY_ITEM";
+                            message.missionPhase = "MAGICKED_ASTROLABE";
+                            return message;
+                        }
+
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.THE_ELDIEME_NECROPOLIS:
+                                if (charaInfo.MapId == 15)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.THE_ELDIEME_NECROPOLIS.ToString();
+                                    message.missionPhase = ZoneId.THE_ELDIEME_NECROPOLIS.ToString() + "_2_1";
+                                    return message;
+                                }
+                                else if (charaInfo.MapId == 16)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.THE_ELDIEME_NECROPOLIS.ToString();
+                                    message.missionPhase = ZoneId.THE_ELDIEME_NECROPOLIS.ToString() + "_1_3";
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.BATALLIA_DOWNS.ToString();
+                                message.missionPhase = ZoneId.THE_ELDIEME_NECROPOLIS.ToString();
+                                return message;
+                            case ZoneId.BATALLIA_DOWNS:
+                                if (charaInfo.Coordinates == "(I-11)" || charaInfo.Coordinates == "(J-11)")
+                                {
+                                    var varProgString = $"Mission[{(int)MissionId.SANDORIA}][{sandoriaMission.Current}]Prog";
+                                    var value = database.GetVarNum(charaInfo.CharaId, varProgString);
+                                    if (value > 0)
+                                    {
+                                        message.missionPhase = "KILL";
+                                    }
+
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.THE_ELDIEME_NECROPOLIS.ToString();
+                                message.missionPhase = ZoneId.BATALLIA_DOWNS.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.BATALLIA_DOWNS.ToString();
+                                message.missionPhase = ZoneId.UPPER_JEUNO.ToString();
+                                return message;
+                        }
+                    }
                     break;
                 // 光の継承者
                 case MissionSandoria.THE_HEIR_TO_THE_LIGHT:
@@ -1281,7 +1526,7 @@ namespace LsbDatabaseApi.mission
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_RESCUE_DRILL))
                     {
-                        var value = database.GetVarNum(charaInfo.CharaId, $"Mission[{(int)MissionId.SANDORIA}][{MissionSandoria.SAVE_THE_CHILDREN}]Option");
+                        var value = database.GetVarNum(charaInfo.CharaId, $"Mission[{(int)MissionId.SANDORIA}][{(int)MissionSandoria.SAVE_THE_CHILDREN}]Option");
                         if (value != 0)
                         {
                             message.missionType = MissionSandoria.SAVE_THE_CHILDREN.ToString();
@@ -1330,7 +1575,16 @@ namespace LsbDatabaseApi.mission
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.LEAUTES_LAST_WISHES))
                     {
-                        message.missionPhase = MissionSandoria.LEAUTES_LAST_WISHES.ToString();
+                        var value = database.GetVarNum(charaInfo.CharaId, $"Mission[{(int)MissionId.SANDORIA}][{(int)MissionSandoria.THE_SHADOW_LORD}]hallEvent");
+                        if (value != 0)
+                        {
+                            message.missionType = MissionSandoria.THE_SHADOW_LORD.ToString();
+                            message.missionPhase = "hallEvent";
+                        }
+                        else
+                        {
+                            message.missionPhase = MissionSandoria.LEAUTES_LAST_WISHES.ToString();
+                        }
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.RANPERRES_FINAL_REST))
                     {
@@ -1342,7 +1596,14 @@ namespace LsbDatabaseApi.mission
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_SECRET_WEAPON))
                     {
-                        message.missionPhase = MissionSandoria.THE_SECRET_WEAPON.ToString();
+                        if (sandoriaMission.StatusLower < 2)
+                        {
+                            message.missionType = MissionSandoria.THE_SECRET_WEAPON.ToString();
+                        }
+                        else
+                        {
+                            message.missionPhase = MissionSandoria.THE_SECRET_WEAPON.ToString();
+                        }
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.COMING_OF_AGE))
                     {
@@ -1350,7 +1611,16 @@ namespace LsbDatabaseApi.mission
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.LIGHTBRINGER))
                     {
-                        message.missionPhase = MissionSandoria.LIGHTBRINGER.ToString();
+                        var value = database.GetVarNum(charaInfo.CharaId, $"Mission[{(int)MissionId.SANDORIA}][{(int)MissionSandoria.COMING_OF_AGE}]Progress");
+                        if (value != 0)
+                        {
+                            message.missionType = MissionSandoria.COMING_OF_AGE.ToString();
+                            message.missionPhase = "Progress";
+                        }
+                        else
+                        {
+                            message.missionPhase = MissionSandoria.LIGHTBRINGER.ToString();
+                        }
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.BREAKING_BARRIERS))
                     {

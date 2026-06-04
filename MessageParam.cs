@@ -223,7 +223,7 @@ namespace LsbDatabaseApi
                     case NationId.BASTOK:
                         if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.XARCABARD_LAND_OF_TRUTHS))
                         {
-                            //TODO SetMessageParam(BastokMission.GetMessageWindurst(database, charaInfo));
+                            SetMessageParam(BastokMission.GetMessageBastok(database, charaInfo));
                             return GetMessage();
                         }
                         break;
@@ -254,10 +254,18 @@ namespace LsbDatabaseApi
                 switch (database.GetNation(charaInfo.CharaId))
                 {
                     case NationId.SANDORIA:
-                        missionKind = MissionKind.MissionSandoria;
+                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.SANDORIA, (int)MissionSandoria.THE_HEIR_TO_THE_LIGHT))
+                        {
+                            SetMessageParam(SandoriaMission.GetMessageSandoria(database, charaInfo));
+                            return GetMessage();
+                        }
                         break;
                     case NationId.BASTOK:
-                        missionKind = MissionKind.MissionBastok;
+                        if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.WHERE_TWO_PATHS_CONVERGE))
+                        {
+                            SetMessageParam(BastokMission.GetMessageBastok(database, charaInfo));
+                            return GetMessage();
+                        }
                         break;
                     case NationId.WINDURST:
                         if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.WINDURST, (int)MissionWindurst.MOON_READING))
