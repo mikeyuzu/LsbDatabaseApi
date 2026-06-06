@@ -2,6 +2,7 @@
 {
     public enum ItemId
     {
+        HARE_MEAT = 4358,                       // 野兎の肉
         QUADAV_AUGURY_SHELL = 494,              // クゥダフの卜占甲
         QUADAV_CHARM = 495,                     // クゥダフの呪符
         CLUMP_OF_GAUSEBIT_WILDGRASS = 534,      // ゴゼビの野草
@@ -13,6 +14,7 @@
         CUP_OF_DHALMEL_SALIVA = 541,            // ダルメルの唾液
         WILD_RABBIT_TAIL = 542,                 // 野兎の尻尾
         DELKFUTT_KEY = 549,                     // デルクフのカギ
+        CHUNK_OF_GLOCOLITE = 563,               // グロコライト
         METEORITE = 582,                        // 隕石
         CHUNK_OF_MINE_GRAVEL = 597,             // 鉱山の砂利
         ONZ_OF_MYTHRIL_SAND = 599,              // ミスリルの砂粒
@@ -65,9 +67,11 @@
 
     public enum KeyItemId
     {
+        ZERUHN_REPORT = 1,                      // 鉱山労働報告書
         BLUE_ACIDITY_TESTER = 3,                // カラーテスター・青
         RED_ACIDITY_TESTER = 4,                 // カラーテスター・赤
         AIRSHIP_PASS_FOR_KAZHAM = 9,            // カザム行き飛空艇パス
+        C_L_REPORT = 12,                        // CL研究報告書
         MAGICITE_OPTISTONE = 14,                // 魔晶石・メノ石
         MAGICITE_AURASTONE = 15,                // 魔晶石・ミノ石
         MAGICITE_ORASTONE = 16,                 // 魔晶石・クノ石

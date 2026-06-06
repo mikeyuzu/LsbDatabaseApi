@@ -272,42 +272,108 @@
   },
   "MissionBastok": {
     "THE_ZERUHN_REPORT": {
-      "0": "グスタベルク ツェールン鉱山 H-11T?\nMakarimに話しかけよう",
-      "1": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
+      "0": "グスタベルク ツェールン鉱山 H-11T3\nMakarimに話しかけよう",
+      "ZERUHN_REPORT": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
     },
     "GEOLOGICAL_SURVEY": {
       "0": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
-      "1": "グスタベルグ ダングルフの涸れ谷 J-9T7\n間欠泉に乗って上に登ろう",
+      "BLUE_ACIDITY_TESTER": "グスタベルグ ダングルフの涸れ谷 I-8T3\n間欠泉に乗って上に登ろう",
       "RED_ACIDITY_TESTER": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう"
     },
     "FETICHISM": {
-      "QUADAV_FETICH_HEAD": "パルブロ鉱山にいるQuadav族モンスターからクゥダフ人形の頭を入手しよう",
-      "QUADAV_FETICH_TORSO": "パルブロ鉱山にいるQuadav族モンスターからクゥダフ人形の胴を入手しよう",
-      "QUADAV_FETICH_ARMS": "パルブロ鉱山にいるQuadav族モンスターからクゥダフ人形の腕を入手しよう",
-      "QUADAV_FETICH_LEGS": "パルブロ鉱山にいるQuadav族モンスターからクゥダフ人形の足を入手しよう",
+      "QUADAV_FETICH_HEAD": "パルブロ鉱山にいるQuadav族モンスターから\nクゥダフ人形の頭を入手しよう",
+      "QUADAV_FETICH_TORSO": "パルブロ鉱山にいるQuadav族モンスターから\nクゥダフ人形の胴を入手しよう",
+      "QUADAV_FETICH_ARMS": "パルブロ鉱山にいるQuadav族モンスターから\nクゥダフ人形の腕を入手しよう",
+      "QUADAV_FETICH_LEGS": "パルブロ鉱山にいるQuadav族モンスターから\nクゥダフ人形の足を入手しよう",
       "0": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesにクゥダフ人形の頭、胴、腕、足を渡そう"
     },
     "THE_CRYSTAL_LINE": {
       "0": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
-      "1": "ザルクヘイム コンシュタット高地 J-7T3\nTelepointに適当なクリスタルをトレードし\n変色クリスタルを手に入れよう",
-      "FADED_CRYSTAL": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう",
-      "2": "バストゥーク共和国 大工房 上J-8T4\nNajiに話しかけよう"
+      "1": "ザルクヘイム コンシュタット高地 I-6T9\nTelepointに適当なクリスタルをトレードし\n変色クリスタルを手に入れよう",
+      "FADED_CRYSTAL": "バストゥーク共和国 大工房 H-8T7\nCidに変色クリスタルを渡そう",
+      "C_L_REPORT": "バストゥーク共和国 大工房 上K-7T6\nAyameに話しかけよう"
     },
     "WADING_BEASTS": {
       "0": "グスタベルグ ダングルフの涸れ谷\nトカゲからトカゲの卵を手に入れよう",
-      "LIZARD_EGG": "バストゥーク共和国 大工房 J-8T?\nAloisにトカゲの卵を渡そう"
+      "LIZARD_EGG": "バストゥーク共和国 大工房 J-8T9\nAloisにトカゲの卵を渡そう"
     },
     "THE_EMISSARY": {
-
+      "0": "バストゥーク共和国 大工房 上J-8T4\nNajiに話しかけよう",
+      "1": "サンドリア王国 北サンドリア J-10T9\nバストゥーク領事館のBarakaに話しかけよう",
+      "6": "ウィンダス連邦 ウィンダス港 F-6T7\nバストゥーク領事館のの右側の扉の先にいる\nMelekに話しかけよう",
+      "10": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
     },
-    "THE_EMISSARY_SANDORIA": {},
-    "THE_EMISSARY_WINDURST2": {},
-    "THE_FOUR_MUSKETEERS": {},
-    "TO_THE_FORSAKEN_MINES": {},
-    "JEUNO": {},
-    "MAGICITE": {},
-    "DARKNESS_RISING": {},
-    "XARCABARD_LAND_OF_TRUTHS": {},
+    "THE_EMISSARY_SANDORIA": {
+      "2": "サンドリア王国 北サンドリア K-10T5\nバストゥーク領事館のHelakuに話しかけよう",
+      "3": "サンドリア王国 ドラギーユ城 I-9T4\nHalverに話しかけよう",
+      "4": "ロンフォール ゲルスバ野営陣 H-7T1\nWarchief Vatgitを倒そう",
+      "5": "サンドリア王国 北サンドリア K-10T5\nHelakuに報告しよう"
+    },
+    "THE_EMISSARY_WINDURST2": {
+      "7": "ウィンダス連邦 天の塔\n受付のKupipiに話しかけよう",
+      "8": "サルタバルタ バルガの舞台\nBurning Circleを調べてランク2最終ミッションに挑もう",
+      "9": "ウィンダス連邦 ウィンダス港 F-6T7\nバストゥーク領事館のMelekに報告しよう"
+    },
+    "THE_FOUR_MUSKETEERS": {
+      "0": "バストゥーク共和国 大工房 上J-8T6\nIron Eaterに話しかけよう",
+      "1": "デルフラント ベドーに移動しよう",
+      "2": "デルフラント ベドー\nCopper Quadavを20体倒そう",
+      "3": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(1/20)",
+      "4": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(2/20)",
+      "5": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(3/20)",
+      "6": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(4/20)",
+      "7": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(5/20)",
+      "8": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(6/20)",
+      "9": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(7/20)",
+      "10": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(8/20)",
+      "11": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(9/20)",
+      "12": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(10/20)",
+      "13": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(11/20)",
+      "14": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(12/20)",
+      "15": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(13/20)",
+      "16": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(14/20)",
+      "17": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(15/20)",
+      "18": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(16/20)",
+      "19": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(17/20)",
+      "20": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(18/20)",
+      "21": "デルフラント ベドー\nCopper Quadavを20体倒そう\n(19/20)",
+      "22": "デルフラント パシュハウ沼に移動しよう"
+    },
+    "TO_THE_FORSAKEN_MINES": {
+      "0": "バストゥーク共和国 バストゥーク鉱山区 K-6T7\nDavyadに話しかけた後\nダングルフの涸れ谷で野兎の肉を手に入れよう",
+      "HARE_MEAT": "グスタベルグ ダングルフの涸れ谷\nWadi Hareから野兎の肉を手に入れよう",
+      "0_HARE_MEAT": "ザルクヘイム グスゲン鉱山 MAP[1]J-7T3\n???に野兎の肉をトレードしよう",
+      "CHUNK_OF_GLOCOLITE": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesにグロコライトを渡そう"
+    },
+    "JEUNO": {
+      "0": "バストゥーク共和国 大工房 上I-9T6\n大統領補佐官室にいるLuciusに話しかけよう",
+      "1": "ジュノ大公国 ル・ルデの庭 H-10T5\nバストゥーク領事館のGoggehnに話しかけよう",
+      "2": "クフィム デルクフの塔上層 H-8\nPorphyrionを倒して\nデルクフのカギを手に入れよう",
+      "DELKFUTT_KEY": "クフィム デルクフの塔上層 H-8T1\nElevatorにデルクフのカギをトレードしよう",
+      "2_2": "クフィム デルクフの塔下層\n螺旋階段を一番下まで降り下層へ移動\nI-8T4にあるCermet Doorから先に進もう",
+      "2_3": "クフィム デルクフの塔下層 K-9T6\n更に先に進んでCermet Doorを調べよう",
+      "3": "ジュノ大公国 ル・ルデの庭 H-10T6\nバストゥーク領事館のDoor: Bastok Emb.を調べよう"
+    },
+    "MAGICITE": {
+      "0": "ジュノ大公国 ル・ルデの庭 H-6T2\nDoor:Audience Chamberを調べよう",
+      "1": "ジュノ大公国 ジュノ下層 J-8T4\n天晶堂のDoor:Neptune's Spireから中に入り\nAldoに話しかけよう",
+      "2_DAVOI": "魔晶石を奪え ダボイ編\nE-6T6にあるMagiciteを調べよう",
+      "2_BEADEAUX": "魔晶石を奪え ベドー編\nF-9T8にあるMagiciteを調べよう",
+      "2_CASTLE_OZTROJA": "魔晶石を奪え オズトロヤ編\nG-8T8にあるMagiciteを調べよう",
+      "2": "ジュノ大公国 ル・ルデの庭 H-6T2\nDoor:Audience Chamberを調べよう",
+      "3": "ジュノ大公国 ル・ルデの庭 H-10T5\nバストゥーク領事館のGoggehnに話しかけよう",
+    },
+    "DARKNESS_RISING": {
+      "10": "フォルガンディ フェ・インへ移動しよう",
+      "11": "フォルガンディ ク・ビアの闘技場\nBurning Circleを調べてランク5ミッションに挑もう",
+      "12": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
+    },
+    "XARCABARD_LAND_OF_TRUTHS": {
+      "0": "バストゥーク共和国 大工房 上K-8T4\n大統領執務室のKarstに話しかけよう",
+      "2": "バルドニア 王の間\nThrone Roomを調べよう",
+      "3": "バルドニア 王の間\nThrone Roomからランク5ミッションに挑もう",
+      "4": "バストゥーク共和国 大工房 上K-8T4\n大統領執務室のKarstに報告しよう"
+    },
     "RETURN_OF_THE_TALEKEEPER": {},
     "THE_PIRATES_COVE": {},
     "THE_FINAL_IMAGE": {},
@@ -318,7 +384,7 @@
     "WHERE_TWO_PATHS_CONVERGE": {},
     "NONE": {
       "0": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからミッションを受けよう",
-      "THE_ZERUHN_REPORT": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからツェールン鉱山からの報告を受けよう",
+      "THE_ZERUHN_REPORT": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからミッションを受けよう",
       "GEOLOGICAL_SURVEY": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから彼の名は...を受けよう",
       "FETICHISM": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから終わらぬ戦いを受けよう",
       "THE_CRYSTAL_LINE": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからクリスタルラインを受けよう",
@@ -327,8 +393,8 @@
       "THE_FOUR_MUSKETEERS": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから四銃士を受けよう",
       "TO_THE_FORSAKEN_MINES": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから忘れられた鉱山にてを受けよう",
       "JEUNO": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからジュノへを受けよう",
-      "MAGICITE": "ジュノ大公国 ル・ルデの庭 H-10T?\nバストゥーク領事館のGoggehnに話しかけよう",
-      "DARKNESS_RISING": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから闇、再びを受けよう",
+      "MAGICITE": "ジュノ大公国 ル・ルデの庭 H-10T6\nバストゥーク領事館のDoor: Bastok Emb.を調べよう",
+      "DARKNESS_RISING": "バストゥーク共和国 大工房 上J-8T4\nNajiからミッションを受けよう",
       "XARCABARD_LAND_OF_TRUTHS": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからザルカバードに眠る真実を受けよう",
       "RETURN_OF_THE_TALEKEEPER": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから語り部現る！？を受けよう",
       "THE_PIRATES_COVE": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesから海賊たちの唄を受けよう",
@@ -1226,7 +1292,7 @@
       "BASTOK4": "天かける雲のごとくクエスト\nバストゥーク港 E-6T4\nHildaに獣神印章を渡そう",
       "BASTOK5": "天かける雲のごとくクエスト\n大工房 J-8T4\nNajiに獣神印章を渡そう",
       "BASTOK6": "天かける雲のごとくクエスト\n大工房 G-8T6\nRaibahtに獣神印章を渡そう",
-      "BASTOK7": "天かける雲のごとくクエスト\n大工房 I-9T4\nLuciusに獣神印章を渡そう",
+      "BASTOK7": "天かける雲のごとくクエスト\n大工房 I-9T6\nLuciusに獣神印章を渡そう",
       "WINDURST0": "天かける雲のごとくクエスト\nウィンダス水の区北 K-6T4\nKoko Lihzehに獣神印章を渡そう",
       "WINDURST1": "天かける雲のごとくクエスト\nウィンダス水の区南 C-11T4\nNaiko-Paneikoに獣神印章を渡そう",
       "WINDURST2": "天かける雲のごとくクエスト\nウィンダス水の区南 J-8T7\nKerutotoに獣神印章を渡そう",
@@ -1519,10 +1585,12 @@
       "NORTHERN_SAN_DORIA": "サンドリア王国 ドラギーユ城\n北サンドリアJ-7T7からドラギーユ城へ"
     },
     "BASTOK_MINES": {
-      "BASTOK_MARKETS": "バストゥーク共和国 バストゥーク鉱山区\nバストゥーク商業区H-12T2からバストゥーク鉱山区へ"
+      "BASTOK_MARKETS": "バストゥーク共和国 バストゥーク鉱山区\nバストゥーク商業区H-11T3からバストゥーク鉱山区へ",
+      "ZERUHN_MINES": "バストゥーク共和国 バストゥーク鉱山区\nツェールン鉱山I-7T6からバストゥーク鉱山区へ"
     },
     "BASTOK_MARKETS": {
       "METALWORKS": "バストゥーク共和国 バストゥーク商業区\n大工房 下H-8T5からバストゥーク商業区へ",
+      "BASTOK_MINES": "バストゥーク共和国 バストゥーク商業区\nバストゥーク鉱山区F-4T2からバストゥーク商業区へ",
       "SOUTH_GUSTABERG": "バストゥーク共和国 バストゥーク商業区\n南グスタベルグJ-7T7からバストゥーク商業区へ"
     },
     "PORT_BASTOK": {
@@ -1533,10 +1601,12 @@
     },
     "WINDURST_WATERS": {
       "WINDURST_WATERS2": "ウィンダス連邦 ウィンダス水の区 北\nウィンダス水の区 南H-6T9から北のマップへ",
-      "WINDURST_WALLS": "ウィンダス連邦 ウィンダス水の区 北\nウィンダス石の区C-7T8からウィンダス水の区へ"
+      "WINDURST_WALLS": "ウィンダス連邦 ウィンダス水の区 北\nウィンダス石の区C-7T8からウィンダス水の区へ",
+      "PORT_WINDURST": "ウィンダス連邦 ウィンダス水の区 南\nウィンダス港E-4T4からウィンダス水の区へ"
     },
     "WINDURST_WALLS": {
       "WINDURST_WOODS": "ウィンダス連邦 ウィンダス石の区\nウィンダス森の区G-7T7からウィンダス石の区へ",
+      "WINDURST_WATERS": "ウィンダス連邦 ウィンダス石の区\nウィンダス水の区 北K-9T9からウィンダス石の区へ",
       "HEAVENS_TOWER": "ウィンダス連邦 ウィンダス石の区\n天の塔入口のワープからウィンダス石の区へ"
     },
     "PORT_WINDURST": {
@@ -1574,6 +1644,7 @@
       "BOSTAUNIEUX_OUBLIETTE": "ロンフォール 西ロンフォール\nボストーニュ監獄MAP[2]D-9T1から西ロンフォールへ"
     },
     "EAST_RONFAURE": {
+      "WEST_RONFAURE": "ロンフォール 東ロンフォール\n西ロンフォールJ-9T6から東ロンフォールへ",
       "SOUTHERN_SAN_DORIA": "ロンフォール 東ロンフォール\n南サンドリアL-10T7から東ロンフォールへ"
     },
     "GHELSBA_OUTPOST": {
@@ -1655,7 +1726,7 @@
     "NORTH_GUSTABERG": {
       "PORT_BASTOK": "グスタベルグ 北グスタベルグ\nバストゥーク港L-6T3から北グスタベルグへ",
       "KONSCHTAT_HIGHLANDS": "グスタベルグ 北グスタベルグ\nコンシュタット高地I-12T4から北グスタベルグへ",
-      "SOUTH_GUSTABERG": "グスタベルグ 北グスタベルグ\n南グスタベルグE-6T9から北グスタベルグへ"
+      "SOUTH_GUSTABERG": "グスタベルグ 北グスタベルグ\n南グスタベルグE-7T9から北グスタベルグへ"
     },
     "SOUTH_GUSTABERG": {
       "BASTOK_MARKETS": "グスタベルグ 南グスタベルグ\nバストゥーク商業区D-11T5から南グスタベルグへ",
@@ -1672,11 +1743,15 @@
     "ZERUHN_MINES": {
       "BASTOK_MINES": "グスタベルグ ツェールン鉱山\nバストゥーク鉱山区D-7T4からツェールン鉱山へ"
     },
+    "DANGRUF_WADI": {
+      "SOUTH_GUSTABERG": "グスタベルグ ダングルフの涸れ谷\n南グスタベルグD-9T5からダングルフの涸れ谷へ"
+    },
     "KORROLOKA_TUNNEL": {
       "ZERUHN_MINES": "グスタベルグ コロロカの洞門\nツェールン鉱山H-7T8 Lasthenesに話しかけて\n門の先に進み、F-7T1からコロロカの洞門へ",
       "KORROLOKA_TUNNEL_1_2": "グスタベルグ コロロカの洞門\nMAP[1]B-10T8からMAP2へ"
     },
     "PASHHOW_MARSHLANDS": {
+      "KONSCHTAT_HIGHLANDS": "デルフラント パシュハウ沼\nコンシュタット高地K-4T9からパシュハウ沼へ",
       "ROLANBERRY_FIELDS": "デルフラント パシュハウ沼\nロランベリー耕地H-14T5からパシュハウ沼へ"
     },
     "ROLANBERRY_FIELDS": {
