@@ -23,6 +23,7 @@
         QUADAV_FETICH_ARMS = 608,               // クゥダフ人形の腕
         QUADAV_FETICH_LEGS = 609,               // クゥダフ人形の足
         FADED_CRYSTAL = 613,                    // 変色クリスタル
+        CHUNK_OF_ADAMAN_ORE = 646,              // アダマン鉱
         PIECE_OF_ANCIENT_PAPYRUS = 1088,        // 古代魔法のパピルス
         CLUMP_OF_EXORAY_MOLD = 1089,            // エクソレイの粘菌
         CHUNK_OF_BOMB_COAL = 1090,              // ボムの炭
@@ -33,6 +34,7 @@
         RANCOR_FLAME = 1139,                    // 怨みの炎
         JUDGMENT_KEY = 1142,                    // 裁きのカギ
         CURSED_KEY = 1143,                      // 呪われたカギ
+        FRAG_ROCK = 1160,                       // 爆裂岩
         CLUMP_OF_GOOBBUE_HUMUS = 1181,          // グゥーブーの腐葉土
         SEALION_CREST_KEY = 1658,               // 海獅子の紋章のカギ
         CORAL_CREST_KEY = 1659,                 // 珊瑚の紋章のカギ
@@ -125,6 +127,7 @@
         SHARD_OF_COWARDICE = 457,               // 怯懦のかけら
         SHARD_OF_ENVY = 458,                    // 嫉妬のかけら
         SHARD_OF_RAGE = 459,                    // 憎悪のかけら
+        MIRACLESALT = 477,                      // 奇跡の塩
         ANCIENT_VERSE_OF_ROMAEVE = 478,         // 古代の曲～ロ・メーヴ～
         ANCIENT_VERSE_OF_ALTEPA = 479,          // 古代の曲～ウガレピ～
         ANCIENT_VERSE_OF_UGGALEPIH = 480,       // 古代の曲～アルテパ～

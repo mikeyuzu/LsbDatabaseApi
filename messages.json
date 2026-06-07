@@ -276,9 +276,9 @@
       "ZERUHN_REPORT": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
     },
     "GEOLOGICAL_SURVEY": {
-      "0": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "0": "バストゥーク共和国 大工房 上H-8T7\nCidに話しかけよう",
       "BLUE_ACIDITY_TESTER": "グスタベルグ ダングルフの涸れ谷 I-8T3\n間欠泉に乗って上に登ろう",
-      "RED_ACIDITY_TESTER": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう"
+      "RED_ACIDITY_TESTER": "バストゥーク共和国 大工房 上H-8T7\nCidに報告しよう"
     },
     "FETICHISM": {
       "QUADAV_FETICH_HEAD": "パルブロ鉱山にいるQuadav族モンスターから\nクゥダフ人形の頭を入手しよう",
@@ -288,14 +288,14 @@
       "0": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesにクゥダフ人形の頭、胴、腕、足を渡そう"
     },
     "THE_CRYSTAL_LINE": {
-      "0": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "0": "バストゥーク共和国 大工房 上H-8T7\nCidに話しかけよう",
       "1": "ザルクヘイム コンシュタット高地 I-6T9\nTelepointに適当なクリスタルをトレードし\n変色クリスタルを手に入れよう",
-      "FADED_CRYSTAL": "バストゥーク共和国 大工房 H-8T7\nCidに変色クリスタルを渡そう",
+      "FADED_CRYSTAL": "バストゥーク共和国 大工房 上H-8T7\nCidに変色クリスタルを渡そう",
       "C_L_REPORT": "バストゥーク共和国 大工房 上K-7T6\nAyameに話しかけよう"
     },
     "WADING_BEASTS": {
       "0": "グスタベルグ ダングルフの涸れ谷\nトカゲからトカゲの卵を手に入れよう",
-      "LIZARD_EGG": "バストゥーク共和国 大工房 J-8T9\nAloisにトカゲの卵を渡そう"
+      "LIZARD_EGG": "バストゥーク共和国 大工房 上J-8T9\nAloisにトカゲの卵を渡そう"
     },
     "THE_EMISSARY": {
       "0": "バストゥーク共和国 大工房 上J-8T4\nNajiに話しかけよう",
@@ -374,14 +374,63 @@
       "3": "バルドニア 王の間\nThrone Roomからランク5ミッションに挑もう",
       "4": "バストゥーク共和国 大工房 上K-8T4\n大統領執務室のKarstに報告しよう"
     },
-    "RETURN_OF_THE_TALEKEEPER": {},
-    "THE_PIRATES_COVE": {},
-    "THE_FINAL_IMAGE": {},
-    "ON_MY_WAY": {},
-    "THE_CHAINS_THAT_BIND_US": {},
-    "ENTER_THE_TALEKEEPER": {},
-    "THE_SALT_OF_THE_EARTH": {},
-    "WHERE_TWO_PATHS_CONVERGE": {},
+    "RETURN_OF_THE_TALEKEEPER": {
+      "0": "バストゥーク共和国 バストゥーク鉱山区 H-6T9\nMedicine Eagleに話しかけよう",
+      "1": "グスタベルク ツェールン鉱山 H-6T2\nDrake Fangに話しかけよう",
+      "2": "クゾッツ 西アルテパ砂漠 G-8T4\n???を調べよう",
+      "KILL": "クゾッツ 西アルテパ砂漠 G-8T4\n???を再度調べよう",
+      "3": "バストゥーク共和国 バストゥーク鉱山区 J-7T9\nTall Mountainに話しかけよう"
+    },
+    "THE_PIRATES_COVE": {
+      "0": "バストゥーク共和国 大工房 上J-8T4\nNajiに話しかけよう",
+      "1": "低地エルシモ ノーグ K-8T1\nOaken Doorから部屋に入り\nGilgameshに話しかけよう",
+      "CHUNK_OF_ADAMAN_ORE": "高地エルシモ イフリートの釜\nつるはしでアダマン鉱を採掘しよう",
+      "2": "高地エルシモ イフリートの釜 MAP[1]H-7T1\n???にアダマン鉱をトレードしよう",
+      "FRAG_ROCK": "低地エルシモ ノーグ K-8T1\nGilgameshに爆裂岩を渡そう",
+      "3": "バストゥーク共和国 大工房 上J-8T4\nNajiに報告しよう"
+    },
+    "THE_FINAL_IMAGE": {
+      "0": "バストゥーク共和国 大工房 H-8T7\nCidに話しかけよう",
+      "1": "リ・テロア ロ・メーヴ\nD-10T8,E-9T8,E-11T9,G-8T2,G-9T8,J-8T7\nK-11T7,L-10T3いずれかから???を調べよう",
+      "KILL": "リ・テロア ロ・メーヴ\nD-10T8,E-9T8,E-11T9,G-8T2,G-9T8,J-8T7\nK-11T7,L-10T3いずれかから???を再度調べよう",
+      "2": "バストゥーク共和国 大工房 H-8T7\nCidに報告しよう"
+    },
+    "ON_MY_WAY": {
+      "0": "バストゥーク共和国 大工房 上K-8T4\n大統領執務室のKarstに話しかけよう",
+      "1": "バストゥーク共和国 バストゥーク港 E-6T4\n蒸気の羊亭のHildaに話しかけよう",
+      "2": "グスタベルグ ワールンの祠\nBurning Circleを調べてそれぞれの行方に挑もう",
+      "3": "バストゥーク共和国 大工房 上K-8T4\n大統領執務室のKarstに報告しよう",
+      "GumbahDialog": "バストゥーク共和国 バストゥーク鉱山区 J-7T1\n2階にいるGumbahに話しかけよう",
+      "GumbahDialog1": "バストゥーク共和国 バストゥーク鉱山区 J-7T1\n2階にいるGumbahに再度話しかけよう"
+    },
+    "THE_CHAINS_THAT_BIND_US": {
+      "0": "バストゥーク共和国 大工房 上J-8T6\nIron Eaterに話しかけよう",
+      "1": "クゾッツ 流砂洞 MAP[5]G-11T4\n???を調べよう",
+      "2": "クゾッツ 流砂洞 MAP[5]G-11T4\n???を再度調べよう",
+      "3": "クゾッツ 流砂洞 MAP[7]H-8T5\nガルカ族壁画前にある???を再度調べよう",
+      "4": "バストゥーク共和国 大工房 上J-8T6\nIron Eaterに報告しよう"
+    },
+    "ENTER_THE_TALEKEEPER": {
+      "0": "グスタベルク ツェールン鉱山 H-6T2\nDrake Fangに話しかけよう",
+      "1": "ヴォルボー クフタルの洞門 MAP[1]H-8T7\n???を調べよう",
+      "2": "ヴォルボー クフタルの洞門 MAP[1]H-8T7\n反時計回りに崖下に回り込み\n???を調べよう",
+      "3": "ヴォルボー クフタルの洞門 MAP[1]H-8T7\n???を再度調べよう",
+      "4": "グスタベルク ツェールン鉱山 H-6T2\nDrake Fangに報告しよう",
+      "5": "バストゥーク共和国 バストゥーク鉱山区に移動しよう"
+    },
+    "THE_SALT_OF_THE_EARTH": {
+      "0": "バストゥーク共和国 大工房 J-8T9\nAloisに話しかけよう",
+      "1": "クゾッツ ラバオ G-6T3\nDancing Wolfに話しかけよう",
+      "2": "ヴォルボー グスタフの洞門 MAP[2]G-6T8\n???を調べよう",
+      "3": "ヴォルボー グスタフの洞門 MAP[2]G-6T8\n???を再度調べよう",
+      "MIRACLESALT": "クゾッツ ラバオ G-6T3\nDancing Wolfに報告しよう",
+      "4": "バストゥーク共和国 大工房 J-8T9\nAloisに報告しよう"
+    },
+    "WHERE_TWO_PATHS_CONVERGE": {
+      "0": "バストゥーク共和国 大工房 上J-8T6\nIron Eaterに話しかけよう",
+      "1": "バルドニア 王の間\nThrone Roomから双刃の邂逅に挑もう",
+      "2": "バストゥーク共和国 大工房 上J-8T6\nIron Eaterに報告しよう"
+    },
     "NONE": {
       "0": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからミッションを受けよう",
       "THE_ZERUHN_REPORT": "バストゥーク共和国 バストゥーク商業区 D-11T8\nCleadesからミッションを受けよう",
@@ -1975,6 +2024,7 @@
     "QUICKSAND_CAVES": {
       "WESTERN_ALTEPA_DESERT": "クゾッツ 流砂洞\n西アルテパ砂漠J-9T5から流砂洞へ",
       "WESTERN_ALTEPA_DESERT_2": "クゾッツ 流砂洞\n西アルテパ砂漠D-12T5から流砂洞へ",
+      "WESTERN_ALTEPA_DESERT_3": "クゾッツ 流砂洞\n西アルテパ砂漠G-5T2から流砂洞へ",
       "EASTERN_ALTEPA_DESERT": "クゾッツ 流砂洞\n東アルテパ砂漠J-7T8から流砂洞へ",
       "EASTERN_ALTEPA_DESERT_2": "クゾッツ 流砂洞\n東アルテパ砂漠H-10T6から流砂洞へ",
       "QUICKSAND_CAVES_4_7": "クゾッツ 流砂洞\nMAP[4]K-8T5の扉を抜けてL-8T5からMAP[7]へ"
@@ -1988,6 +2038,10 @@
     "KUFTAL_TUNNEL": {
       "WESTERN_ALTEPA_DESERT": "ヴォルボー クフタルの洞門\n西アルテパ砂漠I-4T1からクフタルの洞門へ",
       "KUFTAL_TUNNEL_1_2": "ヴォルボー クフタルの洞門\nMAP[1]I-7T9からMAP[2]へ"
+    },
+    "GUSTAV_TUNNEL": {
+      "VALKURM_DUNES": "ヴォルボー グスタフの洞門\nバルクルム砂丘B-8T9からグスタフの洞門へ",
+      "GUSTAV_TUNNEL_1_2": "ヴォルボー グスタフの洞門\nMAP[1]G-9T1からMAP[2]へ"
     },
     "CAPE_TERIGGAN": {
       "KUFTAL_TUNNEL": "ヴォルボー テリガン岬\nクフタルの洞門MAP[2]G-2T2からテリガン岬へ"
@@ -2028,6 +2082,7 @@
     },
     "IFRITS_CAULDRON": {
       "YHOATOR_JUNGLE": "高地エルシモ イフリートの釜\nヨアトル大森林G-6T9からイフリートの釜へ",
+      "YHOATOR_JUNGLE2": "高地エルシモ イフリートの釜\nヨアトル大森林I-6T7からイフリートの釜へ",
       "IFRITS_CAULDRON_4_7": "高地エルシモ イフリートの釜\nMAP[4]H-8T7からMAP[7]へ",
       "IFRITS_CAULDRON_7_5": "高地エルシモ イフリートの釜\nMAP[7]C-12T6からMAP[5]へ",
       "IFRITS_CAULDRON_5_2": "高地エルシモ イフリートの釜\nMAP[5]H-7T7の炎の壁を一定時間経過か\n氷の塊トレードで抜け、J-8T8からMAP[2]へ",

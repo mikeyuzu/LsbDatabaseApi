@@ -1229,9 +1229,82 @@ namespace LsbDatabaseApi.mission
                     break;
                 // 語り部現る！？
                 case MissionBastok.RETURN_OF_THE_TALEKEEPER:
+                    if (bastokMission.StatusLower == 1)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.ZERUHN_MINES:
+                                break;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.ZERUHN_MINES.ToString();
+                                message.missionPhase = ZoneId.BASTOK_MINES.ToString();
+                                return message;
+                        }
+                    }
+                    else if (bastokMission.StatusLower == 2)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.WESTERN_ALTEPA_DESERT:
+                                break;
+                            case ZoneId.EASTERN_ALTEPA_DESERT:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.WESTERN_ALTEPA_DESERT.ToString();
+                                message.missionPhase = ZoneId.EASTERN_ALTEPA_DESERT.ToString();
+                                return message;
+                            case ZoneId.KORROLOKA_TUNNEL:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.KORROLOKA_TUNNEL.ToString();
+                                    message.missionPhase = ZoneId.KORROLOKA_TUNNEL.ToString() + "_1_2";
+                                    return message;
+                                }
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.EASTERN_ALTEPA_DESERT.ToString();
+                                message.missionPhase = ZoneId.KORROLOKA_TUNNEL.ToString();
+                                return message;
+                            case ZoneId.ZERUHN_MINES:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.KORROLOKA_TUNNEL.ToString();
+                                message.missionPhase = ZoneId.ZERUHN_MINES.ToString();
+                                return message;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.ZERUHN_MINES.ToString();
+                                message.missionPhase = ZoneId.BASTOK_MINES.ToString();
+                                return message;
+                        }
+                    }
                     break;
                 // 海賊たちの唄
                 case MissionBastok.THE_PIRATES_COVE:
+                    if (bastokMission.StatusLower == 2)
+                    {
+                        if (database.HasItem(charaInfo.CharaId, ItemId.FRAG_ROCK))
+                        {
+                            message.missionPhase = ItemId.FRAG_ROCK.ToString();
+                            return message;
+                        }
+
+                        if (!database.HasItem(charaInfo.CharaId, ItemId.CHUNK_OF_ADAMAN_ORE))
+                        {
+                            message.missionPhase = ItemId.CHUNK_OF_ADAMAN_ORE.ToString();
+                            return message;
+                        }
+
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.IFRITS_CAULDRON:
+                                break;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.IFRITS_CAULDRON.ToString();
+                                message.missionPhase = ZoneId.YHOATOR_JUNGLE.ToString() + "2";
+                                return message;
+                        }
+                    }
                     break;
                 // 完成品のイメージ
                 case MissionBastok.THE_FINAL_IMAGE:
@@ -1241,12 +1314,81 @@ namespace LsbDatabaseApi.mission
                     break;
                 // 流砂の鎖
                 case MissionBastok.THE_CHAINS_THAT_BIND_US:
+                    if (bastokMission.StatusLower == 1)
+                    {
+                        if (charaInfo.ZoneId == ZoneId.QUICKSAND_CAVES && charaInfo.MapId == 5)
+                        {
+                            break;
+                        }
+                        message.missionKind = MissionKind.Area;
+                        message.missionType = ZoneId.QUICKSAND_CAVES.ToString();
+                        message.missionPhase = ZoneId.WESTERN_ALTEPA_DESERT.ToString() + "_3";
+                        return message;
+                    }
+                    else if (bastokMission.StatusLower == 3)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.QUICKSAND_CAVES:
+                                if (charaInfo.MapId == 4)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.QUICKSAND_CAVES.ToString();
+                                    message.missionPhase = ZoneId.QUICKSAND_CAVES.ToString() + "_4_7";
+                                    return message;
+                                }
+                                if (charaInfo.MapId == 7)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.QUICKSAND_CAVES.ToString();
+                                    message.missionPhase = ZoneId.WESTERN_ALTEPA_DESERT.ToString() + "_2";
+                                    return message;
+                                }
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.QUICKSAND_CAVES.ToString();
+                                message.missionPhase = ZoneId.WESTERN_ALTEPA_DESERT.ToString() + "_2";
+                                return message;
+                        }
+                    }
                     break;
                 // その記憶を紡ぐ者
                 case MissionBastok.ENTER_THE_TALEKEEPER:
                     break;
                 // 最後の幻想
                 case MissionBastok.THE_SALT_OF_THE_EARTH:
+                    if (bastokMission.StatusLower == 2)
+                    {
+                        switch (charaInfo.ZoneId)
+                        {
+                            case ZoneId.GUSTAV_TUNNEL:
+                                if (charaInfo.MapId == 1)
+                                {
+                                    message.missionKind = MissionKind.Area;
+                                    message.missionType = ZoneId.GUSTAV_TUNNEL.ToString();
+                                    message.missionPhase = ZoneId.GUSTAV_TUNNEL.ToString() + "_1_2";
+                                    return message;
+                                }
+                                break;
+                            default:
+                                message.missionKind = MissionKind.Area;
+                                message.missionType = ZoneId.GUSTAV_TUNNEL.ToString();
+                                message.missionPhase = ZoneId.VALKURM_DUNES.ToString();
+                                return message;
+                        }
+                    }
+                    else if (bastokMission.StatusLower == 3)
+                    {
+                        if (database.HasKeyItem(charaInfo.CharaId, KeyItemId.MIRACLESALT))
+                        {
+                            message.missionPhase = KeyItemId.MIRACLESALT.ToString();
+                            return message;
+                        }
+                    }
                     break;
                 // 双刃の邂逅
                 case MissionBastok.WHERE_TWO_PATHS_CONVERGE:
@@ -1323,7 +1465,21 @@ namespace LsbDatabaseApi.mission
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.THE_CHAINS_THAT_BIND_US))
                     {
-                        message.missionPhase = MissionBastok.THE_CHAINS_THAT_BIND_US.ToString();
+                        var value = database.GetVarNum(charaInfo.CharaId, $"Mission[{(int)MissionId.BASTOK}][{(int)MissionBastok.ON_MY_WAY}]GumbahDialog");
+                        if (value == 0)
+                        {
+                            message.missionType = MissionBastok.ON_MY_WAY.ToString();
+                            message.missionPhase = "GumbahDialog";
+                        }
+                        else if (value == 1)
+                        {
+                            message.missionType = MissionBastok.ON_MY_WAY.ToString();
+                            message.missionPhase = "GumbahDialog1";
+                        }
+                        else
+                        {
+                            message.missionPhase = MissionBastok.THE_CHAINS_THAT_BIND_US.ToString();
+                        }
                     }
                     else if (!database.HasMissionComplete(charaInfo.CharaId, MissionId.BASTOK, (int)MissionBastok.ENTER_THE_TALEKEEPER))
                     {
